@@ -11,8 +11,8 @@ sidebar <- dashboardSidebar(
         menuItem(
             "Biến định tính", 
             icon = icon("percentage"), startExpanded = TRUE,
-            menuSubItem("Ước lượng 1 tỷ lệ dựa vào sai số tuyệt đối", tabName = "prop"),
-            menuSubItem("Ước lượng 1 tỷ lệ dựa vào sai số tương đối", tabName = "prop"),
+            menuSubItem("Ước lượng 1 tỷ lệ dựa vào sai số tuyệt đối", tabName = "prop_abs"),
+            menuSubItem("Ước lượng 1 tỷ lệ dựa vào sai số tương đối", tabName = "prop_rela"),
             menuSubItem("So sánh 2 tỷ lệ", tabName = "2props")
             ),
         menuItem(
@@ -207,12 +207,12 @@ dashboardPage(title = "SampleSizeCalc: Ước lượng cỡ mẫu",
         tags$li(
             a(icon("question-circle"),
               strong("Help"),
-              href = "https://github.com/thinhong/SampleSizeCalc/wiki"),
+              href = "https://github.com/khuongquynhlong/samplesize/blob/master/README.md"),
             class = "dropdown"
         ),
         tags$li(
             a(strong("Source code"),
-              href = "https://github.com/thinhong/SampleSizeCalc/"),
+              href = "https://github.com/khuongquynhlong/samplesize"),
             class = "dropdown"
         )
     ),
