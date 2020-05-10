@@ -149,6 +149,7 @@ body <- dashboardBody(
                             ),
                         ),
                         box(title = "Hướng dẫn", width = 8,
+                            withMathJax(),
                             p("Phần này sẽ dùng để giải thích ý nghĩa các tham số"),
                             p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_0(1-P_0)}+Z_{1-\\beta}\\sqrt{P_a(1-P_a)})^2}{(P_a-P_0)^2}$$")
                         ),
@@ -192,7 +193,8 @@ body <- dashboardBody(
         tabItem(
             tabName = "credit",
             fluidRow(
-                box(title = "Credit", width = 6),
+                box(title = "Credit", width = 6,
+                    p("Tác giả")),
                 box(title = "Book", width = 6)
             )
         )
