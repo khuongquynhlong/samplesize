@@ -11,8 +11,9 @@ sidebar <- dashboardSidebar(
         menuItem(
             "Biến định tính", 
             icon = icon("percentage"), startExpanded = TRUE,
-            menuSubItem("So sánh 2 tỷ lệ", tabName = "2props"),
-            menuSubItem("Ước lượng 1 tỷ lệ", tabName = "prop")
+            menuSubItem("Ước lượng 1 tỷ lệ dựa vào sai số tuyệt đối", tabName = "prop"),
+            menuSubItem("Ước lượng 1 tỷ lệ dựa vào sai số tương đối", tabName = "prop"),
+            menuSubItem("So sánh 2 tỷ lệ", tabName = "2props")
             ),
         menuItem(
             "Biến định lượng", 
