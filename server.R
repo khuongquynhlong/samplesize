@@ -104,45 +104,48 @@ shinyServer(function(input, output) {
   )
 
 ##### Two means #####
-  n_2means <- reactive({
-    req(as.numeric(input$m1_2means)>0&
-          as.numeric(input$sd1_2means)>0&
-          as.numeric(input$m2_2means)>0&
-          as.numeric(input$sd2_2means)>0&
-          as.numeric(input$alpha_2means)>0&
-          as.numeric(input$power_2means)>0, 
+  n_2means_hypo <- reactive({
+    req(as.numeric(input$m1_2means_hypo)>0&
+          as.numeric(input$sd1_2means_hypo)>0&
+          as.numeric(input$m2_2means_hypo)>0&
+          as.numeric(input$sd2_2means_hypo)>0&
+          as.numeric(input$alpha_2means_hypo)>0&
+          as.numeric(input$power_2means_hypo)>0, 
         cancelOutput = TRUE)
-    numerator <- abs(as.numeric(input$m1_2means)-as.numeric(input$m2_2means))
-    denominator<- sqrt(((as.numeric(input$sd1_2means)^2)+(as.numeric(input$sd2_2means)^2))/2)
+    numerator <- abs(as.numeric(input$m1_2means_hypo)-as.numeric(input$m2_2means_hypo))
+    denominator<- sqrt(((as.numeric(input$sd1_2means_hypo)^2)+(as.numeric(input$sd2_2means_hypo)^2))/2)
     d <- numerator/denominator
     pwr <- pwr.t.test(d = d, 
-                      sig.level = as.numeric(input$alpha_2means), 
-                      power = as.numeric(input$power_2means), 
+                      sig.level = as.numeric(input$alpha_2means_hypo), 
+                      power = as.numeric(input$power_2means_hypo), 
                       type = "two.sample",
                       alternative = "two.sided")
     pwr$n
   })
-  n1_2means <- reactive({
-    req(input$k_2means>=1, cancelOutput = TRUE)
-    big_n <- 2*n_2means()*(1+input$k_2means)^2/(4*input$k_2means)
-    big_n/(1+input$k_2means)
+  n1_2means_hypo <- reactive({
+    req(input$k_2means_hypo>=1, cancelOutput = TRUE)
+    big_n <- 2*n_2means_hypo()*(1+input$k_2means_hypo)^2/(4*input$k_2means_hypo)
+    big_n/(1+input$k_2means_hypo)
   })
-  output$n1_2means <- renderValueBox({
+  output$n1_2means_hypo <- renderValueBox({
     valueBox(
-      value = ceiling(n1_2means()),
+      value = ceiling(n1_2means_hypo()),
       subtitle = "Nhóm 1",
       icon = icon("capsules"),
       color = "green",
     )
   })
-  output$n2_2means <- renderValueBox({
+  output$n2_2means_hypo <- renderValueBox({
     valueBox(
-      value = input$k_2means*ceiling(n1_2means()),
+      value = input$k_2means_hypo*ceiling(n1_2means_hypo()),
       subtitle = "Nhóm 2",
       icon = icon("tablets"),
       color = "orange",
     )
   })
+  
+##### Cohort studies #####
+  
   
 ##### Correlation #####
   n_corr <- reactive({

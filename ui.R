@@ -18,8 +18,16 @@ sidebar <- dashboardSidebar(
         menuItem(
             "Biến định lượng", 
             icon = icon("chart-line"), startExpanded = TRUE,
-            menuSubItem("So sánh 2 trung bình", tabName = "2means")
+            menuSubItem("Ước lượng 1 trung bình", tabName = "1mean_est"),
+            menuSubItem("Kiểm định giả thuyết cho 1 trung bình", tabName = "1mean_hypo"),
+            menuSubItem("Ước lượng khác biệt giữa 2 trung bình", tabName = "2means_est"),
+            menuSubItem("Kiểm định giả thuyết cho 2 trung bình", tabName = "2means_hypo")
             ),
+        menuItem(
+            "Nghiên cứu đoàn hệ",
+            menuSubItem("Ước lượng nguy cơ tương đối", tabName = "cohort_est"),
+            menuSubItem("Kiểm định giả thuyết cho nguy cơ tương đối", tabName = "cohort_hypo")
+        ),
         menuItem(
             "Hệ số tương quan", 
             tabName = "corr", icon = icon("chart-bar")
@@ -111,11 +119,13 @@ body <- dashboardBody(
                 )
             )
         ),
+
+        
+        
+        ##### Continuous variables #####
+        ##### Estimating the population mean #####
         tabItem(
-            tabName = "proportion",
-        ),
-        tabItem(
-            tabName = "2means",
+            tabName = "1mean_est",
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
@@ -123,27 +133,60 @@ body <- dashboardBody(
                     fluidRow(
                         box(title = "Tham số", width = 4,
                             box(
-                                textInput(inputId = "m1_2means", 
-                                          label = "Trung bình nhóm 1", 
-                                          value = 100.56),
-                                textInput(inputId = "sd1_2means",
-                                          label = "Độ lệch chuẩn nhóm 1",
-                                          value = 7.7),
-                                textInput(inputId = "m2_2means", 
-                                          label = "Trung bình nhóm 2", 
-                                          value = 94.22),
-                                textInput(inputId = "sd2_2means",
-                                          label = "Độ lệch chuẩn nhóm 2",
-                                          value = 5.61),
-                                numericInput(inputId = "k_2means",
-                                             label = "Tỷ số 2 nhóm",
-                                             value = 1)
+                                textInput(inputId = "mean_1mean_est", 
+                                          label = "Population mean", 
+                                          value = 0.1),
+                                textInput(inputId = "sd_1mean_est", 
+                                          label = "Population standard deviation", 
+                                          value = 0.85)
                             ),
                             box(
-                                textInput(inputId = "alpha_2means",
+                                textInput(inputId = "alpha_1mean_est",
                                           label = "Alpha",
                                           value = 0.05),
-                                textInput(inputId = "power_2means",
+                                textInput(inputId = "d_1mean_est",
+                                          label = "Absolute precision required",
+                                          value = 0.1),
+                                textInput(inputId = "eps_1mean_est",
+                                          label = "Relative precision",
+                                          value = 1)
+                            ),
+                        ),
+                        box(title = "Hướng dẫn", width = 8,
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2} \\:hoặc\\: \\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{\\varepsilon^2\\mu^2}$$"),
+                            p("alpha, power")
+                        ),
+                        valueBoxOutput(outputId = "n_1mean_est")
+                    )
+                )
+            )
+        ),
+        
+        ##### Hypothesis testing for 1 population mean #####
+        tabItem(
+            tabName = "1mean_hypo",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Tham số", width = 4,
+                            box(
+                                textInput(inputId = "m0_1mean_hypo", 
+                                          label = "Test value of the population mean", 
+                                          value = 90),
+                                textInput(inputId = "ma_1mean_hypo", 
+                                          label = "Anticipated population mean", 
+                                          value = 85),
+                                textInput(inputId = "sd_1mean_hypo",
+                                          label = "Population standard deviation",
+                                          value = 20)
+                            ),
+                            box(
+                                textInput(inputId = "alpha_1mean_hypo",
+                                          label = "Alpha",
+                                          value = 0.05),
+                                textInput(inputId = "power_1mean_hypo",
                                           label = "Power",
                                           value = 0.8)
                             ),
@@ -151,14 +194,177 @@ body <- dashboardBody(
                         box(title = "Hướng dẫn", width = 8,
                             withMathJax(),
                             p("Phần này sẽ dùng để giải thích ý nghĩa các tham số"),
-                            p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_0(1-P_0)}+Z_{1-\\beta}\\sqrt{P_a(1-P_a)})^2}{(P_a-P_0)^2}$$")
+                            p("$$n=\\frac{\\sigma^2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{(\\mu_0-\\mu_a)^2}$$")
                         ),
-                        valueBoxOutput(outputId = "n1_2means"),
-                        valueBoxOutput(outputId = "n2_2means")
+                        valueBoxOutput(outputId = "n_1mean_hypo")
                     )
                 )
             )
         ),
+        
+        ##### Estimating the difference between 2 population means #####
+        tabItem(
+            tabName = "2means_est",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Tham số", width = 4,
+                            box(
+                                textInput(inputId = "sd_2means_est", 
+                                          label = "Population standard deviation", 
+                                          value = 0.75)
+                            ),
+                            box(
+                                textInput(inputId = "alpha_2means_est",
+                                          label = "Alpha",
+                                          value = 0.05),
+                                textInput(inputId = "d_2means_est", 
+                                          label = "Absolute precision required", 
+                                          value = 0.2)
+                            ),
+                        ),
+                        box(title = "Hướng dẫn", width = 8,
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2(2\\sigma^2)}{d^2}$$"),
+                            p("alpha, power")
+                        ),
+                        valueBoxOutput(outputId = "n_2means_est")
+                    )
+                )
+            )
+        ),
+        
+        ##### Hypothesis testing for 2 population means #####
+        tabItem(
+            tabName = "2means_hypo",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Tham số", width = 4,
+                            box(
+                                textInput(inputId = "m1_2means_hypo", 
+                                          label = "Trung bình nhóm 1", 
+                                          value = 100.56),
+                                textInput(inputId = "sd1_2means_hypo",
+                                          label = "Độ lệch chuẩn nhóm 1",
+                                          value = 7.7),
+                                textInput(inputId = "m2_2means_hypo", 
+                                          label = "Trung bình nhóm 2", 
+                                          value = 94.22),
+                                textInput(inputId = "sd2_2means_hypo",
+                                          label = "Độ lệch chuẩn nhóm 2",
+                                          value = 5.61),
+                                numericInput(inputId = "k_2means_hypo",
+                                             label = "Tỷ số 2 nhóm",
+                                             value = 1)
+                            ),
+                            box(
+                                textInput(inputId = "alpha_2means_hypo",
+                                          label = "Alpha",
+                                          value = 0.05),
+                                textInput(inputId = "power_2means_hypo",
+                                          label = "Power",
+                                          value = 0.8)
+                            ),
+                        ),
+                        box(title = "Hướng dẫn", width = 8,
+                            withMathJax(),
+                            p("Phần này sẽ dùng để giải thích ý nghĩa các tham số"),
+                            p("$$n=\\frac{\\left\\{Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_0(1-P_0)}+Z_{1-\\beta}\\sqrt{P_a(1-P_a)}\\right\\}^2}{(P_a-P_0)^2}$$")
+                        ),
+                        valueBoxOutput(outputId = "n1_2means_hypo"),
+                        valueBoxOutput(outputId = "n2_2means_hypo")
+                    )
+                )
+            )
+        ),
+        
+        ##### Cohort studies #####
+        ##### Estimating a RR with specified relative precision #####
+        tabItem(
+            tabName = "cohort_est",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Tham số", width = 4,
+                            box(
+                                textInput(inputId = "p1_cohort_est", 
+                                          label = "Tỷ lệ biến cố nhóm 1", 
+                                          value = 0.4),
+                                textInput(inputId = "p2_cohort_est", 
+                                          label = "Tỷ lệ biến cố nhóm 2", 
+                                          value = 0.2),
+                                textInput(inputId = "rr_cohort_est", 
+                                          label = "Nguy cơ tương đối (RR)", 
+                                          value = 2)
+                            ),
+                            box(
+                                textInput(inputId = "alpha_cohort_est",
+                                          label = "Alpha",
+                                          value = 0.05),
+                                textInput(inputId = "eps_cohort_est",
+                                          label = "Epsilon",
+                                          value = 0.5)
+                            ),
+                        ),
+                        box(title = "Hướng dẫn", width = 8,
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2}{[log_e(1-\\varepsilon)]^2} \\left[ \\frac{1-P_1}{P_1}+\\frac{1-P_2}{P_2} \\right]$$"),
+                            p("alpha, power")
+                        ),
+                        valueBoxOutput(outputId = "n_cohort_est")
+                    )
+                )
+            )
+        ),
+        
+        # Hypothesis test for a RR
+        tabItem(
+            tabName = "cohort_hypo",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Tham số", width = 4,
+                            box(
+                                textInput(inputId = "p1_cohort_hypo", 
+                                          label = "Tỷ lệ biến cố nhóm 1", 
+                                          value = 0.175),
+                                textInput(inputId = "p2_cohort_hypo", 
+                                          label = "Tỷ lệ biến cố nhóm 2", 
+                                          value = 0.35),
+                                textInput(inputId = "rr0_cohort_hypo", 
+                                          label = "Test value RR", 
+                                          value = 1),
+                                textInput(inputId = "rra_cohort_hypo", 
+                                          label = "Anticipated RR", 
+                                          value = 0.5)
+                            ),
+                            box(
+                                textInput(inputId = "alpha_cohort_hypo",
+                                          label = "Alpha",
+                                          value = 0.05),
+                                textInput(inputId = "power_cohort_hypo",
+                                          label = "Power",
+                                          value = 0.9)
+                            ),
+                        ),
+                        box(title = "Hướng dẫn", width = 8,
+                            p("$$n=\\frac{ \\left\\{ Z_{1-\\frac{\\alpha}{2}}\\sqrt{2\\overline{P}(1-\\overline{P})}+Z_{1-\\beta}\\sqrt{P_1(1-P_1)+P_2(1-P_2)}\\right\\}^2}{(P_1-P_2)^2}$$"),
+                            p("alpha, power")
+                        ),
+                        valueBoxOutput(outputId = "n_cohort_hypo")
+                    )
+                )
+            )
+        ),
+        
+        ##### Correlation #####
         tabItem(
             tabName = "corr",
             tabsetPanel(
@@ -170,7 +376,7 @@ body <- dashboardBody(
                             box(
                                 textInput(inputId = "r_corr", 
                                           label = "Hệ số tương quan", 
-                                          value = 0.3),
+                                          value = 0.3)
                             ),
                             box(
                                 textInput(inputId = "alpha_corr",
