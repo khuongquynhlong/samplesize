@@ -3,7 +3,43 @@ library(shinydashboard)
 library(DT)
 library(pwr)
 
-# Define server logic required to draw a histogram
+# Function estimating the population mean
+fun1_1mean_est <- function(sd, d, alpha) {
+  z <- qnorm(1-alpha/2)
+  n <- z^2*sd^2/d^2
+  return(n)
+}
+
+fun2_1mean_est <- function(sd, eps, mean, alpha) {
+  z <- qnorm(1-alpha/2)
+  n <- z^2*sd^2/(eps^2*mean^2)
+  return(n)
+}
+
+# Function hypothesis testing for 1 population mean
+fun_1mean_hypo <- function(sd, m_0, m_a, alpha, power) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- qnorm(power)
+  n <- sd^2*(z_a+z_b)^2/(m_0-m_a)^2
+  return(n)
+}
+
+# Function estimating the difference between 2 population means
+fun_2means_est <- function(sd, d, alpha) {
+  z <- qnorm(1-alpha/2)
+  n <- 2*z^2*sd^2/d^2
+  return(n)
+}
+
+# Function for estimating a RR
+fun_cohort_est <- function(p1, p2, rr, alpha, eps) {
+  z <- qnorm(1-alpha/2)
+  n <- z^2*((1-p1)/p1+(1-p2)/p2)/log(1-eps, base = exp(1))^2
+  return(n)
+}
+
+
+
 shinyServer(function(input, output) {
   
 ##### Two proportions #####
@@ -103,7 +139,71 @@ shinyServer(function(input, output) {
     }
   )
 
-##### Two means #####
+  ##### Continuous variables #####
+  ##### Estimating the population mean #####
+  n_1mean_est <- reactive({
+    req(as.numeric(input$mean_1mean_est)>0&
+          as.numeric(input$sd_1mean_est)>0&
+          as.numeric(input$alpha_1mean_est)>0&
+          as.numeric(input$d_1mean_est)>0&
+          as.numeric(input$eps_1mean_est)>0,
+        cancelOutput = TRUE)
+    fun1_1mean_est(sd = as.numeric(input$sd_1mean_est), 
+                   d = as.numeric(input$d_1mean_est), 
+                   alpha = as.numeric(input$alpha_1mean_est))
+  })
+  output$n_1mean_est <- renderValueBox({
+    valueBox(
+      value = ceiling(n_1mean_est()),
+      subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  ##### Hypothesis testing for 1 population mean #####
+  n_1mean_hypo <- reactive({
+    req(as.numeric(input$m0_1mean_hypo)>0&
+          as.numeric(input$ma_1mean_hypo)>0&
+          as.numeric(input$sd_1mean_hypo)>0&
+          as.numeric(input$alpha_1mean_hypo)>0&
+          as.numeric(input$power_1mean_hypo)>0,
+        cancelOutput = TRUE)
+    fun_1mean_hypo(sd = as.numeric(input$sd_1mean_hypo), 
+                   m_0 = as.numeric(input$m0_1mean_hypo), 
+                   m_a = as.numeric(input$ma_1mean_hypo), 
+                   alpha = as.numeric(input$alpha_1mean_hypo), 
+                   power = as.numeric(input$power_1mean_hypo))
+  })
+  output$n_1mean_hypo <- renderValueBox({
+    valueBox(
+      value = ceiling(n_1mean_hypo()),
+      subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  ##### Estimating the difference between 2 population means #####
+  n_2means_est <- reactive({
+    req(as.numeric(input$sd_2means_est)>0&
+          as.numeric(input$alpha_2means_est)>0&
+          as.numeric(input$d_2means_est)>0,
+        cancelOutput = TRUE)
+    fun_2means_est(sd = as.numeric(input$sd_2means_est), 
+                   d = as.numeric(input$d_2means_est), 
+                   alpha = as.numeric(input$alpha_2means_est))
+  })
+  output$n_2means_est <- renderValueBox({
+    valueBox(
+      value = ceiling(n_2means_est()),
+      subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  ##### Two means #####
   n_2means_hypo <- reactive({
     req(as.numeric(input$m1_2means_hypo)>0&
           as.numeric(input$sd1_2means_hypo)>0&
@@ -144,10 +244,34 @@ shinyServer(function(input, output) {
     )
   })
   
-##### Cohort studies #####
+  ##### Cohort studies #####
+  ##### Estimating a RR with specified relative precision #####
+  n_cohort_est <- reactive({
+    req(as.numeric(input$p1_cohort_est)>0&
+          as.numeric(input$p2_cohort_est)>0&
+          as.numeric(input$rr_cohort_est)>0&
+          as.numeric(input$alpha_cohort_est)>0&
+          as.numeric(input$eps_cohort_est)>0,
+        cancelOutput = TRUE)
+    fun_cohort_est(p1 = as.numeric(input$p1_cohort_est), 
+                   p2 = as.numeric(input$p2_cohort_est), 
+                   rr = as.numeric(input$rr_cohort_est), 
+                   alpha = as.numeric(input$alpha_cohort_est), 
+                   eps = as.numeric(input$eps_cohort_est))
+  })
+  output$n_cohort_est <- renderValueBox({
+    valueBox(
+      value = ceiling(n_cohort_est()),
+      subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  ##### Hypothesis test for a RR #####
   
   
-##### Correlation #####
+  ##### Correlation #####
   n_corr <- reactive({
     req(as.numeric(input$r_corr)>0&
           as.numeric(input$alpha_corr)>0&

@@ -10,14 +10,14 @@ sidebar <- dashboardSidebar(
     sidebarMenu(
         menuItem(
             "Biến định tính", 
-            icon = icon("percentage"), startExpanded = TRUE,
+            icon = icon("percentage"), startExpanded = FALSE,
             menuSubItem("Ước lượng 1 tỷ lệ dựa vào sai số tuyệt đối", tabName = "prop_abs"),
             menuSubItem("Ước lượng 1 tỷ lệ dựa vào sai số tương đối", tabName = "prop_rela"),
             menuSubItem("So sánh 2 tỷ lệ", tabName = "2props")
             ),
         menuItem(
             "Biến định lượng", 
-            icon = icon("chart-line"), startExpanded = TRUE,
+            icon = icon("chart-line"), startExpanded = FALSE,
             menuSubItem("Ước lượng 1 trung bình", tabName = "1mean_est"),
             menuSubItem("Kiểm định giả thuyết cho 1 trung bình", tabName = "1mean_hypo"),
             menuSubItem("Ước lượng khác biệt giữa 2 trung bình", tabName = "2means_est"),
@@ -25,12 +25,14 @@ sidebar <- dashboardSidebar(
             ),
         menuItem(
             "Nghiên cứu đoàn hệ",
+            icon = icon("university"), startExpanded = FALSE,
             menuSubItem("Ước lượng nguy cơ tương đối", tabName = "cohort_est"),
             menuSubItem("Kiểm định giả thuyết cho nguy cơ tương đối", tabName = "cohort_hypo")
         ),
         menuItem(
             "Hệ số tương quan", 
-            tabName = "corr", icon = icon("chart-bar")
+            icon = icon("chart-bar"), startExpanded = FALSE,
+            tabName = "corr"
             ),
         menuItem(
             "Credit", selected = TRUE,
@@ -153,7 +155,8 @@ body <- dashboardBody(
                             ),
                         ),
                         box(title = "Hướng dẫn", width = 8,
-                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2} \\:hoặc\\: \\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{\\varepsilon^2\\mu^2}$$"),
+                            p("Công thức 1: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}$$"),
+                            p("Công thức 2: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{\\varepsilon^2\\mu^2}$$"),
                             p("alpha, power")
                         ),
                         valueBoxOutput(outputId = "n_1mean_est")
@@ -322,7 +325,7 @@ body <- dashboardBody(
             )
         ),
         
-        # Hypothesis test for a RR
+        ##### Hypothesis test for a RR #####
         tabItem(
             tabName = "cohort_hypo",
             tabsetPanel(
