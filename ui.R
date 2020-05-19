@@ -30,6 +30,12 @@ sidebar <- dashboardSidebar(
             menuSubItem("Kiểm định giả thuyết cho nguy cơ tương đối", tabName = "cohort_hypo")
         ),
         menuItem(
+            "Sample surveys",
+            icon = icon("poll"), startExpanded = FALSE,
+            menuSubItem("Simple random sampling", tabName = "simple_random"),
+            menuSubItem("Stratified sampling", tabName = "stratified")
+        ),
+        menuItem(
             "Hệ số tương quan", 
             icon = icon("chart-bar"), startExpanded = FALSE,
             tabName = "corr"
@@ -246,40 +252,83 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(title = "Tham số", width = 4,
-                            box(
-                                textInput(inputId = "m1_2means_hypo", 
-                                          label = "Trung bình nhóm 1", 
-                                          value = 100.56),
-                                textInput(inputId = "sd1_2means_hypo",
-                                          label = "Độ lệch chuẩn nhóm 1",
-                                          value = 7.7),
-                                textInput(inputId = "m2_2means_hypo", 
-                                          label = "Trung bình nhóm 2", 
-                                          value = 94.22),
-                                textInput(inputId = "sd2_2means_hypo",
-                                          label = "Độ lệch chuẩn nhóm 2",
-                                          value = 5.61),
-                                numericInput(inputId = "k_2means_hypo",
-                                             label = "Tỷ số 2 nhóm",
-                                             value = 1)
-                            ),
-                            box(
-                                textInput(inputId = "alpha_2means_hypo",
-                                          label = "Alpha",
-                                          value = 0.05),
-                                textInput(inputId = "power_2means_hypo",
-                                          label = "Power",
-                                          value = 0.8)
-                            ),
-                        ),
-                        box(title = "Hướng dẫn", width = 8,
+                        box(title = "Hướng dẫn", width = 6,
                             withMathJax(),
-                            p("Phần này sẽ dùng để giải thích ý nghĩa các tham số"),
-                            p("$$n=\\frac{\\left\\{Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_0(1-P_0)}+Z_{1-\\beta}\\sqrt{P_a(1-P_a)}\\right\\}^2}{(P_a-P_0)^2}$$")
+                            p("$$n=\\frac{2\\sigma^2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{(\\mu_1-\\mu_2)^2}$$"),
+                            p(HTML("&sigma;: được tính bằng công thức")),
+                            p("$$\\sigma=\\sqrt{\\frac{\\sigma_1^2+\\sigma_2^2}{2}}$$")
                         ),
-                        valueBoxOutput(outputId = "n1_2means_hypo"),
-                        valueBoxOutput(outputId = "n2_2means_hypo")
+                        tabBox(
+                            title = "Tham số", width = 6, side = "right",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        status = "success",
+                                        textInput(inputId = "m1_2means_hypo", 
+                                                  label = "Trung bình nhóm 1", 
+                                                  value = 100.56),
+                                        textInput(inputId = "sd1_2means_hypo",
+                                                  label = "Độ lệch chuẩn nhóm 1",
+                                                  value = 7.7)
+                                    ),
+                                    box(
+                                        status = "warning",
+                                        textInput(inputId = "m2_2means_hypo", 
+                                                  label = "Trung bình nhóm 2", 
+                                                  value = 94.22),
+                                        textInput(inputId = "sd2_2means_hypo",
+                                                  label = "Độ lệch chuẩn nhóm 2",
+                                                  value = 5.61)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_2means_hypo",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "power_2means_hypo",
+                                                  label = "Power",
+                                                  value = 0.8),
+                                        numericInput(inputId = "k_2means_hypo",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1)
+                                    ),
+                                    valueBoxOutput(outputId = "n1_2means_hypo", width = 6),
+                                    valueBoxOutput(outputId = "n2_2means_hypo", width = 6)
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính power",
+                                fluidRow(
+                                    box(
+                                        status = "success",
+                                        textInput(inputId = "m1_2means_hypo_power", 
+                                                  label = "Trung bình nhóm 1", 
+                                                  value = 0),
+                                        textInput(inputId = "sd1_2means_hypo_power",
+                                                  label = "Độ lệch chuẩn nhóm 1",
+                                                  value = 7.7)
+                                    ),
+                                    box(
+                                        status = "warning",
+                                        textInput(inputId = "m2_2means_hypo_power", 
+                                                  label = "Trung bình nhóm 2", 
+                                                  value = 2),
+                                        textInput(inputId = "sd2_2means_hypo_power",
+                                                  label = "Độ lệch chuẩn nhóm 2",
+                                                  value = 5.61)
+                                    ),
+                                    box(
+                                        textInput(inputId = "n_2means_hypo_power",
+                                                  label = "Cỡ mẫu",
+                                                  value = 100),
+                                        textInput(inputId = "alpha_2means_hypo_power",
+                                                  label = "Alpha",
+                                                  value = 0.05)
+                                    ),
+                                    valueBoxOutput(outputId = "power_2means_hypo", width = 6)
+                                )
+                            )
+                        )
                     )
                 )
             )
@@ -362,6 +411,46 @@ body <- dashboardBody(
                             p("alpha, power")
                         ),
                         valueBoxOutput(outputId = "n_cohort_hypo")
+                    )
+                )
+            )
+        ),
+        
+        ##### Sample survey #####
+        ##### Simple random sampling #####
+        tabItem(
+            tabName = "simple_random",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Tham số", width = 4,
+                            box(
+                                textInput(inputId = "N_simple_random", 
+                                          label = "Population size", 
+                                          value = 4000),
+                                textInput(inputId = "P_simple_random", 
+                                          label = "Anticipated population proportion", 
+                                          value = 0.6)
+                            ),
+                            box(
+                                textInput(inputId = "alpha_simple_random",
+                                          label = "Alpha",
+                                          value = 0.05),
+                                textInput(inputId = "d_simple_random",
+                                          label = "Absolute precision required",
+                                          value = 0.05),
+                                textInput(inputId = "eps_simple_random",
+                                          label = "Relative precision",
+                                          value = 0.083)
+                            ),
+                        ),
+                        box(title = "Hướng dẫn", width = 8,
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2P(1-P)N}{d^2(N-1)+Z_{1-\\frac{\\alpha}{2}}^2P(1-P)}$$"),
+                            p("alpha, power")
+                        ),
+                        valueBoxOutput(outputId = "n_simple_random")
                     )
                 )
             )
