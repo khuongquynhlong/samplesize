@@ -38,7 +38,19 @@ fun_cohort_est <- function(p1, p2, rr, alpha, eps) {
   return(n)
 }
 
+# Function for hypothesis test for a RR
+fun_cohort_hypo <- function(p1, p2, rr_0, rr_a, alpha, power) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- qnorm(power)
+  p <- mean(c(p1, p2))
+  n <- (z_a*sqrt(2*p*(1-p))+z_b*sqrt(p1*(1-p1)+p2*(1-p2)))^2/(p1-p2)^2
+}
 
+# Function for simple random sampling
+fun_simple_random <- function(N, P, alpha, d, eps) {
+  z <- qnorm(1-alpha/2)
+  n <- z^2*P*(1-P)*N/(d^2*(N-1)+z^2*P*(1-P))
+}
 
 shinyServer(function(input, output) {
   
@@ -204,10 +216,11 @@ shinyServer(function(input, output) {
   })
   
   ##### Two means #####
+  # Sample size
   n_2means_hypo <- reactive({
-    req(as.numeric(input$m1_2means_hypo)>0&
+    req(as.numeric(input$m1_2means_hypo)>=0&
           as.numeric(input$sd1_2means_hypo)>0&
-          as.numeric(input$m2_2means_hypo)>0&
+          as.numeric(input$m2_2means_hypo)>=0&
           as.numeric(input$sd2_2means_hypo)>0&
           as.numeric(input$alpha_2means_hypo)>0&
           as.numeric(input$power_2means_hypo)>0, 
@@ -244,6 +257,34 @@ shinyServer(function(input, output) {
     )
   })
   
+  # Power
+  power_2means_hypo <- reactive({
+    req(as.numeric(input$m1_2means_hypo_power)>=0&
+          as.numeric(input$sd1_2means_hypo_power)>0&
+          as.numeric(input$m2_2means_hypo_power)>=0&
+          as.numeric(input$sd2_2means_hypo_power)>0&
+          as.numeric(input$alpha_2means_hypo_power)>0&
+          as.numeric(input$n_2means_hypo_power)>0,
+        cancelOutput = TRUE)
+    numerator <- abs(as.numeric(input$m1_2means_hypo_power)-as.numeric(input$m2_2means_hypo_power))
+    denominator<- sqrt(((as.numeric(input$sd1_2means_hypo_power)^2)+(as.numeric(input$sd2_2means_hypo_power)^2))/2)
+    d <- numerator/denominator
+    pwr <- pwr.t.test(d = d, 
+                      sig.level = as.numeric(input$alpha_2means_hypo_power), 
+                      n = as.numeric(input$n_2means_hypo_power),
+                      type = "two.sample",
+                      alternative = "two.sided")
+    pwr$power
+  })
+  output$power_2means_hypo <- renderValueBox({
+    valueBox(
+      value = round(power_2means_hypo(), 2),
+      subtitle = "Power",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
   ##### Cohort studies #####
   ##### Estimating a RR with specified relative precision #####
   n_cohort_est <- reactive({
@@ -269,7 +310,61 @@ shinyServer(function(input, output) {
   })
   
   ##### Hypothesis test for a RR #####
+  n_cohort_hypo <- reactive({
+    req(as.numeric(input$p1_cohort_hypo)>0&
+          as.numeric(input$p2_cohort_hypo)>0&
+          as.numeric(input$rr0_cohort_hypo)>0&
+          as.numeric(input$rra_cohort_hypo)>0&
+          as.numeric(input$alpha_cohort_hypo)>0&
+          as.numeric(input$power_cohort_hypo)>0,
+        cancelOutput = TRUE)
+    fun_cohort_hypo(p1 = as.numeric(input$p1_cohort_hypo),
+                    p2 = as.numeric(input$p2_cohort_hypo),
+                    alpha = as.numeric(input$alpha_cohort_hypo),
+                    power = as.numeric(input$power_cohort_hypo))
+  })
+  output$n_cohort_hypo <- renderValueBox({
+    valueBox(
+      value = ceiling(n_cohort_hypo()),
+      subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
   
+  ##### Sample survey #####
+  ##### Simple random sampling #####
+  n_simple_random <- reactive({
+    req(as.numeric(input$N_simple_random)>0&
+          as.numeric(input$P_simple_random)>0&
+          as.numeric(input$alpha_simple_random)>0&
+          as.numeric(input$d_simple_random)>0&
+          as.numeric(input$eps_simple_random)>0,
+        cancelOutput = TRUE)
+    fun_simple_random(N = as.numeric(input$N_simple_random), 
+                      P = as.numeric(input$P_simple_random), 
+                      alpha = as.numeric(input$alpha_simple_random), 
+                      d = as.numeric(input$d_simple_random))
+  })
+  output$n_simple_random <- renderValueBox({
+    valueBox(
+      value = ceiling(n_simple_random()),
+      subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  ##### Stratified sampling #####
+  # observeEvent(input$no_strata_stratified, {
+  #   output$strata <- renderUI({
+  #     input_list <- lapply(1:input$no_strata_stratified, function(i) {
+  #       inputName <- paste("N", i)
+  #       numericInput(inputName, inputName, 1)
+  #     })
+  #     do.call(tagList, input_list)
+  #   })
+  # })
   
   ##### Correlation #####
   n_corr <- reactive({
