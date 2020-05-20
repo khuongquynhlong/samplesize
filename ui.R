@@ -60,6 +60,160 @@ body <- dashboardBody(
         tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
     ),
     tabItems(
+        
+        ##### Categorical variables #####
+        ##### Estimating the population proportion with absolute precision #####
+        
+        tabItem(
+            tabName = "1prop_est_abs",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Hướng dẫn", width = 6,
+                            withMathJax(),
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2P(1-P)}{d^2}$$")
+                        ),
+                        box(
+                            width = 6, side = "left",
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        status = "success",
+                                        textInput(inputId = "p_1prop_est_abs", 
+                                                  label = "Tỷ lệ ước lượng", 
+                                                  value = 0.3)
+                                    ),
+                                    box(
+                                        status = "warning",
+                                        textInput(inputId = "alpha_1prop_est_abs",
+                                                  label = HTML("Khoảng tin cậy (1 - &alpha;)"),
+                                                  value = 0.95),
+                                        textInput(inputId = "d_1prop_est_abs",
+                                                  label = "Sai số tuyệt đối (d)",
+                                                  value = 0.05)
+                                    ),
+                                    valueBoxOutput(outputId = "n_1prop_est_abs", width = 6)
+                                ),
+                        )
+                    )
+                )
+            )
+        ),        
+
+        
+        ##### Estimating the population proportion with relative precision #####
+        
+        tabItem(
+            tabName = "1prop_est_rel",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Hướng dẫn", width = 6,
+                            withMathJax(),
+                            p("$$n=Z_{1-\\frac{\\alpha}{2}}^2 \\frac{1-P}{\\varepsilon^2P}$$")
+                        ),
+                        box(
+                            width = 6, side = "left",
+                            title = "Tính cỡ mẫu",
+                            fluidRow(
+                                box(
+                                    status = "success",
+                                    textInput(inputId = "p_1prop_est_rel", 
+                                              label = "Tỷ lệ ước lượng", 
+                                              value = 0.3)
+                                ),
+                                box(
+                                    status = "warning",
+                                    textInput(inputId = "alpha_1prop_est_rel",
+                                              label = HTML("Khoảng tin cậy (1 - &alpha;)"),
+                                              value = 0.95),
+                                    textInput(inputId = "d_1prop_est_rel",
+                                              label = HTML("Sai số tương đối (&varepsilon;)"),
+                                              value = 0.1)
+                                ),
+                                valueBoxOutput(outputId = "n_1prop_est_rel", width = 6)
+                            ),
+                        )
+                    )
+                )
+            )
+        ),        
+        
+        ##### Hypothesis test for 1 population proportion #####
+        
+        tabItem(
+            tabName = "1prop_hypo_pop",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Hướng dẫn", width = 6,
+                            withMathJax(),
+                            p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_o(1-P_o)} + Z_{1-\\beta}\\sqrt{P_a(1-P_a)})^2}{(P_a - P_o)^2}$$")
+                        ),
+                        tabBox(
+                            width = 6, side = "left",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        status = "success",
+                                        textInput(inputId = "p0_1prop_hypo_pop", 
+                                                  label = "Tỷ lệ quần thể", 
+                                                  value = 0.30),
+                                        textInput(inputId = "p1_1prop_hypo_pop",
+                                                  label = "Tỷ lệ ước tính",
+                                                  value = 0.20)
+                                    ),
+                                    box(
+                                        status = "warning",
+                                        textInput(inputId = "alpha_1prop_hypo_pop",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "power_1prop_hypo_pop",
+                                                  label = "Power",
+                                                  value = 0.8)
+                                    ),
+                                    valueBoxOutput(outputId = "n_1prop_hypo_pop", width = 6)
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính power",
+                                fluidRow(
+                                    box(
+                                        status = "success",
+                                        textInput(inputId = "p0_1prop_hypo_pop_power", 
+                                                  label = "Tỷ lệ quần thể", 
+                                                  value = 0.30),
+                                        textInput(inputId = "p1_1prop_hypo_pop_power",
+                                                  label = "Tỷ lệ ước tính",
+                                                  value = 0.20)
+                                    ),
+                                    box(
+                                        status = "warning",
+                                        textInput(inputId = "alpha_1prop_hypo_pop_power",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "n_1prop_hypo_pop",
+                                                  label = "Cỡ mẫu",
+                                                  value = 100)
+                                    ),
+                                    valueBoxOutput(outputId = "power_1prop_hypo_pop", width = 6)
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        ),       
+        
+        ##### Hypothesis test for two proportion #####
+        
         tabItem(
             tabName = "2props",
             tabsetPanel(
@@ -137,6 +291,78 @@ body <- dashboardBody(
         ),
 
         
+        ##### Hypothesis test for two proportion (small proportion) #####
+        
+        tabItem(
+            tabName = "2props_small",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Hướng dẫn", width = 6,
+                            withMathJax(),
+                            p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{0.00061(\\arcsin\\sqrt{P_2}-\\arcsin\\sqrt{P_1})^2}$$")
+                        ),
+                        tabBox(
+                            width = 6, side = "left",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        status = "success",
+                                        textInput(inputId = "p1_2props_small", 
+                                                  label = "Tỷ lệ nhóm 1", 
+                                                  value = 0.30),
+                                        textInput(inputId = "p2_2props_small",
+                                                  label = "Tỷ lệ nhóm 2",
+                                                  value = 0.20)
+                                    ),
+                                    box(
+                                        status = "warning",
+                                        textInput(inputId = "alpha_2props_small",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "power_2props_small",
+                                                  label = "Power",
+                                                  value = 0.8),
+                                        numericInput(inputId = "k_2props_small",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1)
+                                    ),
+                                    valueBoxOutput(outputId = "n1_2props_small", width = 6),
+                                    valueBoxOutput(outputId = "n2_2props_small", width = 6)
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính power",
+                                fluidRow(
+                                    box(
+                                        status = "success",
+                                        textInput(inputId = "p1_2props_small_power", 
+                                                  label = "Tỷ lệ nhóm 1", 
+                                                  value = 0.30),
+                                        textInput(inputId = "p2_2props_small_power",
+                                                  label = "Tỷ lệ nhóm 2",
+                                                  value = 0.20)
+                                    ),
+                                    box(
+                                        status = "warning",
+                                        textInput(inputId = "alpha_2props_small_power",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "n_2props_small_power",
+                                                  label = "Cỡ mẫu",
+                                                  value = 100)
+                                    ),
+                                    valueBoxOutput(outputId = "power_2props_small_p", width = 6)
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        ),        
         
         ##### Continuous variables #####
         ##### Estimating the population mean #####
