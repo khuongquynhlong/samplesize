@@ -11,9 +11,11 @@ sidebar <- dashboardSidebar(
         menuItem(
             "Biến định tính", 
             icon = icon("percentage"), startExpanded = FALSE,
-            menuSubItem("Ước lượng 1 tỷ lệ dựa vào sai số tuyệt đối", tabName = "prop_abs"),
-            menuSubItem("Ước lượng 1 tỷ lệ dựa vào sai số tương đối", tabName = "prop_rela"),
-            menuSubItem("So sánh 2 tỷ lệ", tabName = "2props")
+            menuSubItem("Ước lượng 1 tỷ lệ với sai số tuyệt đối", tabName = "1prop_est_abs"),
+            menuSubItem("Ước lượng 1 tỷ lệ với sai số tương đối", tabName = "1prop_est_rel"),
+            menuSubItem("So sánh với tỷ lệ quần thể", tabName = "1prop_hypo_pop"),
+            menuSubItem("So sánh 2 tỷ lệ", tabName = "2props"),
+            menuSubItem("So sánh 2 tỷ lệ (tỷ lệ nhỏ)", tabName = "2props_small")
             ),
         menuItem(
             "Biến định lượng", 
@@ -24,10 +26,16 @@ sidebar <- dashboardSidebar(
             menuSubItem("Kiểm định giả thuyết cho 2 trung bình", tabName = "2means_hypo")
             ),
         menuItem(
-            "Nghiên cứu đoàn hệ",
+            "Nghiên cứu thuần tập",
             icon = icon("university"), startExpanded = FALSE,
             menuSubItem("Ước lượng nguy cơ tương đối", tabName = "cohort_est"),
             menuSubItem("Kiểm định giả thuyết cho nguy cơ tương đối", tabName = "cohort_hypo")
+        ),
+        menuItem(
+            "Nghiên cứu bệnh chứng",
+            icon = icon("university"), startExpanded = FALSE,
+            menuSubItem("Ước lượng OR với sai số tương đối", tabName = "1OR_est"),
+            menuSubItem("So sánh 2 OR", tabName = "2OR_hypo")
         ),
         menuItem(
             "Sample surveys",
