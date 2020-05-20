@@ -259,7 +259,7 @@ body <- dashboardBody(
                             p("$$\\sigma=\\sqrt{\\frac{\\sigma_1^2+\\sigma_2^2}{2}}$$")
                         ),
                         tabBox(
-                            title = "Tham số", width = 6, side = "right",
+                            width = 6, side = "left",
                             tabPanel(
                                 title = "Tính cỡ mẫu",
                                 fluidRow(
