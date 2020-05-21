@@ -373,33 +373,36 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(title = "Tham số", width = 4,
+                        box(title = "Tính cỡ mẫu", width = 6,
                             box(
-                                textInput(inputId = "mean_1mean_est", 
-                                          label = "Population mean", 
-                                          value = 0.1),
+                                radioButtons(inputId = "precision_type_1mean_est", 
+                                             label = "Chọn loại sai số", 
+                                             choices = c("Absolute precision" = 1,
+                                                         "Relative precision" = 2)),
                                 textInput(inputId = "sd_1mean_est", 
                                           label = "Population standard deviation", 
-                                          value = 0.85)
-                            ),
-                            box(
+                                          value = 0.85),
                                 textInput(inputId = "alpha_1mean_est",
                                           label = "Alpha",
-                                          value = 0.05),
-                                textInput(inputId = "d_1mean_est",
-                                          label = "Absolute precision required",
-                                          value = 0.1),
-                                textInput(inputId = "eps_1mean_est",
-                                          label = "Relative precision",
-                                          value = 1)
+                                          value = 0.05)
                             ),
+                            box(
+                                uiOutput(outputId = "precision_1mean_est")
+                            ),
+                            valueBoxOutput(outputId = "n_1mean_est", width = 6)
                         ),
-                        box(title = "Hướng dẫn", width = 8,
-                            p("Công thức 1: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}$$"),
-                            p("Công thức 2: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{\\varepsilon^2\\mu^2}$$"),
-                            p("alpha, power")
-                        ),
-                        valueBoxOutput(outputId = "n_1mean_est")
+                        box(title = "Hướng dẫn", width = 6,
+                            conditionalPanel(
+                                condition = "input.precision_type_1mean_est == 1",
+                                withMathJax(),
+                                p("Công thức 1: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}$$")
+                            ),
+                            conditionalPanel(
+                                condition = "input.precision_type_1mean_est == 2",
+                                withMathJax(),
+                                p("Công thức 2: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{\\varepsilon^2\\mu^2}$$")
+                            )
+                        )
                     )
                 )
             )
@@ -413,33 +416,63 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(title = "Tham số", width = 4,
-                            box(
-                                textInput(inputId = "m0_1mean_hypo", 
-                                          label = "Test value of the population mean", 
-                                          value = 90),
-                                textInput(inputId = "ma_1mean_hypo", 
-                                          label = "Anticipated population mean", 
-                                          value = 85),
-                                textInput(inputId = "sd_1mean_hypo",
-                                          label = "Population standard deviation",
-                                          value = 20)
+                        tabBox(
+                            width = 6, side = "left",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "m0_1mean_hypo", 
+                                                  label = "Test value of the population mean", 
+                                                  value = 90),
+                                        textInput(inputId = "ma_1mean_hypo", 
+                                                  label = "Anticipated population mean", 
+                                                  value = 85),
+                                        textInput(inputId = "sd_1mean_hypo",
+                                                  label = "Population standard deviation",
+                                                  value = 20)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_1mean_hypo",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "power_1mean_hypo",
+                                                  label = "Power",
+                                                  value = 0.8)
+                                    ),
+                                    valueBoxOutput(outputId = "n_1mean_hypo", width = 6)        )
                             ),
-                            box(
-                                textInput(inputId = "alpha_1mean_hypo",
-                                          label = "Alpha",
-                                          value = 0.05),
-                                textInput(inputId = "power_1mean_hypo",
-                                          label = "Power",
-                                          value = 0.8)
-                            ),
+                            tabPanel(
+                                title = "Tính power",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "m0_1mean_hypo_power", 
+                                                  label = "Test value of the population mean", 
+                                                  value = 90),
+                                        textInput(inputId = "ma_1mean_hypo_power", 
+                                                  label = "Anticipated population mean", 
+                                                  value = 85),
+                                        textInput(inputId = "sd_1mean_hypo_power",
+                                                  label = "Population standard deviation",
+                                                  value = 20)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_1mean_hypo_power",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "n_1mean_hypo_power",
+                                                  label = "Cỡ mẫu",
+                                                  value = 100)
+                                    ),
+                                    valueBoxOutput(outputId = "power_1mean_hypo", width = 6)
+                                )
+                            )
                         ),
-                        box(title = "Hướng dẫn", width = 8,
+                        box(title = "Hướng dẫn", width = 6,
                             withMathJax(),
                             p("Phần này sẽ dùng để giải thích ý nghĩa các tham số"),
                             p("$$n=\\frac{\\sigma^2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{(\\mu_0-\\mu_a)^2}$$")
-                        ),
-                        valueBoxOutput(outputId = "n_1mean_hypo")
+                        )
                     )
                 )
             )
@@ -453,26 +486,27 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(title = "Tham số", width = 4,
+                        box(title = "Tính cỡ mẫu", width = 6,
                             box(
                                 textInput(inputId = "sd_2means_est", 
                                           label = "Population standard deviation", 
-                                          value = 0.75)
-                            ),
-                            box(
-                                textInput(inputId = "alpha_2means_est",
-                                          label = "Alpha",
-                                          value = 0.05),
+                                          value = 0.75),
                                 textInput(inputId = "d_2means_est", 
                                           label = "Absolute precision required", 
                                           value = 0.2)
                             ),
+                            box(
+                                textInput(inputId = "alpha_2means_est",
+                                          label = "Alpha",
+                                          value = 0.05)
+                            ),
+                            valueBoxOutput(outputId = "n_2means_est", width = 6)
                         ),
-                        box(title = "Hướng dẫn", width = 8,
+                        box(title = "Hướng dẫn", width = 6,
+                            withMathJax(),
                             p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2(2\\sigma^2)}{d^2}$$"),
                             p("alpha, power")
                         ),
-                        valueBoxOutput(outputId = "n_2means_est")
                     )
                 )
             )
@@ -486,12 +520,6 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(title = "Hướng dẫn", width = 6,
-                            withMathJax(),
-                            p("$$n=\\frac{2\\sigma^2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{(\\mu_1-\\mu_2)^2}$$"),
-                            p(HTML("&sigma;: được tính bằng công thức")),
-                            p("$$\\sigma=\\sqrt{\\frac{\\sigma_1^2+\\sigma_2^2}{2}}$$")
-                        ),
                         tabBox(
                             width = 6, side = "left",
                             tabPanel(
@@ -562,6 +590,12 @@ body <- dashboardBody(
                                     valueBoxOutput(outputId = "power_2means_hypo", width = 6)
                                 )
                             )
+                        ),
+                        box(title = "Hướng dẫn", width = 6,
+                            withMathJax(),
+                            p("$$n=\\frac{2\\sigma^2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{(\\mu_1-\\mu_2)^2}$$"),
+                            p(HTML("&sigma;: được tính bằng công thức")),
+                            p("$$\\sigma=\\sqrt{\\frac{\\sigma_1^2+\\sigma_2^2}{2}}$$")
                         )
                     )
                 )
@@ -577,7 +611,7 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(title = "Tham số", width = 4,
+                        box(title = "Tính cỡ mẫu", width = 6,
                             box(
                                 textInput(inputId = "p1_cohort_est", 
                                           label = "Tỷ lệ biến cố nhóm 1", 
@@ -595,14 +629,14 @@ body <- dashboardBody(
                                           value = 0.05),
                                 textInput(inputId = "eps_cohort_est",
                                           label = "Epsilon",
-                                          value = 0.5)
+                                          value = 0.5),
                             ),
+                            valueBoxOutput(outputId = "n_cohort_est", width = 6)
                         ),
-                        box(title = "Hướng dẫn", width = 8,
+                        box(title = "Hướng dẫn", width = 6,
                             p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2}{[log_e(1-\\varepsilon)]^2} \\left[ \\frac{1-P_1}{P_1}+\\frac{1-P_2}{P_2} \\right]$$"),
                             p("alpha, power")
-                        ),
-                        valueBoxOutput(outputId = "n_cohort_est")
+                        )
                     )
                 )
             )
@@ -616,35 +650,69 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(title = "Tham số", width = 4,
-                            box(
-                                textInput(inputId = "p1_cohort_hypo", 
-                                          label = "Tỷ lệ biến cố nhóm 1", 
-                                          value = 0.175),
-                                textInput(inputId = "p2_cohort_hypo", 
-                                          label = "Tỷ lệ biến cố nhóm 2", 
-                                          value = 0.35),
-                                textInput(inputId = "rr0_cohort_hypo", 
-                                          label = "Test value RR", 
-                                          value = 1),
-                                textInput(inputId = "rra_cohort_hypo", 
-                                          label = "Anticipated RR", 
-                                          value = 0.5)
+                        tabBox(
+                            width = 6, side = "left",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "p1_cohort_hypo", 
+                                                  label = "Tỷ lệ biến cố nhóm 1", 
+                                                  value = 0.175),
+                                        textInput(inputId = "p2_cohort_hypo", 
+                                                  label = "Tỷ lệ biến cố nhóm 2", 
+                                                  value = 0.35),
+                                        textInput(inputId = "rr0_cohort_hypo", 
+                                                  label = "Test value RR", 
+                                                  value = 1),
+                                        textInput(inputId = "rra_cohort_hypo", 
+                                                  label = "Anticipated RR", 
+                                                  value = 0.5)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_cohort_hypo",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "power_cohort_hypo",
+                                                  label = "Power",
+                                                  value = 0.9)
+                                    ),
+                                    valueBoxOutput(outputId = "n_cohort_hypo", width = 6)
+                                )
                             ),
-                            box(
-                                textInput(inputId = "alpha_cohort_hypo",
-                                          label = "Alpha",
-                                          value = 0.05),
-                                textInput(inputId = "power_cohort_hypo",
-                                          label = "Power",
-                                          value = 0.9)
-                            ),
+                            tabPanel(
+                                title = "Tính power",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "p1_cohort_hypo_power", 
+                                                  label = "Tỷ lệ biến cố nhóm 1", 
+                                                  value = 0.175),
+                                        textInput(inputId = "p2_cohort_hypo_power", 
+                                                  label = "Tỷ lệ biến cố nhóm 2", 
+                                                  value = 0.35),
+                                        textInput(inputId = "rr0_cohort_hypo_power", 
+                                                  label = "Test value RR", 
+                                                  value = 1),
+                                        textInput(inputId = "rra_cohort_hypo_power", 
+                                                  label = "Anticipated RR", 
+                                                  value = 0.5)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_cohort_hypo_power",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "n_cohort_hypo_power",
+                                                  label = "Cỡ mẫu",
+                                                  value = 100)
+                                    ),
+                                    valueBoxOutput(outputId = "power_cohort_hypo", width = 6)
+                                )
+                            )
                         ),
-                        box(title = "Hướng dẫn", width = 8,
+                        box(title = "Hướng dẫn", width = 6,
                             p("$$n=\\frac{ \\left\\{ Z_{1-\\frac{\\alpha}{2}}\\sqrt{2\\overline{P}(1-\\overline{P})}+Z_{1-\\beta}\\sqrt{P_1(1-P_1)+P_2(1-P_2)}\\right\\}^2}{(P_1-P_2)^2}$$"),
                             p("alpha, power")
-                        ),
-                        valueBoxOutput(outputId = "n_cohort_hypo")
+                        )
                     )
                 )
             )
@@ -659,7 +727,7 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(title = "Tham số", width = 4,
+                        box(title = "Tính cỡ mẫu", width = 6,
                             box(
                                 textInput(inputId = "N_simple_random", 
                                           label = "Population size", 
@@ -674,17 +742,14 @@ body <- dashboardBody(
                                           value = 0.05),
                                 textInput(inputId = "d_simple_random",
                                           label = "Absolute precision required",
-                                          value = 0.05),
-                                textInput(inputId = "eps_simple_random",
-                                          label = "Relative precision",
-                                          value = 0.083)
+                                          value = 0.05)
                             ),
+                            valueBoxOutput(outputId = "n_simple_random", width = 6)
                         ),
-                        box(title = "Hướng dẫn", width = 8,
+                        box(title = "Hướng dẫn", width = 6,
                             p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2P(1-P)N}{d^2(N-1)+Z_{1-\\frac{\\alpha}{2}}^2P(1-P)}$$"),
                             p("alpha, power")
-                        ),
-                        valueBoxOutput(outputId = "n_simple_random")
+                        )
                     )
                 )
             )
