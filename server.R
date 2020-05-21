@@ -10,7 +10,7 @@ fun1_1mean_est <- function(sd, d, alpha) {
   return(n)
 }
 
-fun2_1mean_est <- function(sd, eps, mean, alpha) {
+fun2_1mean_est <- function(sd, alpha, mean, eps) {
   z <- qnorm(1-alpha/2)
   n <- z^2*sd^2/(eps^2*mean^2)
   return(n)
@@ -22,6 +22,13 @@ fun_1mean_hypo <- function(sd, m_0, m_a, alpha, power) {
   z_b <- qnorm(power)
   n <- sd^2*(z_a+z_b)^2/(m_0-m_a)^2
   return(n)
+}
+
+fun_1mean_hypo_power <- function(sd, m_0, m_a, alpha, n) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- sqrt(n*(m_0-m_a)^2/sd^2)-z_a
+  power <- pnorm(z_b)
+  return(power)
 }
 
 # Function estimating the difference between 2 population means
@@ -44,6 +51,15 @@ fun_cohort_hypo <- function(p1, p2, rr_0, rr_a, alpha, power) {
   z_b <- qnorm(power)
   p <- mean(c(p1, p2))
   n <- (z_a*sqrt(2*p*(1-p))+z_b*sqrt(p1*(1-p1)+p2*(1-p2)))^2/(p1-p2)^2
+  return(n)
+}
+
+fun_cohort_hypo_power <- function(p1, p2, alpha, n) {
+  z_a <- qnorm(1-alpha/2)
+  p <- mean(c(p1, p2))
+  z_b <- (sqrt(n*(p1-p2)^2)-z_a*sqrt(2*p*(1-p)))/sqrt(p1*(1-p1)+p2*(1-p2))
+  power <- pnorm(z_b)
+  return(power)
 }
 
 # Function for simple random sampling
@@ -153,16 +169,39 @@ shinyServer(function(input, output) {
 
   ##### Continuous variables #####
   ##### Estimating the population mean #####
+  output$precision_1mean_est <- renderUI({
+    if (input$precision_type_1mean_est == 1) {
+      textInput(inputId = "d_1mean_est",
+                label = "Absolute precision",
+                value = 0.1)
+    } else if (input$precision_type_1mean_est == 2) {
+      list(
+        textInput(inputId = "mean_1mean_est", 
+                  label = "Population mean", 
+                  value = 0.1),
+        textInput(inputId = "eps_1mean_est",
+                  label = "Relative precision",
+                  value = 2)
+      )
+    }
+  })
   n_1mean_est <- reactive({
-    req(as.numeric(input$mean_1mean_est)>0&
-          as.numeric(input$sd_1mean_est)>0&
+    req(as.numeric(input$sd_1mean_est)>0&
           as.numeric(input$alpha_1mean_est)>0&
-          as.numeric(input$d_1mean_est)>0&
-          as.numeric(input$eps_1mean_est)>0,
+          (as.numeric(input$d_1mean_est)>0||
+          as.numeric(input$eps_1mean_est)>0||
+          as.numeric(input$mean_1mean_est)>=0),
         cancelOutput = TRUE)
-    fun1_1mean_est(sd = as.numeric(input$sd_1mean_est), 
-                   d = as.numeric(input$d_1mean_est), 
-                   alpha = as.numeric(input$alpha_1mean_est))
+    if (input$precision_type_1mean_est == 1) {
+      fun1_1mean_est(sd = as.numeric(input$sd_1mean_est), 
+                     d = as.numeric(input$d_1mean_est), 
+                     alpha = as.numeric(input$alpha_1mean_est))
+    } else if (input$precision_type_1mean_est == 2) {
+      fun2_1mean_est(sd = as.numeric(input$sd_1mean_est), 
+                     mean = as.numeric(input$mean_1mean_est),
+                     eps = as.numeric(input$eps_1mean_est), 
+                     alpha = as.numeric(input$alpha_1mean_est))
+    }
   })
   output$n_1mean_est <- renderValueBox({
     valueBox(
@@ -174,6 +213,7 @@ shinyServer(function(input, output) {
   })
   
   ##### Hypothesis testing for 1 population mean #####
+  # Sample size
   n_1mean_hypo <- reactive({
     req(as.numeric(input$m0_1mean_hypo)>0&
           as.numeric(input$ma_1mean_hypo)>0&
@@ -191,6 +231,29 @@ shinyServer(function(input, output) {
     valueBox(
       value = ceiling(n_1mean_hypo()),
       subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  # Power
+  power_1mean_hypo <- reactive({
+    req(as.numeric(input$m0_1mean_hypo_power)>=0&
+          as.numeric(input$ma_1mean_hypo_power)>=0&
+          as.numeric(input$sd_1mean_hypo_power)>0&
+          as.numeric(input$alpha_1mean_hypo_power)>0&
+          as.numeric(input$n_1mean_hypo_power)>0,
+        cancelOutput = TRUE)
+    fun_1mean_hypo_power(m_0 = as.numeric(input$m0_1mean_hypo_power), 
+                         m_a = as.numeric(input$ma_1mean_hypo_power), 
+                         sd = as.numeric(input$sd_1mean_hypo_power), 
+                         alpha = as.numeric(input$alpha_1mean_hypo_power), 
+                         n = as.numeric(input$n_1mean_hypo_power))
+  })
+  output$power_1mean_hypo <- renderValueBox({
+    valueBox(
+      value = round(power_1mean_hypo(), 2),
+      subtitle = "Power",
       icon = icon("capsules"),
       color = "green",
     )
@@ -310,6 +373,7 @@ shinyServer(function(input, output) {
   })
   
   ##### Hypothesis test for a RR #####
+  # Sample size
   n_cohort_hypo <- reactive({
     req(as.numeric(input$p1_cohort_hypo)>0&
           as.numeric(input$p2_cohort_hypo)>0&
@@ -332,14 +396,35 @@ shinyServer(function(input, output) {
     )
   })
   
+  # Power
+  power_cohort_hypo <- reactive({
+    req(as.numeric(input$p1_cohort_hypo_power)>0&
+          as.numeric(input$p2_cohort_hypo_power)>0&
+          as.numeric(input$alpha_cohort_hypo_power)>0&
+          as.numeric(input$n_cohort_hypo_power)>0,
+        cancelOutput = TRUE)
+    fun_cohort_hypo_power(p1 = as.numeric(input$p1_cohort_hypo_power), 
+                          p2 = as.numeric(input$p2_cohort_hypo_power), 
+                          alpha = as.numeric(input$alpha_cohort_hypo_power), 
+                          n = as.numeric(input$n_cohort_hypo_power))
+  })
+  output$power_cohort_hypo <- renderValueBox({
+    valueBox(
+      value = round(power_cohort_hypo(), 2),
+      subtitle = "Power",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  
   ##### Sample survey #####
   ##### Simple random sampling #####
   n_simple_random <- reactive({
     req(as.numeric(input$N_simple_random)>0&
           as.numeric(input$P_simple_random)>0&
           as.numeric(input$alpha_simple_random)>0&
-          as.numeric(input$d_simple_random)>0&
-          as.numeric(input$eps_simple_random)>0,
+          as.numeric(input$d_simple_random)>0,
         cancelOutput = TRUE)
     fun_simple_random(N = as.numeric(input$N_simple_random), 
                       P = as.numeric(input$P_simple_random), 
