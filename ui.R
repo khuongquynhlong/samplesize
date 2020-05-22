@@ -49,9 +49,11 @@ sidebar <- dashboardSidebar(
             tabName = "corr"
             ),
         menuItem(
-            "Độ nhạy, độ đặc hiệu, AUC", 
+            "Test chẩn đoán", 
             icon = icon("vial"), startExpanded = FALSE,
-            tabName = "senspec"
+            menuSubItem("Độ nhạy", tabName = "sens"),
+            menuSubItem("Độ đặc hiệu", tabName = "spec"),
+            menuSubItem("Diện tích dưới đường cong", tabName = "AUC")
         ),
         menuItem(
             "Hồi quy đa biến", 
@@ -904,16 +906,87 @@ body <- dashboardBody(
                 )
             )
         ),
+        
+        
+        ##### Sensitivity, specificity, AUC #####
+        ### Sensitivity
+        
+        tabItem(
+            tabName = "sens",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(width = 6, side = "left", title = "Đang cập nhật"),
+                        box(title = "Đang cập nhật", width = 6)
+                    )
+                )
+            )
+        ), 
+        
+        ### Specificity
+        
+        tabItem(
+            tabName = "spec",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(width = 6, side = "left", title = "Đang cập nhật"),
+                        box(title = "Đang cập nhật", width = 6)
+                    )
+                )
+            )
+        ), 
+        
+        ### AUC
+        
+        tabItem(
+            tabName = "AUC",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(width = 6, side = "left", title = "Đang cập nhật"),
+                        box(title = "Đang cập nhật", width = 6)
+                    )
+                )
+            )
+        ), 
+        
+        
+        ##### Regression #####
+        
+        tabItem(
+            tabName = "samregress",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(width = 6, side = "left", title = "Đang cập nhật"),
+                        box(title = "Đang cập nhật", width = 6)
+                    )
+                )
+            )
+        ), 
+        
+        
+        
+        
         tabItem(
             tabName = "credit",
             fluidRow(
                 box(title = "Credit", width = 6,
                     p("Tác giả")),
                 box(title = "Book", width = 6)
+                )
             )
         )
     )
-)
 
 dashboardPage(title = "SampleSizeCalc: Ước lượng cỡ mẫu",
     dashboardHeader(
