@@ -33,9 +33,9 @@ sidebar <- dashboardSidebar(
         ),
         menuItem(
             "Nghiên cứu bệnh chứng",
-            icon = icon("university"), startExpanded = FALSE,
-            menuSubItem("Ước lượng OR với sai số tương đối", tabName = "1OR_est"),
-            menuSubItem("So sánh 2 OR", tabName = "2OR_hypo")
+            icon = icon("microscope"), startExpanded = FALSE,
+            menuSubItem("Ước lượng OR với sai số tương đối", tabName = "case_est"),
+            menuSubItem("So sánh 2 OR", tabName = "case_hypo")
         ),
         menuItem(
             "Sample surveys",
@@ -45,9 +45,19 @@ sidebar <- dashboardSidebar(
         ),
         menuItem(
             "Hệ số tương quan", 
-            icon = icon("chart-bar"), startExpanded = FALSE,
+            icon = icon("dribbble"), startExpanded = FALSE,
             tabName = "corr"
             ),
+        menuItem(
+            "Độ nhạy, độ đặc hiệu, AUC", 
+            icon = icon("vial"), startExpanded = FALSE,
+            tabName = "senspec"
+        ),
+        menuItem(
+            "Hồi quy đa biến", 
+            icon = icon("registered"), startExpanded = FALSE,
+            tabName = "samregress"
+        ),
         menuItem(
             "Credit", selected = TRUE,
             tabName = "credit"
@@ -71,31 +81,27 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
+                        box(width = 6, side = "left", title = "Tính cỡ mẫu",
+                            box(
+                                status = "success",
+                                textInput(inputId = "p_1prop_est_abs", 
+                                          label = "Tỷ lệ ước lượng", 
+                                          value = 0.3)
+                                ),
+                            box(
+                                status = "warning",
+                                textInput(inputId = "alpha_1prop_est_abs",
+                                          label = HTML("Khoảng tin cậy (1 - &alpha;)"),
+                                          value = 0.95),
+                                textInput(inputId = "d_1prop_est_abs",
+                                          label = "Sai số tuyệt đối (d)",
+                                          value = 0.05)
+                                ),
+                            valueBoxOutput(outputId = "n_1prop_est_abs", width = 6)
+                            ),
                         box(title = "Hướng dẫn", width = 6,
                             withMathJax(),
                             p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2P(1-P)}{d^2}$$")
-                        ),
-                        box(
-                            width = 6, side = "left",
-                                title = "Tính cỡ mẫu",
-                                fluidRow(
-                                    box(
-                                        status = "success",
-                                        textInput(inputId = "p_1prop_est_abs", 
-                                                  label = "Tỷ lệ ước lượng", 
-                                                  value = 0.3)
-                                    ),
-                                    box(
-                                        status = "warning",
-                                        textInput(inputId = "alpha_1prop_est_abs",
-                                                  label = HTML("Khoảng tin cậy (1 - &alpha;)"),
-                                                  value = 0.95),
-                                        textInput(inputId = "d_1prop_est_abs",
-                                                  label = "Sai số tuyệt đối (d)",
-                                                  value = 0.05)
-                                    ),
-                                    valueBoxOutput(outputId = "n_1prop_est_abs", width = 6)
-                                ),
                         )
                     )
                 )
@@ -112,32 +118,28 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
+                        box(width = 6, side = "left", title = "Tính cỡ mẫu",
+                            box(
+                                status = "success",
+                                textInput(inputId = "p_1prop_est_rel",
+                                          label = "Tỷ lệ ước lượng",
+                                          value = 0.3)
+                                ),
+                            box(
+                                status = "warning",
+                                textInput(inputId = "alpha_1prop_est_rel",
+                                          label = HTML("Khoảng tin cậy (1 - &alpha;)"),
+                                          value = 0.95),
+                                textInput(inputId = "d_1prop_est_rel",
+                                          label = HTML("Sai số tương đối (&epsilon;)"),
+                                          value = 0.1)
+                                ),
+                            valueBoxOutput(outputId = "n_1prop_est_rel", width = 6)
+                            ),
                         box(title = "Hướng dẫn", width = 6,
                             withMathJax(),
                             p("$$n=Z_{1-\\frac{\\alpha}{2}}^2 \\frac{1-P}{\\varepsilon^2P}$$")
                         ),
-                        box(
-                            width = 6, side = "left",
-                            title = "Tính cỡ mẫu",
-                            fluidRow(
-                                box(
-                                    status = "success",
-                                    textInput(inputId = "p_1prop_est_rel", 
-                                              label = "Tỷ lệ ước lượng", 
-                                              value = 0.3)
-                                ),
-                                box(
-                                    status = "warning",
-                                    textInput(inputId = "alpha_1prop_est_rel",
-                                              label = HTML("Khoảng tin cậy (1 - &alpha;)"),
-                                              value = 0.95),
-                                    textInput(inputId = "d_1prop_est_rel",
-                                              label = HTML("Sai số tương đối (&varepsilon;)"),
-                                              value = 0.1)
-                                ),
-                                valueBoxOutput(outputId = "n_1prop_est_rel", width = 6)
-                            ),
-                        )
                     )
                 )
             )
@@ -152,12 +154,8 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(title = "Hướng dẫn", width = 6,
-                            withMathJax(),
-                            p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_o(1-P_o)} + Z_{1-\\beta}\\sqrt{P_a(1-P_a)})^2}{(P_a - P_o)^2}$$")
-                        ),
                         tabBox(
-                            width = 6, side = "left",
+                            width = 6, side = "left", 
                             tabPanel(
                                 title = "Tính cỡ mẫu",
                                 fluidRow(
@@ -206,6 +204,11 @@ body <- dashboardBody(
                                     valueBoxOutput(outputId = "power_1prop_hypo_pop", width = 6)
                                 )
                             )
+                        ),
+                        
+                        box(title = "Hướng dẫn", width = 6,
+                            withMathJax(),
+                            p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_o(1-P_o)} + Z_{1-\\beta}\\sqrt{P_a(1-P_a)})^2}{(P_a - P_o)^2}$$")
                         )
                     )
                 )
@@ -221,74 +224,70 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(title = "Tham số", width = 4,
-                            box(
-                                textInput(inputId = "p1_2props", 
-                                          label = "Tỷ lệ nhóm 1", 
-                                          value = 0.5),
-                                textInput(inputId = "p2_2props", 
-                                          label = "Tỷ lệ nhóm 2", 
-                                          value = 0.3),
-                                numericInput(inputId = "k_2props",
-                                             label = "Tỷ số 2 nhóm",
-                                             value = 1)
+                        tabBox(
+                            width = 6, side = "left",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        status = "success",
+                                        textInput(inputId = "p1_2props", 
+                                                  label = "Tỷ lệ nhóm 1", 
+                                                  value = 0.30),
+                                        textInput(inputId = "p2_2props",
+                                                  label = "Tỷ lệ nhóm 2",
+                                                  value = 0.20)
+                                    ),
+                                    box(
+                                        status = "warning",
+                                        textInput(inputId = "alpha_2props",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "power_2props",
+                                                  label = "Power",
+                                                  value = 0.8),
+                                        numericInput(inputId = "k_2props",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1)
+                                    ),
+                                    valueBoxOutput(outputId = "n1_2props", width = 6),
+                                    valueBoxOutput(outputId = "n2_2props", width = 6)
+                                )
                             ),
-                            box(
-                                textInput(inputId = "alpha_2props",
-                                          label = "Alpha",
-                                          value = 0.05),
-                                textInput(inputId = "power_2props",
-                                          label = "Power",
-                                          value = 0.8)
-                            ),
-                        ),
-                        box(title = "Hướng dẫn", width = 8,
-                            withMathJax(),
-                            p("Phần này sẽ dùng để giải thích ý nghĩa các tham số"),
-                            p("Bao gồm cả công thức"),
-                            p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_0(1-P_0)}+Z_{1-\\beta}\\sqrt{P_a(1-P_a)})^2}{(P_a-P_0)^2}$$")
-                        ),
-                        valueBoxOutput(outputId = "n1_2props"),
-                        valueBoxOutput(outputId = "n2_2props")
-                    ),
-                ),
-                tabPanel(
-                    title = "Nhập file",
-                    fluidRow(
-                        box(width = 4,
-                            "Nhấn vào đây để tải mẫu về",
-                            p(),
-                            downloadButton(outputId = "temp_2props",
-                                           label = "Tải về"),
-                            p(),
-                            "Điền các tỷ lệ của từng biến kết cuộc theo mẫu và tải lên",
-                            p(),
-                            fileInput(inputId = "upload_2props",
-                                      label = "Tải lên",
-                                      multiple = F),
-                            box(
-                                numericInput(inputId = "k_df_2props",
-                                             label = "Tỷ số 2 nhóm",
-                                             value = 1)
-                            ),
-                            box(
-                                textInput(inputId = "alpha_df_2props",
-                                          label = "Alpha",
-                                          value = 0.05),
-                                textInput(inputId = "power_df_2props",
-                                          label = "Power",
-                                          value = 0.8)
+                            tabPanel(
+                                title = "Tính power",
+                                fluidRow(
+                                    box(
+                                        status = "success",
+                                        textInput(inputId = "p1_2props_power", 
+                                                  label = "Tỷ lệ nhóm 1", 
+                                                  value = 0.30),
+                                        textInput(inputId = "p2_2props_power",
+                                                  label = "Tỷ lệ nhóm 2",
+                                                  value = 0.20)
+                                    ),
+                                    box(
+                                        status = "warning",
+                                        textInput(inputId = "alpha_2props_power",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "n_2props_power",
+                                                  label = "Cỡ mẫu",
+                                                  value = 100)
+                                    ),
+                                    valueBoxOutput(outputId = "power_2props_p", width = 6)
+                                )
                             )
                         ),
-                        box(title = "Kết quả", width = 8, status = "success", solidHeader = TRUE,
-                            div(downloadButton(outputId = "download_df_2props", label = "Tải về"), style = "float:right"),
-                            textOutput(outputId = "text_df_2props"),
-                            DT::dataTableOutput(outputId = "ss_df_2props")
-                        ),
+                        box(title = "Hướng dẫn", width = 6,
+                            withMathJax(),
+                            p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_0(1-P_0)}+Z_{1-\\beta}\\sqrt{P_a(1-P_a)})^2}{(P_a-P_0)^2}$$")
+                        )
                     )
                 )
             )
         ),
+
 
         
         ##### Hypothesis test for two proportion (small proportion) #####
@@ -300,10 +299,6 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(title = "Hướng dẫn", width = 6,
-                            withMathJax(),
-                            p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{0.00061(\\arcsin\\sqrt{P_2}-\\arcsin\\sqrt{P_1})^2}$$")
-                        ),
                         tabBox(
                             width = 6, side = "left",
                             tabPanel(
@@ -358,6 +353,10 @@ body <- dashboardBody(
                                     valueBoxOutput(outputId = "power_2props_small_p", width = 6)
                                 )
                             )
+                        ),
+                        box(title = "Hướng dẫn", width = 6,
+                            withMathJax(),
+                            p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{0.00061(\\arcsin\\sqrt{P_2}-\\arcsin\\sqrt{P_1})^2}$$")
                         )
                     )
                 )
@@ -380,7 +379,7 @@ body <- dashboardBody(
                                              choices = c("Absolute precision" = 1,
                                                          "Relative precision" = 2)),
                                 textInput(inputId = "sd_1mean_est", 
-                                          label = "Population standard deviation", 
+                                          label = "Độ lệch chuẩn", 
                                           value = 0.85),
                                 textInput(inputId = "alpha_1mean_est",
                                           label = "Alpha",
@@ -717,6 +716,124 @@ body <- dashboardBody(
                 )
             )
         ),
+        
+
+        ##### Case control studies #####
+        ##### Estimating a OR with specified relative precision #####
+        tabItem(
+            tabName = "case_est",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Tính cỡ mẫu", width = 6,
+                            box(
+                                textInput(inputId = "p1_case_est", 
+                                          label = "Tỷ lệ phơi nhiễm trong nhóm bệnh", 
+                                          value = 0.4),
+                                textInput(inputId = "p2_case_est", 
+                                          label = "Tỷ lệ phơi nhiễm trong nhóm chứng", 
+                                          value = 0.2),
+                                textInput(inputId = "or_case_est", 
+                                          label = "Tỷ số số chênh (OR)", 
+                                          value = 2)
+                            ),
+                            box(
+                                textInput(inputId = "alpha_case_est",
+                                          label = "Alpha",
+                                          value = 0.05),
+                                textInput(inputId = "eps_case_est",
+                                          label = HTML("Sai số tương đối (&epsilon;)"),
+                                          value = 0.5),
+                            ),
+                            valueBoxOutput(outputId = "n_case_est", width = 6)
+                        ),
+                        box(title = "Hướng dẫn", width = 6,
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2}{[log_e(1-\\varepsilon)]^2} \\left[ \\frac{1}{P_1(1-P_1)}+\\frac{1}{P_2(1-P_2)} \\right]$$"),
+                            p("alpha, power")
+                        )
+                    )
+                )
+            )
+        ),
+        
+        ##### Hypothesis test for a OR #####
+        tabItem(
+            tabName = "case_hypo",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        tabBox(
+                            width = 6, side = "left",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "p1_case_hypo", 
+                                                  label = "Tỷ lệ phơi nhiễm trong nhóm bệnh", 
+                                                  value = 0.175),
+                                        textInput(inputId = "p2_case_hypo", 
+                                                  label = "Tỷ lệ phơi nhiễm trong nhóm chứng", 
+                                                  value = 0.35),
+                                        textInput(inputId = "oro_case_hypo", 
+                                                  label = "Test value OR", 
+                                                  value = 1),
+                                        textInput(inputId = "ora_case_hypo", 
+                                                  label = "Anticipated OR", 
+                                                  value = 0.5)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_case_hypo",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "power_case_hypo",
+                                                  label = "Power",
+                                                  value = 0.9)
+                                    ),
+                                    valueBoxOutput(outputId = "n_case_hypo", width = 6)
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính power",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "p1_case_hypo_power", 
+                                                  label = "Tỷ lệ phơi nhiễm trong nhóm bệnh", 
+                                                  value = 0.175),
+                                        textInput(inputId = "p2_case_hypo_power", 
+                                                  label = "Tỷ lệ phơi nhiễm trong nhóm chứng", 
+                                                  value = 0.35),
+                                        textInput(inputId = "oro_case_hypo_power", 
+                                                  label = "Test value OR", 
+                                                  value = 1),
+                                        textInput(inputId = "ora_case_hypo_power", 
+                                                  label = "Anticipated OR", 
+                                                  value = 0.5)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_case_hypo_power",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "n_case_hypo_power",
+                                                  label = "Cỡ mẫu",
+                                                  value = 100)
+                                    ),
+                                    valueBoxOutput(outputId = "power_case_hypo", width = 6)
+                                )
+                            )
+                        ),
+                        box(title = "Hướng dẫn", width = 6,
+                            p("$$n=\\frac{ \\left\\{ Z_{1-\\frac{\\alpha}{2}}\\sqrt{2P_2(1-P_2)}+Z_{1-\\beta}\\sqrt{P_1(1-P_1)+P_2(1-P_2)}\\right\\}^2}{(P_1-P_2)^2}$$"),
+                            p("alpha, power")
+                        )
+                    )
+                )
+            )
+        ),
+        
         
         ##### Sample survey #####
         ##### Simple random sampling #####
