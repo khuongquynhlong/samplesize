@@ -54,6 +54,21 @@ fun_2props_hypo_power <- function(p1, p2, alpha, n) {
   return(power)
 }
 
+# Hypothesis test for 2 props (small props)
+fun_2props_hypo_small <- function(p1, p2, alpha, power) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- qnorm(power)
+  n <- (z_a+z_b)^2/(2*(asin(sqrt(p2))-asin(sqrt(p1)))^2)
+  return(n)
+}
+
+fun_2props_hypo_small_power <- function(p1, p2, alpha, n) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- sqrt(2*n*(asin(sqrt(p2))-asin(sqrt(p1)))^2)-z_a
+  power <- pnorm(z_b)
+  return(power)
+}
+
 # Function estimating the population mean
 fun1_1mean_est <- function(sd, d, alpha) {
   z <- qnorm(1-alpha/2)
@@ -319,6 +334,60 @@ shinyServer(function(input, output) {
     )
   })
   
+  ##### Hypothesis test for 2 proportions (small proportion) #####
+  n_2props_hypo_small <- reactive({
+    req(as.numeric(input$p1_2props_hypo_small)>0&
+          as.numeric(input$p2_2props_hypo_small)>0&
+          as.numeric(input$alpha_2props_hypo_small)>0&
+          as.numeric(input$power_2props_hypo_small)>0,
+        cancelOutput = TRUE)
+    fun_2props_hypo_small(p1 = as.numeric(input$p1_2props_hypo_small),
+                    p2 = as.numeric(input$p2_2props_hypo_small),
+                    alpha = as.numeric(input$alpha_2props_hypo_small),
+                    power = as.numeric(input$power_2props_hypo_small))
+  })
+  n1_2props_hypo_small <- reactive({
+    req(input$k_2props_hypo_small>=1, cancelOutput = TRUE)
+    big_n <- 2*n_2props_hypo_small()*(1+input$k_2props_hypo_small)^2/(4*input$k_2props_hypo_small)
+    big_n/(1+input$k_2props_hypo_small)
+  })
+  output$n1_2props_hypo_small <- renderValueBox({
+    valueBox(
+      value = ceiling(n1_2props_hypo_small()),
+      subtitle = "Nhóm 1",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  output$n2_2props_hypo_small <- renderValueBox({
+    valueBox(
+      value = input$k_2props_hypo_small*ceiling(n1_2props_hypo_small()),
+      subtitle = "Nhóm 2",
+      icon = icon("tablets"),
+      color = "orange",
+    )
+  })
+  
+  # Power
+  power_2props_hypo_small <- reactive({
+    req(as.numeric(input$p1_2props_hypo_small_power)>0&
+          as.numeric(input$p2_2props_hypo_small_power)>0&
+          as.numeric(input$alpha_2props_hypo_small_power)>0&
+          as.numeric(input$n_2props_hypo_small_power)>0,
+        cancelOutput = TRUE)
+    fun_2props_hypo_small_power(p1 = as.numeric(input$p1_2props_hypo_small_power), 
+                                p2 = as.numeric(input$p2_2props_hypo_small_power), 
+                                alpha = as.numeric(input$alpha_2props_hypo_small_power), 
+                                n = as.numeric(input$n_2props_hypo_small_power))
+  })
+  output$power_2props_hypo_small <- renderValueBox({
+    valueBox(
+      value = round(power_2props_hypo_small(), 2),
+      subtitle = "Power",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
   
   
 # ##### Two proportions #####
