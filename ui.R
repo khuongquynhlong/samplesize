@@ -352,7 +352,7 @@ body <- dashboardBody(
                         ),
                         box(title = "Hướng dẫn", width = 6,
                             withMathJax(),
-                            p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{0.00061(\\arcsin\\sqrt{P_2}-\\arcsin\\sqrt{P_1})^2}$$")
+                            p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{2(\\arcsin\\sqrt{P_2}-\\arcsin\\sqrt{P_1})^2}$$")
                         )
                     )
                 )
