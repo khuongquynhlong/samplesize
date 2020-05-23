@@ -14,7 +14,7 @@ sidebar <- dashboardSidebar(
             menuSubItem("Ước lượng 1 tỷ lệ", tabName = "1prop_est"),
             menuSubItem("So sánh với tỷ lệ quần thể", tabName = "1prop_hypo"),
             menuSubItem("Ước lượng khác biệt 2 tỷ lệ", tabName = "2props_est"),
-            menuSubItem("So sánh 2 tỷ lệ", tabName = "2props"),
+            menuSubItem("Kiểm định giả thuyết cho 2 tỷ lệ", tabName = "2props_hypo"),
             menuSubItem("So sánh 2 tỷ lệ (tỷ lệ nhỏ)", tabName = "2props_small")
             ),
         menuItem(
@@ -90,7 +90,7 @@ body <- dashboardBody(
                                                          "Relative precision" = 2)),
                                 textInput(inputId = "p_1prop_est", 
                                           label = "Tỷ lệ ước lượng", 
-                                          value = 0.3),
+                                          value = 0.2),
                                 textInput(inputId = "alpha_1prop_est",
                                           label = "Alpha",
                                           value = 0.05)
@@ -222,7 +222,7 @@ body <- dashboardBody(
         
         ##### Hypothesis test for two proportion #####
         tabItem(
-            tabName = "2props",
+            tabName = "2props_hypo",
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
@@ -235,27 +235,27 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         status = "success",
-                                        textInput(inputId = "p1_2props", 
+                                        textInput(inputId = "p1_2props_hypo", 
                                                   label = "Tỷ lệ nhóm 1", 
-                                                  value = 0.30),
-                                        textInput(inputId = "p2_2props",
+                                                  value = 0.60),
+                                        textInput(inputId = "p2_2props_hypo",
                                                   label = "Tỷ lệ nhóm 2",
-                                                  value = 0.20)
-                                    ),
-                                    box(
-                                        status = "warning",
-                                        textInput(inputId = "alpha_2props",
-                                                  label = "Alpha",
-                                                  value = 0.05),
-                                        textInput(inputId = "power_2props",
-                                                  label = "Power",
-                                                  value = 0.8),
-                                        numericInput(inputId = "k_2props",
+                                                  value = 0.50),
+                                        numericInput(inputId = "k_2props_hypo",
                                                      label = "Tỷ số 2 nhóm",
                                                      value = 1)
                                     ),
-                                    valueBoxOutput(outputId = "n1_2props", width = 6),
-                                    valueBoxOutput(outputId = "n2_2props", width = 6)
+                                    box(
+                                        status = "warning",
+                                        textInput(inputId = "alpha_2props_hypo",
+                                                  label = "Alpha",
+                                                  value = 0.05),
+                                        textInput(inputId = "power_2props_hypo",
+                                                  label = "Power",
+                                                  value = 0.9)
+                                    ),
+                                    valueBoxOutput(outputId = "n1_2props_hypo", width = 6),
+                                    valueBoxOutput(outputId = "n2_2props_hypo", width = 6)
                                 )
                             ),
                             tabPanel(
@@ -263,29 +263,30 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         status = "success",
-                                        textInput(inputId = "p1_2props_power", 
+                                        textInput(inputId = "p1_2props_hypo_power", 
                                                   label = "Tỷ lệ nhóm 1", 
-                                                  value = 0.30),
-                                        textInput(inputId = "p2_2props_power",
+                                                  value = 0.60),
+                                        textInput(inputId = "p2_2props_hypo_power",
                                                   label = "Tỷ lệ nhóm 2",
-                                                  value = 0.20)
+                                                  value = 0.50)
                                     ),
                                     box(
                                         status = "warning",
-                                        textInput(inputId = "alpha_2props_power",
+                                        textInput(inputId = "alpha_2props_hypo_power",
                                                   label = "Alpha",
                                                   value = 0.05),
-                                        textInput(inputId = "n_2props_power",
+                                        textInput(inputId = "n_2props_hypo_power",
                                                   label = "Cỡ mẫu",
                                                   value = 100)
                                     ),
-                                    valueBoxOutput(outputId = "power_2props_p", width = 6)
+                                    valueBoxOutput(outputId = "power_2props_hypo", width = 6)
                                 )
                             )
                         ),
                         box(title = "Hướng dẫn", width = 6,
                             withMathJax(),
-                            p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_0(1-P_0)}+Z_{1-\\beta}\\sqrt{P_a(1-P_a)})^2}{(P_a-P_0)^2}$$")
+                            p("$$n=\\frac{ \\left\\{ Z_{1-\\frac{\\alpha}{2}}\\sqrt{2\\overline{P}(1-\\overline{P})}+Z_{1-\\beta}\\sqrt{P_1(1-P_1)+P_2(1-P_2)}\\right\\}^2}{(P_1-P_2)^2}$$"),
+                            helpText("Công thức này giống với công thức kiểm định giả thuyết cho nguy cơ tương đối (nghiên cứu thuần tập)")
                         )
                     )
                 )
