@@ -1,9 +1,6 @@
 library(shiny)
 library(shinydashboard)
 library(DT)
-library(pwr)
-
-
 
 # Function estimating the population mean
 fun1_1mean_est <- function(sd, d, alpha) {
@@ -38,6 +35,23 @@ fun_2means_est <- function(sd, d, alpha) {
   z <- qnorm(1-alpha/2)
   n <- 2*z^2*sd^2/d^2
   return(n)
+}
+
+# Function for 2 means hypothesis testing
+fun_2means_hypo <- function(m1, m2, sd1, sd2, alpha, power) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- qnorm(power)
+  sd <- sqrt((sd1^2+sd2^2)/2)
+  n <- 2*sd^2*(z_a+z_b)^2/(m1-m2)^2
+  return(n)
+}
+
+fun_2means_hypo_power <- function(m1, m2, sd1, sd2, alpha, n) {
+  z_a <- qnorm(1-alpha/2)
+  sd <- sqrt((sd1^2+sd2^2)/2)
+  z_b <- sqrt(n*(m1-m2)^2/(2*sd^2))-z_a
+  power <- pnorm(z_b)
+  return(power)
 }
 
 # Function for estimating a RR
@@ -290,15 +304,12 @@ shinyServer(function(input, output) {
           as.numeric(input$alpha_2means_hypo)>0&
           as.numeric(input$power_2means_hypo)>0, 
         cancelOutput = TRUE)
-    numerator <- abs(as.numeric(input$m1_2means_hypo)-as.numeric(input$m2_2means_hypo))
-    denominator<- sqrt(((as.numeric(input$sd1_2means_hypo)^2)+(as.numeric(input$sd2_2means_hypo)^2))/2)
-    d <- numerator/denominator
-    pwr <- pwr.t.test(d = d, 
-                      sig.level = as.numeric(input$alpha_2means_hypo), 
-                      power = as.numeric(input$power_2means_hypo), 
-                      type = "two.sample",
-                      alternative = "two.sided")
-    pwr$n
+    fun_2means_hypo(m1 = as.numeric(input$m1_2means_hypo), 
+                    m2 = as.numeric(input$m2_2means_hypo), 
+                    sd1 = as.numeric(input$sd1_2means_hypo), 
+                    sd2 = as.numeric(input$sd2_2means_hypo), 
+                    alpha = as.numeric(input$alpha_2means_hypo), 
+                    power = as.numeric(input$power_2means_hypo))
   })
   n1_2means_hypo <- reactive({
     req(input$k_2means_hypo>=1, cancelOutput = TRUE)
@@ -331,15 +342,12 @@ shinyServer(function(input, output) {
           as.numeric(input$alpha_2means_hypo_power)>0&
           as.numeric(input$n_2means_hypo_power)>0,
         cancelOutput = TRUE)
-    numerator <- abs(as.numeric(input$m1_2means_hypo_power)-as.numeric(input$m2_2means_hypo_power))
-    denominator<- sqrt(((as.numeric(input$sd1_2means_hypo_power)^2)+(as.numeric(input$sd2_2means_hypo_power)^2))/2)
-    d <- numerator/denominator
-    pwr <- pwr.t.test(d = d, 
-                      sig.level = as.numeric(input$alpha_2means_hypo_power), 
-                      n = as.numeric(input$n_2means_hypo_power),
-                      type = "two.sample",
-                      alternative = "two.sided")
-    pwr$power
+    fun_2means_hypo_power(m1 = as.numeric(input$m1_2means_hypo_power), 
+                          m2 = as.numeric(input$m2_2means_hypo_power), 
+                          sd1 = as.numeric(input$sd1_2means_hypo_power), 
+                          sd2 = as.numeric(input$sd2_2means_hypo_power), 
+                          alpha = as.numeric(input$alpha_2means_hypo_power), 
+                          n = as.numeric(input$n_2means_hypo_power))
   })
   output$power_2means_hypo <- renderValueBox({
     valueBox(
