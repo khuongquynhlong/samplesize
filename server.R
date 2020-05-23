@@ -91,6 +91,30 @@ fun_cohort_hypo_power <- function(p1, p2, alpha, n) {
   return(power)
 }
 
+# Case control studies #
+# Estimating a OR with specified relative precision #
+fun_case_est <- function(p1, p2, or, alpha, eps) {
+  z = qnorm(1-alpha/2)
+  n = z^2/(log(1-eps))^2*(1/(p1*(1-p1))+1/(p2*(1-p2)))
+  return(n)
+}
+
+# Function for hypothesis test for a OR
+fun_case_hypo <- function(p1, p2, alpha, power) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- qnorm(power)
+  n <- (z_a*sqrt(2*p2*(1-p2)) + z_b*sqrt(p1*(1-p1) + p2*(1-p2)))^2/(p1-p2)^2
+  return(n)
+}
+
+fun_case_hypo_power <- function(p1, p2, alpha, n) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- (sqrt(n*(p1-p2)^2) - z_a*sqrt(2*p2*(1-p2)))/sqrt(p1*(1-p1) + p2*(1-p2))
+  power <- pnorm(z_b)
+  return(power)
+}
+
+
 # Function for simple random sampling
 fun_simple_random <- function(N, P, alpha, d, eps) {
   z <- qnorm(1-alpha/2)
@@ -474,6 +498,77 @@ shinyServer(function(input, output) {
   output$power_cohort_hypo <- renderValueBox({
     valueBox(
       value = round(power_cohort_hypo(), 2),
+      subtitle = "Power",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  # Case control studies #
+  # Estimating a OR with specified relative precision #
+  n_case_est <- reactive({
+    req(as.numeric(input$p1_case_est)>0 &
+          as.numeric(input$p2_case_est)>0 &
+          as.numeric(input$or_case_est)>0 &
+          as.numeric(input$alpha_case_est)>0 &
+          as.numeric(input$eps_case_est)>0,
+        cancelOutput = TRUE)
+    fun_case_est(p1 = as.numeric(input$p1_case_est),
+                 p2 = as.numeric(input$p2_case_est),
+                 or = as.numeric(input$or_case_est),
+                 alpha = as.numeric(input$alpha_case_est),
+                 eps = as.numeric(input$eps_case_est))
+  })
+  
+  output$n_case_est <- renderValueBox({
+    valueBox(
+      value = ceiling(n_case_est()),
+      subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  # Hypothesis test for a OR
+  
+  n_case_hypo <- reactive({
+    req(as.numeric(input$p1_case_hypo)>0 &
+          as.numeric(input$p2_case_hypo)>0 &
+          as.numeric(input$oro_case_hypo)>0 &
+          as.numeric(input$ora_case_hypo)>0 &
+          as.numeric(input$alpha_case_hypo)>0 &
+          as.numeric(input$power_case_hypo)>0,
+        cancelOutput = TRUE)
+    fun_case_hypo(p1 = as.numeric(input$p1_case_hypo),
+                  p2 = as.numeric(input$p2_case_hypo),
+                  alpha = as.numeric(input$alpha_case_hypo),
+                  power = as.numeric(input$power_case_hypo))
+  })
+  output$n_case_hypo <- renderValueBox({
+    valueBox(
+      value = ceiling(n_case_hypo()),
+      subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  # Power
+  power_case_hypo <- reactive({
+    req(as.numeric(input$p1_case_hypo_power)>0 &
+          as.numeric(input$p2_case_hypo_power)>0 &
+          as.numeric(input$alpha_case_hypo_power)>0 &
+          as.numeric(input$n_case_hypo_power)>0,
+        cancelOutput = TRUE)
+    fun_case_hypo_power(p1 = as.numeric(input$p1_case_hypo_power),
+                        p2 = as.numeric(input$p2_case_hypo_power),
+                        alpha = as.numeric(input$alpha_case_hypo_power),
+                        n = as.numeric(input$n_case_hypo_power))
+  })
+  
+  output$power_case_hypo <- renderValueBox({
+    valueBox(
+      value = round(power_case_hypo(), 2),
       subtitle = "Power",
       icon = icon("capsules"),
       color = "green",
