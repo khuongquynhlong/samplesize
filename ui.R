@@ -15,7 +15,7 @@ sidebar <- dashboardSidebar(
             menuSubItem("So sánh với tỷ lệ quần thể", tabName = "1prop_hypo"),
             menuSubItem("Ước lượng khác biệt 2 tỷ lệ", tabName = "2props_est"),
             menuSubItem("Kiểm định giả thuyết cho 2 tỷ lệ", tabName = "2props_hypo"),
-            menuSubItem("So sánh 2 tỷ lệ (tỷ lệ nhỏ)", tabName = "2props_small")
+            menuSubItem("Kiểm định giả thuyết cho 2 tỷ lệ (tỷ lệ nhỏ)", tabName = "2props_hypo_small")
             ),
         menuItem(
             "Biến định lượng", 
@@ -243,10 +243,7 @@ body <- dashboardBody(
                                                   value = 0.50),
                                         numericInput(inputId = "k_2props_hypo",
                                                      label = "Tỷ số 2 nhóm",
-                                                     value = 1)
-                                    ),
-                                    box(
-                                        status = "warning",
+                                                     value = 1),
                                         textInput(inputId = "alpha_2props_hypo",
                                                   label = "Alpha",
                                                   value = 0.05),
@@ -295,7 +292,7 @@ body <- dashboardBody(
         
         ##### Hypothesis test for two proportion (small proportion) #####
         tabItem(
-            tabName = "2props_small",
+            tabName = "2props_hypo_small",
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
@@ -308,27 +305,24 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         status = "success",
-                                        textInput(inputId = "p1_2props_small", 
+                                        textInput(inputId = "p1_2props_hypo_small", 
                                                   label = "Tỷ lệ nhóm 1", 
-                                                  value = 0.30),
-                                        textInput(inputId = "p2_2props_small",
+                                                  value = 0.0001),
+                                        textInput(inputId = "p2_2props_hypo_small",
                                                   label = "Tỷ lệ nhóm 2",
-                                                  value = 0.20)
-                                    ),
-                                    box(
-                                        status = "warning",
-                                        textInput(inputId = "alpha_2props_small",
+                                                  value = 0.0004),
+                                        numericInput(inputId = "k_2props_hypo_small",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1),
+                                        textInput(inputId = "alpha_2props_hypo_small",
                                                   label = "Alpha",
                                                   value = 0.05),
-                                        textInput(inputId = "power_2props_small",
+                                        textInput(inputId = "power_2props_hypo_small",
                                                   label = "Power",
-                                                  value = 0.8),
-                                        numericInput(inputId = "k_2props_small",
-                                                     label = "Tỷ số 2 nhóm",
-                                                     value = 1)
+                                                  value = 0.9)
                                     ),
-                                    valueBoxOutput(outputId = "n1_2props_small", width = 6),
-                                    valueBoxOutput(outputId = "n2_2props_small", width = 6)
+                                    valueBoxOutput(outputId = "n1_2props_hypo_small", width = 6),
+                                    valueBoxOutput(outputId = "n2_2props_hypo_small", width = 6)
                                 )
                             ),
                             tabPanel(
@@ -336,23 +330,23 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         status = "success",
-                                        textInput(inputId = "p1_2props_small_power", 
+                                        textInput(inputId = "p1_2props_hypo_small_power", 
                                                   label = "Tỷ lệ nhóm 1", 
-                                                  value = 0.30),
-                                        textInput(inputId = "p2_2props_small_power",
+                                                  value = 0.0001),
+                                        textInput(inputId = "p2_2props_hypo_small_power",
                                                   label = "Tỷ lệ nhóm 2",
-                                                  value = 0.20)
+                                                  value = 0.0004)
                                     ),
                                     box(
                                         status = "warning",
-                                        textInput(inputId = "alpha_2props_small_power",
+                                        textInput(inputId = "alpha_2props_hypo_small_power",
                                                   label = "Alpha",
                                                   value = 0.05),
-                                        textInput(inputId = "n_2props_small_power",
+                                        textInput(inputId = "n_2props_hypo_small_power",
                                                   label = "Cỡ mẫu",
-                                                  value = 100)
+                                                  value = 10000)
                                     ),
-                                    valueBoxOutput(outputId = "power_2props_small_p", width = 6)
+                                    valueBoxOutput(outputId = "power_2props_hypo_small", width = 6)
                                 )
                             )
                         ),
