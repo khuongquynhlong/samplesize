@@ -14,8 +14,8 @@ sidebar <- dashboardSidebar(
             menuSubItem("Ước lượng 1 tỷ lệ", tabName = "1prop_est"),
             menuSubItem("So sánh với tỷ lệ quần thể", tabName = "1prop_hypo"),
             menuSubItem("Ước lượng khác biệt 2 tỷ lệ", tabName = "2props_est"),
-            menuSubItem("Kiểm định giả thuyết cho 2 tỷ lệ", tabName = "2props_hypo"),
-            menuSubItem("Kiểm định giả thuyết cho 2 tỷ lệ (tỷ lệ nhỏ)", tabName = "2props_hypo_small")
+            menuSubItem("So sánh 2 tỷ lệ", tabName = "2props_hypo"),
+            menuSubItem("So sánh 2 tỷ lệ (tỷ lệ nhỏ)", tabName = "2props_hypo_small")
             ),
         menuItem(
             "Biến định lượng", 
@@ -23,7 +23,7 @@ sidebar <- dashboardSidebar(
             menuSubItem("Ước lượng 1 trung bình", tabName = "1mean_est"),
             menuSubItem("Kiểm định giả thuyết cho 1 trung bình", tabName = "1mean_hypo"),
             menuSubItem("Ước lượng khác biệt giữa 2 trung bình", tabName = "2means_est"),
-            menuSubItem("Kiểm định giả thuyết cho 2 trung bình", tabName = "2means_hypo")
+            menuSubItem("So sánh 2 trung bình", tabName = "2means_hypo")
             ),
         menuItem(
             "Nghiên cứu thuần tập",
@@ -195,10 +195,10 @@ body <- dashboardBody(
                         box(title = "Tính cỡ mẫu", width = 6,
                             box(
                                 textInput(inputId = "p1_2props_est", 
-                                          label = "Anticipated population proportion 1", 
-                                          value = 0.5),
+                                          label = "Tỷ lệ nhóm 1", 
+                                          value = 0.2),
                                 textInput(inputId = "p2_2props_est", 
-                                          label = "Anticipated population proportion 2", 
+                                          label = "Tỷ lệ nhóm 2", 
                                           value = 0.5)
                             ),
                             box(
@@ -206,14 +206,14 @@ body <- dashboardBody(
                                           label = "Alpha",
                                           value = 0.05),
                                 textInput(inputId = "d_2props_est",
-                                          label = "Absolute precision",
+                                          label = "Sai số tuyệt đối",
                                           value = 0.05)
                             ),
                             valueBoxOutput(outputId = "n_2props_est", width = 6)
                         ),
                         box(title = "Hướng dẫn", width = 6,
                             withMathJax(),
-                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2[P_1(1-P_1)+P_2(1-P_2)]}{d^2}$$")
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2 \\left[P_1(1-P_1)+P_2(1-P_2)\\right]}{d^2}$$")
                         ),
                     )
                 )
@@ -249,7 +249,7 @@ body <- dashboardBody(
                                                   value = 0.05),
                                         textInput(inputId = "power_2props_hypo",
                                                   label = "Power",
-                                                  value = 0.9)
+                                                  value = 0.8)
                                     ),
                                     valueBoxOutput(outputId = "n1_2props_hypo", width = 6),
                                     valueBoxOutput(outputId = "n2_2props_hypo", width = 6)
@@ -274,7 +274,7 @@ body <- dashboardBody(
                                                   value = 0.05),
                                         textInput(inputId = "n_2props_hypo_power",
                                                   label = "Cỡ mẫu",
-                                                  value = 100)
+                                                  value = 500)
                                     ),
                                     valueBoxOutput(outputId = "power_2props_hypo", width = 6)
                                 )
@@ -307,10 +307,10 @@ body <- dashboardBody(
                                         status = "success",
                                         textInput(inputId = "p1_2props_hypo_small", 
                                                   label = "Tỷ lệ nhóm 1", 
-                                                  value = 0.0001),
+                                                  value = 0.001),
                                         textInput(inputId = "p2_2props_hypo_small",
                                                   label = "Tỷ lệ nhóm 2",
-                                                  value = 0.0004),
+                                                  value = 0.010),
                                         numericInput(inputId = "k_2props_hypo_small",
                                                      label = "Tỷ số 2 nhóm",
                                                      value = 1),
@@ -319,7 +319,7 @@ body <- dashboardBody(
                                                   value = 0.05),
                                         textInput(inputId = "power_2props_hypo_small",
                                                   label = "Power",
-                                                  value = 0.9)
+                                                  value = 0.8)
                                     ),
                                     valueBoxOutput(outputId = "n1_2props_hypo_small", width = 6),
                                     valueBoxOutput(outputId = "n2_2props_hypo_small", width = 6)
@@ -332,10 +332,10 @@ body <- dashboardBody(
                                         status = "success",
                                         textInput(inputId = "p1_2props_hypo_small_power", 
                                                   label = "Tỷ lệ nhóm 1", 
-                                                  value = 0.0001),
+                                                  value = 0.001),
                                         textInput(inputId = "p2_2props_hypo_small_power",
                                                   label = "Tỷ lệ nhóm 2",
-                                                  value = 0.0004)
+                                                  value = 0.010)
                                     ),
                                     box(
                                         status = "warning",
@@ -344,7 +344,7 @@ body <- dashboardBody(
                                                   value = 0.05),
                                         textInput(inputId = "n_2props_hypo_small_power",
                                                   label = "Cỡ mẫu",
-                                                  value = 10000)
+                                                  value = 1000)
                                     ),
                                     valueBoxOutput(outputId = "power_2props_hypo_small", width = 6)
                                 )
@@ -376,7 +376,7 @@ body <- dashboardBody(
                                                          "Relative precision" = 2)),
                                 textInput(inputId = "sd_1mean_est", 
                                           label = "Độ lệch chuẩn", 
-                                          value = 0.85),
+                                          value = 2),
                                 textInput(inputId = "alpha_1mean_est",
                                           label = "Alpha",
                                           value = 0.05)
@@ -418,13 +418,13 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         textInput(inputId = "m0_1mean_hypo", 
-                                                  label = "Test value of the population mean", 
+                                                  label = "Trung bình quần thể", 
                                                   value = 90),
                                         textInput(inputId = "ma_1mean_hypo", 
-                                                  label = "Anticipated population mean", 
+                                                  label = "Trung bình nhóm so sánh", 
                                                   value = 85),
                                         textInput(inputId = "sd_1mean_hypo",
-                                                  label = "Population standard deviation",
+                                                  label = "Độ lệch chuẩn quần thể",
                                                   value = 20)
                                     ),
                                     box(
@@ -442,13 +442,13 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         textInput(inputId = "m0_1mean_hypo_power", 
-                                                  label = "Test value of the population mean", 
+                                                  label = "Trung bình quần thể", 
                                                   value = 90),
                                         textInput(inputId = "ma_1mean_hypo_power", 
-                                                  label = "Anticipated population mean", 
+                                                  label = "Trung bình nhóm so sánh", 
                                                   value = 85),
                                         textInput(inputId = "sd_1mean_hypo_power",
-                                                  label = "Population standard deviation",
+                                                  label = "Độ lệch chuẩn quần thể",
                                                   value = 20)
                                     ),
                                     box(
@@ -524,19 +524,19 @@ body <- dashboardBody(
                                         status = "success",
                                         textInput(inputId = "m1_2means_hypo", 
                                                   label = "Trung bình nhóm 1", 
-                                                  value = 100.56),
+                                                  value = 100),
                                         textInput(inputId = "sd1_2means_hypo",
                                                   label = "Độ lệch chuẩn nhóm 1",
-                                                  value = 7.7)
+                                                  value = 20)
                                     ),
                                     box(
                                         status = "warning",
                                         textInput(inputId = "m2_2means_hypo", 
                                                   label = "Trung bình nhóm 2", 
-                                                  value = 94.22),
+                                                  value = 95),
                                         textInput(inputId = "sd2_2means_hypo",
                                                   label = "Độ lệch chuẩn nhóm 2",
-                                                  value = 5.61)
+                                                  value = 15)
                                     ),
                                     box(
                                         textInput(inputId = "alpha_2means_hypo",
@@ -560,24 +560,24 @@ body <- dashboardBody(
                                         status = "success",
                                         textInput(inputId = "m1_2means_hypo_power", 
                                                   label = "Trung bình nhóm 1", 
-                                                  value = 0),
+                                                  value = 100),
                                         textInput(inputId = "sd1_2means_hypo_power",
                                                   label = "Độ lệch chuẩn nhóm 1",
-                                                  value = 7.7)
+                                                  value = 20)
                                     ),
                                     box(
                                         status = "warning",
                                         textInput(inputId = "m2_2means_hypo_power", 
                                                   label = "Trung bình nhóm 2", 
-                                                  value = 2),
+                                                  value = 95),
                                         textInput(inputId = "sd2_2means_hypo_power",
                                                   label = "Độ lệch chuẩn nhóm 2",
-                                                  value = 5.61)
+                                                  value = 15)
                                     ),
                                     box(
                                         textInput(inputId = "n_2means_hypo_power",
                                                   label = "Cỡ mẫu",
-                                                  value = 100),
+                                                  value = 250),
                                         textInput(inputId = "alpha_2means_hypo_power",
                                                   label = "Alpha",
                                                   value = 0.05)
@@ -670,7 +670,7 @@ body <- dashboardBody(
                                                   value = 0.05),
                                         textInput(inputId = "power_cohort_hypo",
                                                   label = "Power",
-                                                  value = 0.9)
+                                                  value = 0.8)
                                     ),
                                     valueBoxOutput(outputId = "n_cohort_hypo", width = 6)
                                 )
@@ -787,7 +787,7 @@ body <- dashboardBody(
                                                   value = 0.05),
                                         textInput(inputId = "power_case_hypo",
                                                   label = "Power",
-                                                  value = 0.9)
+                                                  value = 0.8)
                                     ),
                                     valueBoxOutput(outputId = "n_case_hypo", width = 6)
                                 )
