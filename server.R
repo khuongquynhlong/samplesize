@@ -37,6 +37,23 @@ fun_2props_est <- function(p1, p2, alpha, d) {
   return(n)
 }
 
+# Function hypothesis test for 2 props
+fun_2props_hypo <- function(p1, p2, alpha, power) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- qnorm(power)
+  p <- mean(c(p1, p2))
+  n <- (z_a*sqrt(2*p*(1-p))+z_b*sqrt(p1*(1-p1)+p2*(1-p2)))^2/(p1-p2)^2
+  return(n)
+}
+
+fun_2props_hypo_power <- function(p1, p2, alpha, n) {
+  z_a <- qnorm(1-alpha/2)
+  p <- mean(c(p1, p2))
+  z_b <- (sqrt(n*(p1-p2)^2)-z_a*sqrt(2*p*(1-p)))/sqrt(p1*(1-p1)+p2*(1-p2))
+  power <- pnorm(z_b)
+  return(power)
+}
+
 # Function estimating the population mean
 fun1_1mean_est <- function(sd, d, alpha) {
   z <- qnorm(1-alpha/2)
@@ -97,7 +114,7 @@ fun_cohort_est <- function(p1, p2, rr, alpha, eps) {
 }
 
 # Function for hypothesis test for a RR
-fun_cohort_hypo <- function(p1, p2, rr_0, rr_a, alpha, power) {
+fun_cohort_hypo <- function(p1, p2, alpha, power) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   p <- mean(c(p1, p2))
@@ -131,7 +148,7 @@ shinyServer(function(input, output) {
     } else if (input$precision_type_1prop_est == 2) {
       textInput(inputId = "eps_1prop_est",
                 label = "Relative precision",
-                value = 0.1)
+                value = 0.2)
     }
   })
   n_1prop_est <- reactive({
@@ -218,6 +235,61 @@ shinyServer(function(input, output) {
     valueBox(
       value = ceiling(n_2props_est()),
       subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  ##### Hypothesis test for 2 proportions #####
+  n_2props_hypo <- reactive({
+    req(as.numeric(input$p1_2props_hypo)>0&
+          as.numeric(input$p2_2props_hypo)>0&
+          as.numeric(input$alpha_2props_hypo)>0&
+          as.numeric(input$power_2props_hypo)>0,
+        cancelOutput = TRUE)
+    fun_2props_hypo(p1 = as.numeric(input$p1_2props_hypo),
+                    p2 = as.numeric(input$p2_2props_hypo),
+                    alpha = as.numeric(input$alpha_2props_hypo),
+                    power = as.numeric(input$power_2props_hypo))
+  })
+  n1_2props_hypo <- reactive({
+    req(input$k_2props_hypo>=1, cancelOutput = TRUE)
+    big_n <- 2*n_2props_hypo()*(1+input$k_2props_hypo)^2/(4*input$k_2props_hypo)
+    big_n/(1+input$k_2props_hypo)
+  })
+  output$n1_2props_hypo <- renderValueBox({
+    valueBox(
+      value = ceiling(n1_2props_hypo()),
+      subtitle = "Nhóm 1",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  output$n2_2props_hypo <- renderValueBox({
+    valueBox(
+      value = input$k_2props_hypo*ceiling(n1_2props_hypo()),
+      subtitle = "Nhóm 2",
+      icon = icon("tablets"),
+      color = "orange",
+    )
+  })
+  
+  # Power
+  power_2props_hypo <- reactive({
+    req(as.numeric(input$p1_2props_hypo_power)>0&
+          as.numeric(input$p2_2props_hypo_power)>0&
+          as.numeric(input$alpha_2props_hypo_power)>0&
+          as.numeric(input$n_2props_hypo_power)>0,
+        cancelOutput = TRUE)
+    fun_2props_hypo_power(p1 = as.numeric(input$p1_2props_hypo_power), 
+                          p2 = as.numeric(input$p2_2props_hypo_power), 
+                          alpha = as.numeric(input$alpha_2props_hypo_power), 
+                          n = as.numeric(input$n_2props_hypo_power))
+  })
+  output$power_2props_hypo <- renderValueBox({
+    valueBox(
+      value = round(power_2props_hypo(), 2),
+      subtitle = "Power",
       icon = icon("capsules"),
       color = "green",
     )
@@ -433,7 +505,7 @@ shinyServer(function(input, output) {
     )
   })
   
-  ##### Two means #####
+  ##### Hypothesis test for 2 means #####
   # Sample size
   n_2means_hypo <- reactive({
     req(as.numeric(input$m1_2means_hypo)>=0&
