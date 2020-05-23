@@ -2,6 +2,19 @@ library(shiny)
 library(shinydashboard)
 library(DT)
 
+# Function estimating a population proportion
+fun1_1prop_est <- function(p, d, alpha) {
+  z <- qnorm(1-alpha/2)
+  n <- z^2*p*(1-p)/d^2
+  return(n)
+}
+
+fun2_1prop_est <- function(p, eps, alpha) {
+  z <- qnorm(1-alpha/2)
+  n <- z^2*(1-p)/(eps^2*p)
+  return(n)
+}
+
 # Function estimating the population mean
 fun1_1mean_est <- function(sd, d, alpha) {
   z <- qnorm(1-alpha/2)
@@ -85,6 +98,46 @@ fun_simple_random <- function(N, P, alpha, d, eps) {
 }
 
 shinyServer(function(input, output) {
+  
+  ##### Categorical variables #####
+  ##### Estimate 1 prop #####
+  output$precision_1prop_est <- renderUI({
+    if (input$precision_type_1prop_est == 1) {
+      textInput(inputId = "d_1prop_est",
+                label = "Absolute precision",
+                value = 0.05)
+    } else if (input$precision_type_1prop_est == 2) {
+      textInput(inputId = "eps_1prop_est",
+                label = "Relative precision",
+                value = 0.1)
+    }
+  })
+  n_1prop_est <- reactive({
+    req(as.numeric(input$p_1prop_est)>0&
+          as.numeric(input$alpha_1prop_est)>0&
+          (as.numeric(input$d_1prop_est)>0||
+             as.numeric(input$eps_1prop_est)>0),
+        cancelOutput = TRUE)
+    if (input$precision_type_1prop_est == 1) {
+      fun1_1prop_est(p = as.numeric(input$p_1prop_est), 
+                     d = as.numeric(input$d_1prop_est), 
+                     alpha = as.numeric(input$alpha_1prop_est))
+    } else if (input$precision_type_1prop_est == 2) {
+      fun2_1prop_est(p = as.numeric(input$p_1prop_est), 
+                     eps = as.numeric(input$eps_1prop_est), 
+                     alpha = as.numeric(input$alpha_1prop_est))
+    }
+  })
+  output$n_1prop_est <- renderValueBox({
+    valueBox(
+      value = ceiling(n_1prop_est()),
+      subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  
   
 # ##### Two proportions #####
 #   ##### Fast calculation #####

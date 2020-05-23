@@ -11,8 +11,7 @@ sidebar <- dashboardSidebar(
         menuItem(
             "Biến định tính", 
             icon = icon("percentage"), startExpanded = FALSE,
-            menuSubItem("Ước lượng 1 tỷ lệ với sai số tuyệt đối", tabName = "1prop_est_abs"),
-            menuSubItem("Ước lượng 1 tỷ lệ với sai số tương đối", tabName = "1prop_est_rel"),
+            menuSubItem("Ước lượng 1 tỷ lệ", tabName = "1prop_est"),
             menuSubItem("So sánh với tỷ lệ quần thể", tabName = "1prop_hypo_pop"),
             menuSubItem("So sánh 2 tỷ lệ", tabName = "2props"),
             menuSubItem("So sánh 2 tỷ lệ (tỷ lệ nhỏ)", tabName = "2props_small")
@@ -75,77 +74,47 @@ body <- dashboardBody(
         
         ##### Categorical variables #####
         ##### Estimating the population proportion with absolute precision #####
-        
         tabItem(
-            tabName = "1prop_est_abs",
+            tabName = "1prop_est",
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(width = 6, side = "left", title = "Tính cỡ mẫu",
+                        box(title = "Tính cỡ mẫu", width = 6,
                             box(
-                                status = "success",
-                                textInput(inputId = "p_1prop_est_abs", 
+                                radioButtons(inputId = "precision_type_1prop_est", 
+                                             label = "Chọn loại sai số", 
+                                             choices = c("Absolute precision" = 1,
+                                                         "Relative precision" = 2)),
+                                textInput(inputId = "p_1prop_est", 
                                           label = "Tỷ lệ ước lượng", 
-                                          value = 0.3)
-                                ),
-                            box(
-                                status = "warning",
-                                textInput(inputId = "alpha_1prop_est_abs",
-                                          label = HTML("Khoảng tin cậy (1 - &alpha;)"),
-                                          value = 0.95),
-                                textInput(inputId = "d_1prop_est_abs",
-                                          label = "Sai số tuyệt đối (d)",
+                                          value = 0.3),
+                                textInput(inputId = "alpha_1prop_est",
+                                          label = "Alpha",
                                           value = 0.05)
-                                ),
-                            valueBoxOutput(outputId = "n_1prop_est_abs", width = 6)
                             ),
+                            box(
+                                uiOutput(outputId = "precision_1prop_est")
+                            ),
+                            valueBoxOutput(outputId = "n_1prop_est", width = 6)
+                        ),
                         box(title = "Hướng dẫn", width = 6,
-                            withMathJax(),
-                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2P(1-P)}{d^2}$$")
+                            conditionalPanel(
+                                condition = "input.precision_type_1prop_est == 1",
+                                withMathJax(),
+                                p("Công thức 1: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2P(1-P)}{d^2}$$")
+                            ),
+                            conditionalPanel(
+                                condition = "input.precision_type_1prop_est == 2",
+                                withMathJax(),
+                                p("Công thức 2: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2(1-P)}{\\varepsilon^2P}$$")
+                            )
                         )
                     )
                 )
             )
-        ),        
-
-        
-        ##### Estimating the population proportion with relative precision #####
-        
-        tabItem(
-            tabName = "1prop_est_rel",
-            tabsetPanel(
-                type = "tabs",
-                tabPanel(
-                    title = "Nhập số",
-                    fluidRow(
-                        box(width = 6, side = "left", title = "Tính cỡ mẫu",
-                            box(
-                                status = "success",
-                                textInput(inputId = "p_1prop_est_rel",
-                                          label = "Tỷ lệ ước lượng",
-                                          value = 0.3)
-                                ),
-                            box(
-                                status = "warning",
-                                textInput(inputId = "alpha_1prop_est_rel",
-                                          label = HTML("Khoảng tin cậy (1 - &alpha;)"),
-                                          value = 0.95),
-                                textInput(inputId = "d_1prop_est_rel",
-                                          label = HTML("Sai số tương đối (&epsilon;)"),
-                                          value = 0.1)
-                                ),
-                            valueBoxOutput(outputId = "n_1prop_est_rel", width = 6)
-                            ),
-                        box(title = "Hướng dẫn", width = 6,
-                            withMathJax(),
-                            p("$$n=Z_{1-\\frac{\\alpha}{2}}^2 \\frac{1-P}{\\varepsilon^2P}$$")
-                        ),
-                    )
-                )
-            )
-        ),        
+        ),
         
         ##### Hypothesis test for 1 population proportion #####
         
