@@ -15,6 +15,28 @@ fun2_1prop_est <- function(p, eps, alpha) {
   return(n)
 }
 
+# Function hypothesis test a population proportion
+fun_1prop_hypo <- function(p_0, p_a, alpha, power) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- qnorm(power)
+  n <- (z_a*sqrt(p_0*(1-p_0))+z_b*sqrt(p_a*(1-p_a)))^2/(p_a-p_0)^2
+  return(n)
+}
+
+fun_1prop_hypo_power <- function(p_0, p_a, alpha, n) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- (sqrt(n*(p_a-p_0)^2)-z_a*sqrt(p_0*(1-p_0)))/sqrt(p_a*(1-p_a))
+  power <- pnorm(z_b)
+  return(power)
+}
+
+# Function estimate 2 props difference
+fun_2props_est <- function(p1, p2, alpha, d) {
+  z <- qnorm(1-alpha/2)
+  n <- z^2*(p1*(1-p1)+p2*(1-p2))/d^2
+  return(n)
+}
+
 # Function estimating the population mean
 fun1_1mean_est <- function(sd, d, alpha) {
   z <- qnorm(1-alpha/2)
@@ -131,6 +153,70 @@ shinyServer(function(input, output) {
   output$n_1prop_est <- renderValueBox({
     valueBox(
       value = ceiling(n_1prop_est()),
+      subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  ##### Hypothesis test for a population proportion #####
+  # Sample size
+  n_1prop_hypo <- reactive({
+    req(as.numeric(input$p0_1prop_hypo)>0&
+          as.numeric(input$pa_1prop_hypo)>0&
+          as.numeric(input$alpha_1prop_hypo)>0&
+          as.numeric(input$power_1prop_hypo)>0,
+        cancelOutput = TRUE)
+    fun_1prop_hypo(p_0 = as.numeric(input$p0_1prop_hypo), 
+                   p_a = as.numeric(input$pa_1prop_hypo), 
+                   alpha = as.numeric(input$alpha_1prop_hypo), 
+                   power = as.numeric(input$power_1prop_hypo))
+  })
+  output$n_1prop_hypo <- renderValueBox({
+    valueBox(
+      value = ceiling(n_1prop_hypo()),
+      subtitle = "Cỡ mẫu",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  # Power
+  power_1prop_hypo <- reactive({
+    req(as.numeric(input$p0_1prop_hypo_power)>0&
+          as.numeric(input$pa_1prop_hypo_power)>0&
+          as.numeric(input$alpha_1prop_hypo_power)>0&
+          as.numeric(input$n_1prop_hypo_power)>0,
+        cancelOutput = TRUE)
+    fun_1prop_hypo_power(p_0 = as.numeric(input$p0_1prop_hypo_power), 
+                         p_a = as.numeric(input$pa_1prop_hypo_power), 
+                         alpha = as.numeric(input$alpha_1prop_hypo_power), 
+                         n = as.numeric(input$n_1prop_hypo_power))
+  })
+  output$power_1prop_hypo <- renderValueBox({
+    valueBox(
+      value = round(power_1prop_hypo(), 2),
+      subtitle = "Power",
+      icon = icon("capsules"),
+      color = "green",
+    )
+  })
+  
+  ##### Estimate 2 proportions difference #####
+  n_2props_est <- reactive({
+    req(as.numeric(input$p1_2props_est)>0&
+          as.numeric(input$p2_2props_est)>0&
+          as.numeric(input$alpha_2props_est)>0&
+          as.numeric(input$d_2props_est)>0,
+        cancelOutput = TRUE)
+    fun_2props_est(p1 = as.numeric(input$p1_2props_est), 
+                   p2 = as.numeric(input$p2_2props_est), 
+                   alpha = as.numeric(input$alpha_2props_est), 
+                   d = as.numeric(input$d_2props_est))
+  })
+  output$n_2props_est <- renderValueBox({
+    valueBox(
+      value = ceiling(n_2props_est()),
       subtitle = "Cỡ mẫu",
       icon = icon("capsules"),
       color = "green",
