@@ -86,8 +86,8 @@ body <- dashboardBody(
                             box(
                                 radioButtons(inputId = "precision_type_1prop_est", 
                                              label = "Chọn loại sai số", 
-                                             choices = c("Absolute precision" = 1,
-                                                         "Relative precision" = 2)),
+                                             choices = c("Sai số tuyệt đối" = 1,
+                                                         "Sai số tương đối" = 2)),
                                 textInput(inputId = "p_1prop_est", 
                                           label = "Tỷ lệ ước lượng", 
                                           value = 0.2),
@@ -372,8 +372,8 @@ body <- dashboardBody(
                             box(
                                 radioButtons(inputId = "precision_type_1mean_est", 
                                              label = "Chọn loại sai số", 
-                                             choices = c("Absolute precision" = 1,
-                                                         "Relative precision" = 2)),
+                                             choices = c("Sai số tuyệt đối" = 1,
+                                                         "Sai số tương đối" = 2)),
                                 textInput(inputId = "sd_1mean_est", 
                                           label = "Độ lệch chuẩn", 
                                           value = 2),
