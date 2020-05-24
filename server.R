@@ -182,11 +182,11 @@ shinyServer(function(input, output) {
   output$precision_1prop_est <- renderUI({
     if (input$precision_type_1prop_est == 1) {
       textInput(inputId = "d_1prop_est",
-                label = "Absolute precision",
+                label = "Sai số tuyệt đối",
                 value = 0.05)
     } else if (input$precision_type_1prop_est == 2) {
       textInput(inputId = "eps_1prop_est",
-                label = "Relative precision",
+                label = "Sai số tương đối",
                 value = 0.2)
     }
   })
@@ -396,7 +396,7 @@ shinyServer(function(input, output) {
   output$precision_1mean_est <- renderUI({
     if (input$precision_type_1mean_est == 1) {
       textInput(inputId = "d_1mean_est",
-                label = "Absolute precision",
+                label = "Sai số tuyệt đối",
                 value = 0.1)
     } else if (input$precision_type_1mean_est == 2) {
       list(
@@ -404,7 +404,7 @@ shinyServer(function(input, output) {
                   label = "Population mean", 
                   value = 10),
         textInput(inputId = "eps_1mean_est",
-                  label = "Relative precision",
+                  label = "Sai số tương đối",
                   value = 0.05)
       )
     }
