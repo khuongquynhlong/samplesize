@@ -113,6 +113,25 @@ body <- dashboardBody(
                             )
                         )
                     )
+                ),
+                tabPanel(
+                    title = "Biểu đồ",
+                    fluidRow(
+                        box(title = "Tham số", width = 4,
+                            radioButtons(inputId = "precision_type_1prop_est_plot", 
+                                         label = "Chọn loại sai số", 
+                                         choices = c("Sai số tuyệt đối" = 1,
+                                                     "Sai số tương đối" = 2)),
+                            textInput(inputId = "alpha_1prop_est_plot",
+                                      label = "Alpha",
+                                      value = 0.05),
+                            uiOutput(outputId = "precision_1prop_est_plot"),
+                            helpText("Có thể nhập nhiều sai số, cách nhau bằng dấu khoảng trắng (space)")
+                        ),
+                        box(title = "Biểu đồ", width = 8,
+                            plotlyOutput(outputId = "plot_1prop_est")
+                        )
+                    )
                 )
             )
         ),

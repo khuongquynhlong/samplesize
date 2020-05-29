@@ -1,18 +1,19 @@
 library(shiny)
 library(shinydashboard)
 library(DT)
+library(plotly)
 
 # Function estimating a population proportion
 fun1_1prop_est <- function(p, d, alpha) {
   z <- qnorm(1-alpha/2)
   n <- z^2*p*(1-p)/d^2
-  return(n)
+  return(ceiling(n))
 }
 
 fun2_1prop_est <- function(p, eps, alpha) {
   z <- qnorm(1-alpha/2)
   n <- z^2*(1-p)/(eps^2*p)
-  return(n)
+  return(ceiling(n))
 }
 
 # Function hypothesis test a population proportion
@@ -20,21 +21,21 @@ fun_1prop_hypo <- function(p_0, p_a, alpha, power) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   n <- (z_a*sqrt(p_0*(1-p_0))+z_b*sqrt(p_a*(1-p_a)))^2/(p_a-p_0)^2
-  return(n)
+  return(ceiling(n))
 }
 
 fun_1prop_hypo_power <- function(p_0, p_a, alpha, n) {
   z_a <- qnorm(1-alpha/2)
   z_b <- (sqrt(n*(p_a-p_0)^2)-z_a*sqrt(p_0*(1-p_0)))/sqrt(p_a*(1-p_a))
   power <- pnorm(z_b)
-  return(power)
+  return(round(power, 2))
 }
 
 # Function estimate 2 props difference
 fun_2props_est <- function(p1, p2, alpha, d) {
   z <- qnorm(1-alpha/2)
   n <- z^2*(p1*(1-p1)+p2*(1-p2))/d^2
-  return(n)
+  return(ceiling(n))
 }
 
 # Function hypothesis test for 2 props
@@ -43,7 +44,7 @@ fun_2props_hypo <- function(p1, p2, alpha, power) {
   z_b <- qnorm(power)
   p <- mean(c(p1, p2))
   n <- (z_a*sqrt(2*p*(1-p))+z_b*sqrt(p1*(1-p1)+p2*(1-p2)))^2/(p1-p2)^2
-  return(n)
+  return(ceiling(n))
 }
 
 fun_2props_hypo_power <- function(p1, p2, alpha, n) {
@@ -51,7 +52,7 @@ fun_2props_hypo_power <- function(p1, p2, alpha, n) {
   p <- mean(c(p1, p2))
   z_b <- (sqrt(n*(p1-p2)^2)-z_a*sqrt(2*p*(1-p)))/sqrt(p1*(1-p1)+p2*(1-p2))
   power <- pnorm(z_b)
-  return(power)
+  return(round(power, 2))
 }
 
 # Hypothesis test for 2 props (small props)
@@ -59,27 +60,27 @@ fun_2props_hypo_small <- function(p1, p2, alpha, power) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   n <- (z_a+z_b)^2/(2*(asin(sqrt(p2))-asin(sqrt(p1)))^2)
-  return(n)
+  return(ceiling(n))
 }
 
 fun_2props_hypo_small_power <- function(p1, p2, alpha, n) {
   z_a <- qnorm(1-alpha/2)
   z_b <- sqrt(2*n*(asin(sqrt(p2))-asin(sqrt(p1)))^2)-z_a
   power <- pnorm(z_b)
-  return(power)
+  return(round(power, 2))
 }
 
 # Function estimating the population mean
 fun1_1mean_est <- function(sd, d, alpha) {
   z <- qnorm(1-alpha/2)
   n <- z^2*sd^2/d^2
-  return(n)
+  return(ceiling(n))
 }
 
 fun2_1mean_est <- function(sd, alpha, mean, eps) {
   z <- qnorm(1-alpha/2)
   n <- z^2*sd^2/(eps^2*mean^2)
-  return(n)
+  return(ceiling(n))
 }
 
 # Function hypothesis testing for 1 population mean
@@ -87,21 +88,21 @@ fun_1mean_hypo <- function(sd, m_0, m_a, alpha, power) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   n <- sd^2*(z_a+z_b)^2/(m_0-m_a)^2
-  return(n)
+  return(ceiling(n))
 }
 
 fun_1mean_hypo_power <- function(sd, m_0, m_a, alpha, n) {
   z_a <- qnorm(1-alpha/2)
   z_b <- sqrt(n*(m_0-m_a)^2/sd^2)-z_a
   power <- pnorm(z_b)
-  return(power)
+  return(round(power, 2))
 }
 
 # Function estimating the difference between 2 population means
 fun_2means_est <- function(sd, d, alpha) {
   z <- qnorm(1-alpha/2)
   n <- 2*z^2*sd^2/d^2
-  return(n)
+  return(ceiling(n))
 }
 
 # Function for 2 means hypothesis testing
@@ -110,7 +111,7 @@ fun_2means_hypo <- function(m1, m2, sd1, sd2, alpha, power) {
   z_b <- qnorm(power)
   sd <- sqrt((sd1^2+sd2^2)/2)
   n <- 2*sd^2*(z_a+z_b)^2/(m1-m2)^2
-  return(n)
+  return(ceiling(n))
 }
 
 fun_2means_hypo_power <- function(m1, m2, sd1, sd2, alpha, n) {
@@ -118,14 +119,14 @@ fun_2means_hypo_power <- function(m1, m2, sd1, sd2, alpha, n) {
   sd <- sqrt((sd1^2+sd2^2)/2)
   z_b <- sqrt(n*(m1-m2)^2/(2*sd^2))-z_a
   power <- pnorm(z_b)
-  return(power)
+  return(round(power, 2))
 }
 
 # Function for estimating a RR
 fun_cohort_est <- function(p1, p2, rr, alpha, eps) {
   z <- qnorm(1-alpha/2)
   n <- z^2*((1-p1)/p1+(1-p2)/p2)/log(1-eps, base = exp(1))^2
-  return(n)
+  return(ceiling(n))
 }
 
 # Function for hypothesis test for a RR
@@ -134,7 +135,7 @@ fun_cohort_hypo <- function(p1, p2, alpha, power) {
   z_b <- qnorm(power)
   p <- mean(c(p1, p2))
   n <- (z_a*sqrt(2*p*(1-p))+z_b*sqrt(p1*(1-p1)+p2*(1-p2)))^2/(p1-p2)^2
-  return(n)
+  return(ceiling(n))
 }
 
 fun_cohort_hypo_power <- function(p1, p2, alpha, n) {
@@ -142,7 +143,7 @@ fun_cohort_hypo_power <- function(p1, p2, alpha, n) {
   p <- mean(c(p1, p2))
   z_b <- (sqrt(n*(p1-p2)^2)-z_a*sqrt(2*p*(1-p)))/sqrt(p1*(1-p1)+p2*(1-p2))
   power <- pnorm(z_b)
-  return(power)
+  return(round(power, 2))
 }
 
 # Case control studies #
@@ -150,7 +151,7 @@ fun_cohort_hypo_power <- function(p1, p2, alpha, n) {
 fun_case_est <- function(p1, p2, or, alpha, eps) {
   z = qnorm(1-alpha/2)
   n = z^2/(log(1-eps))^2*(1/(p1*(1-p1))+1/(p2*(1-p2)))
-  return(n)
+  return(ceiling(n))
 }
 
 # Function for hypothesis test for a OR
@@ -158,14 +159,14 @@ fun_case_hypo <- function(p1, p2, alpha, power) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   n <- (z_a*sqrt(2*p2*(1-p2)) + z_b*sqrt(p1*(1-p1) + p2*(1-p2)))^2/(p1-p2)^2
-  return(n)
+  return(ceiling(n))
 }
 
 fun_case_hypo_power <- function(p1, p2, alpha, n) {
   z_a <- qnorm(1-alpha/2)
   z_b <- (sqrt(n*(p1-p2)^2) - z_a*sqrt(2*p2*(1-p2)))/sqrt(p1*(1-p1) + p2*(1-p2))
   power <- pnorm(z_b)
-  return(power)
+  return(round(power, 2))
 }
 
 
@@ -173,6 +174,7 @@ fun_case_hypo_power <- function(p1, p2, alpha, n) {
 fun_simple_random <- function(N, P, alpha, d, eps) {
   z <- qnorm(1-alpha/2)
   n <- z^2*P*(1-P)*N/(d^2*(N-1)+z^2*P*(1-P))
+  return(ceiling(n))
 }
 
 shinyServer(function(input, output) {
@@ -208,13 +210,77 @@ shinyServer(function(input, output) {
   })
   output$n_1prop_est <- renderValueBox({
     valueBox(
-      value = ceiling(n_1prop_est()),
+      value = n_1prop_est(),
       subtitle = "Cỡ mẫu",
       icon = icon("capsules"),
       color = "green",
     )
   })
   
+  # Plot
+  output$precision_1prop_est_plot <- renderUI({
+    if (input$precision_type_1prop_est_plot == 1) {
+      textInput(inputId = "d_1prop_est_plot",
+                label = "Sai số tuyệt đối",
+                value = "0.05 0.1 0.15")
+    } else if (input$precision_type_1prop_est_plot == 2) {
+      textInput(inputId = "eps_1prop_est_plot",
+                label = "Sai số tương đối",
+                value = "0.1 0.2 0.3")
+    }
+  })
+  df_plot_1prop_est <- reactive({
+    if (input$precision_type_1prop_est_plot == 1) {
+      req(!is.null(input$d_1prop_est_plot))
+      p <- seq(from = 0.01, to = 0.99, by = 0.01)
+      d <- as.numeric(unlist(strsplit(input$d_1prop_est_plot, " ")))
+      alpha <- as.numeric(input$alpha_1prop_est_plot)
+      df <- expand.grid(d, p)
+      names(df) <- c("d", "p")
+      df$n <- fun1_1prop_est(p = df$p, d = df$d, alpha = alpha)
+      df$d <- as.factor(df$d)
+      return(df)
+    } else if (input$precision_type_1prop_est_plot == 2) {
+      req(!is.null(input$eps_1prop_est_plot))
+      p <- seq(from = 0.1, to = 0.99, by = 0.01)
+      eps <- as.numeric(unlist(strsplit(input$eps_1prop_est_plot, " ")))
+      alpha <- as.numeric(input$alpha_1prop_est_plot)
+      df <- expand.grid(eps, p)
+      names(df) <- c("eps", "p")
+      df$n <- fun2_1prop_est(p = df$p, eps = df$eps, alpha = alpha)
+      df$eps <- as.factor(df$eps)
+      return(df)
+    }
+  })
+  output$plot_1prop_est <- renderPlotly({
+    if (input$precision_type_1prop_est_plot == 1) {
+      plot_ly(df_plot_1prop_est(), x = ~p, y = ~n, color = ~d,
+              type = "scatter", mode = "lines+markers",
+              hovertemplate = paste0("<b>Sai số tuyệt đối</b> %{fullData.name}<br>",
+                                     "<b>Tỷ lệ:</b> %{x}<br>",
+                                     "<b>Cỡ mẫu:</b> %{y}<br>",
+                                     "<extra></extra>")
+      ) %>%
+        layout(
+          xaxis = list(title = "Tỷ lệ",
+                       zeroline = F),
+          yaxis = list(title = "Cỡ mẫu")
+        )
+    } else if (input$precision_type_1prop_est_plot == 2) {
+      plot_ly(df_plot_1prop_est(), x = ~p, y = ~n, color = ~eps,
+              type = "scatter", mode = "lines+markers",
+              hovertemplate = paste0("<b>Sai số tương đối</b> %{fullData.name}<br>",
+                                     "<b>Tỷ lệ:</b> %{x}<br>",
+                                     "<b>Cỡ mẫu:</b> %{y}<br>",
+                                     "<extra></extra>")
+      ) %>%
+        layout(
+          xaxis = list(title = "Tỷ lệ",
+                       zeroline = F),
+          yaxis = list(title = "Cỡ mẫu")
+        )
+    }
+  })
   ##### Hypothesis test for a population proportion #####
   # Sample size
   n_1prop_hypo <- reactive({
@@ -230,7 +296,7 @@ shinyServer(function(input, output) {
   })
   output$n_1prop_hypo <- renderValueBox({
     valueBox(
-      value = ceiling(n_1prop_hypo()),
+      value = n_1prop_hypo(),
       subtitle = "Cỡ mẫu",
       icon = icon("capsules"),
       color = "green",
@@ -251,7 +317,7 @@ shinyServer(function(input, output) {
   })
   output$power_1prop_hypo <- renderValueBox({
     valueBox(
-      value = round(power_1prop_hypo(), 2),
+      value = power_1prop_hypo(),
       subtitle = "Power",
       icon = icon("capsules"),
       color = "green",
@@ -272,7 +338,7 @@ shinyServer(function(input, output) {
   })
   output$n_2props_est <- renderValueBox({
     valueBox(
-      value = ceiling(n_2props_est()),
+      value = n_2props_est(),
       subtitle = "Cỡ mẫu",
       icon = icon("capsules"),
       color = "green",
@@ -298,7 +364,7 @@ shinyServer(function(input, output) {
   })
   output$n1_2props_hypo <- renderValueBox({
     valueBox(
-      value = ceiling(n1_2props_hypo()),
+      value = n1_2props_hypo(),
       subtitle = "Nhóm 1",
       icon = icon("capsules"),
       color = "green",
@@ -306,7 +372,7 @@ shinyServer(function(input, output) {
   })
   output$n2_2props_hypo <- renderValueBox({
     valueBox(
-      value = input$k_2props_hypo*ceiling(n1_2props_hypo()),
+      value = input$k_2props_hypo*n1_2props_hypo(),
       subtitle = "Nhóm 2",
       icon = icon("tablets"),
       color = "orange",
@@ -327,7 +393,7 @@ shinyServer(function(input, output) {
   })
   output$power_2props_hypo <- renderValueBox({
     valueBox(
-      value = round(power_2props_hypo(), 2),
+      value = power_2props_hypo(),
       subtitle = "Power",
       icon = icon("capsules"),
       color = "green",
@@ -353,7 +419,7 @@ shinyServer(function(input, output) {
   })
   output$n1_2props_hypo_small <- renderValueBox({
     valueBox(
-      value = ceiling(n1_2props_hypo_small()),
+      value = n1_2props_hypo_small(),
       subtitle = "Nhóm 1",
       icon = icon("capsules"),
       color = "green",
@@ -361,7 +427,7 @@ shinyServer(function(input, output) {
   })
   output$n2_2props_hypo_small <- renderValueBox({
     valueBox(
-      value = input$k_2props_hypo_small*ceiling(n1_2props_hypo_small()),
+      value = input$k_2props_hypo_small*n1_2props_hypo_small(),
       subtitle = "Nhóm 2",
       icon = icon("tablets"),
       color = "orange",
@@ -382,7 +448,7 @@ shinyServer(function(input, output) {
   })
   output$power_2props_hypo_small <- renderValueBox({
     valueBox(
-      value = round(power_2props_hypo_small(), 2),
+      value = power_2props_hypo_small(),
       subtitle = "Power",
       icon = icon("capsules"),
       color = "green",
@@ -429,7 +495,7 @@ shinyServer(function(input, output) {
   })
   output$n_1mean_est <- renderValueBox({
     valueBox(
-      value = ceiling(n_1mean_est()),
+      value = n_1mean_est(),
       subtitle = "Cỡ mẫu",
       icon = icon("capsules"),
       color = "green",
@@ -453,7 +519,7 @@ shinyServer(function(input, output) {
   })
   output$n_1mean_hypo <- renderValueBox({
     valueBox(
-      value = ceiling(n_1mean_hypo()),
+      value = n_1mean_hypo(),
       subtitle = "Cỡ mẫu",
       icon = icon("capsules"),
       color = "green",
@@ -476,7 +542,7 @@ shinyServer(function(input, output) {
   })
   output$power_1mean_hypo <- renderValueBox({
     valueBox(
-      value = round(power_1mean_hypo(), 2),
+      value = power_1mean_hypo(),
       subtitle = "Power",
       icon = icon("capsules"),
       color = "green",
@@ -495,7 +561,7 @@ shinyServer(function(input, output) {
   })
   output$n_2means_est <- renderValueBox({
     valueBox(
-      value = ceiling(n_2means_est()),
+      value = n_2means_est(),
       subtitle = "Cỡ mẫu",
       icon = icon("capsules"),
       color = "green",
@@ -526,7 +592,7 @@ shinyServer(function(input, output) {
   })
   output$n1_2means_hypo <- renderValueBox({
     valueBox(
-      value = ceiling(n1_2means_hypo()),
+      value = n1_2means_hypo(),
       subtitle = "Nhóm 1",
       icon = icon("capsules"),
       color = "green",
@@ -534,7 +600,7 @@ shinyServer(function(input, output) {
   })
   output$n2_2means_hypo <- renderValueBox({
     valueBox(
-      value = input$k_2means_hypo*ceiling(n1_2means_hypo()),
+      value = input$k_2means_hypo*n1_2means_hypo(),
       subtitle = "Nhóm 2",
       icon = icon("tablets"),
       color = "orange",
@@ -559,7 +625,7 @@ shinyServer(function(input, output) {
   })
   output$power_2means_hypo <- renderValueBox({
     valueBox(
-      value = round(power_2means_hypo(), 2),
+      value = power_2means_hypo(),
       subtitle = "Power",
       icon = icon("capsules"),
       color = "green",
@@ -583,7 +649,7 @@ shinyServer(function(input, output) {
   })
   output$n_cohort_est <- renderValueBox({
     valueBox(
-      value = ceiling(n_cohort_est()),
+      value = n_cohort_est(),
       subtitle = "Cỡ mẫu",
       icon = icon("capsules"),
       color = "green",
@@ -607,7 +673,7 @@ shinyServer(function(input, output) {
   })
   output$n_cohort_hypo <- renderValueBox({
     valueBox(
-      value = ceiling(n_cohort_hypo()),
+      value = n_cohort_hypo(),
       subtitle = "Cỡ mẫu",
       icon = icon("capsules"),
       color = "green",
@@ -628,7 +694,7 @@ shinyServer(function(input, output) {
   })
   output$power_cohort_hypo <- renderValueBox({
     valueBox(
-      value = round(power_cohort_hypo(), 2),
+      value = power_cohort_hypo(),
       subtitle = "Power",
       icon = icon("capsules"),
       color = "green",
@@ -653,7 +719,7 @@ shinyServer(function(input, output) {
   
   output$n_case_est <- renderValueBox({
     valueBox(
-      value = ceiling(n_case_est()),
+      value = n_case_est(),
       subtitle = "Cỡ mẫu",
       icon = icon("capsules"),
       color = "green",
@@ -677,7 +743,7 @@ shinyServer(function(input, output) {
   })
   output$n_case_hypo <- renderValueBox({
     valueBox(
-      value = ceiling(n_case_hypo()),
+      value = n_case_hypo(),
       subtitle = "Cỡ mẫu",
       icon = icon("capsules"),
       color = "green",
@@ -699,7 +765,7 @@ shinyServer(function(input, output) {
   
   output$power_case_hypo <- renderValueBox({
     valueBox(
-      value = round(power_case_hypo(), 2),
+      value = power_case_hypo(),
       subtitle = "Power",
       icon = icon("capsules"),
       color = "green",
@@ -722,7 +788,7 @@ shinyServer(function(input, output) {
   })
   output$n_simple_random <- renderValueBox({
     valueBox(
-      value = ceiling(n_simple_random()),
+      value = n_simple_random(),
       subtitle = "Cỡ mẫu",
       icon = icon("capsules"),
       color = "green",
