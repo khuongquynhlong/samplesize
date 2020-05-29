@@ -2,6 +2,7 @@ library(shiny)
 library(shinydashboard)
 library(DT)
 library(pwr)
+library(plotly)
 
 # shinydashboard icons were obtained at:
 # https://fontawesome.com/icons
