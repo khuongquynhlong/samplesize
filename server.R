@@ -256,7 +256,7 @@ shinyServer(function(input, output) {
     if (input$precision_type_1prop_est_plot == 1) {
       plot_ly(df_plot_1prop_est(), x = ~p, y = ~n, color = ~d,
               type = "scatter", mode = "lines+markers",
-              hovertemplate = paste0("<b>Sai số tuyệt đối</b> %{fullData.name}<br>",
+              hovertemplate = paste0("<b>Sai số tuyệt đối:</b> %{fullData.name}<br>",
                                      "<b>Tỷ lệ:</b> %{x}<br>",
                                      "<b>Cỡ mẫu:</b> %{y}<br>",
                                      "<extra></extra>")
