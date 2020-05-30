@@ -232,7 +232,9 @@ shinyServer(function(input, output) {
   df_plot_1prop_est <- reactive({
     if (input$precision_type_1prop_est_plot == 1) {
       req(!is.null(input$d_1prop_est_plot))
-      p <- seq(from = 0.01, to = 0.99, by = 0.01)
+      p <- seq(from = input$p_range_1prop_est_plot[1], 
+               to = input$p_range_1prop_est_plot[2], 
+               by = as.numeric(input$p_by_1prop_est_plot))
       d <- as.numeric(unlist(strsplit(input$d_1prop_est_plot, " ")))
       alpha <- as.numeric(input$alpha_1prop_est_plot)
       df <- expand.grid(d, p)
@@ -242,7 +244,9 @@ shinyServer(function(input, output) {
       return(df)
     } else if (input$precision_type_1prop_est_plot == 2) {
       req(!is.null(input$eps_1prop_est_plot))
-      p <- seq(from = 0.1, to = 0.99, by = 0.01)
+    p <- seq(from = input$p_range_1prop_est_plot[1], 
+             to = input$p_range_1prop_est_plot[2], 
+             by = as.numeric(input$p_by_1prop_est_plot))
       eps <- as.numeric(unlist(strsplit(input$eps_1prop_est_plot, " ")))
       alpha <- as.numeric(input$alpha_1prop_est_plot)
       df <- expand.grid(eps, p)

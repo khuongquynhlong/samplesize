@@ -126,6 +126,12 @@ body <- dashboardBody(
                             textInput(inputId = "alpha_1prop_est_plot",
                                       label = "Alpha",
                                       value = 0.05),
+                            sliderInput(inputId = "p_range_1prop_est_plot",
+                                        label = "Chọn khoảng tỷ lệ muốn vẽ",
+                                        min = 0, max = 1, value = c(0.1, 0.99)),
+                            textInput(inputId = "p_by_1prop_est_plot",
+                                      label = "Khoảng cách tỷ lệ",
+                                      value = 0.01),
                             uiOutput(outputId = "precision_1prop_est_plot"),
                             helpText("Có thể nhập nhiều sai số, cách nhau bằng dấu khoảng trắng (space)")
                         ),
