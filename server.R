@@ -286,7 +286,8 @@ shinyServer(function(input, output) {
         layout(
           xaxis = list(title = "Tỷ lệ",
                        zeroline = F),
-          yaxis = list(title = "Cỡ mẫu")
+          yaxis = list(title = "Cỡ mẫu"),
+          font = list(family = "Arial")
         )
     }
   })
