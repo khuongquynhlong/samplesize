@@ -231,7 +231,9 @@ shinyServer(function(input, output) {
   })
   df_plot_1prop_est <- reactive({
     if (input$precision_type_1prop_est_plot == 1) {
-      req(!is.null(input$d_1prop_est_plot))
+      req(!is.null(input$d_1prop_est_plot)&
+              as.numeric(input$p_by_1prop_est_plot)>0,
+          cancelOutput = TRUE)
       p <- seq(from = input$p_range_1prop_est_plot[1], 
                to = input$p_range_1prop_est_plot[2], 
                by = as.numeric(input$p_by_1prop_est_plot))
@@ -243,10 +245,12 @@ shinyServer(function(input, output) {
       df$d <- as.factor(df$d)
       return(df)
     } else if (input$precision_type_1prop_est_plot == 2) {
-      req(!is.null(input$eps_1prop_est_plot))
-    p <- seq(from = input$p_range_1prop_est_plot[1], 
-             to = input$p_range_1prop_est_plot[2], 
-             by = as.numeric(input$p_by_1prop_est_plot))
+      req(!is.null(input$eps_1prop_est_plot)&
+              as.numeric(input$p_by_1prop_est_plot)>0,
+          cancelOutput = TRUE)
+      p <- seq(from = input$p_range_1prop_est_plot[1], 
+               to = input$p_range_1prop_est_plot[2], 
+               by = as.numeric(input$p_by_1prop_est_plot))
       eps <- as.numeric(unlist(strsplit(input$eps_1prop_est_plot, " ")))
       alpha <- as.numeric(input$alpha_1prop_est_plot)
       df <- expand.grid(eps, p)
