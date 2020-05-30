@@ -312,7 +312,87 @@ body <- dashboardBody(
                             helpText("Công thức này giống với công thức kiểm định giả thuyết cho nguy cơ tương đối (nghiên cứu thuần tập)")
                         )
                     )
+                ),
+                tabPanel(
+                    title = "Biểu đồ",
+                    fluidRow(
+                        box(title = "Tham số", width = 4,
+                            radioButtons(inputId = "plot_type_2props_hypo_plot", 
+                                         label = "Chọn loại biểu đồ", 
+                                         choices = c("Biểu đồ cỡ mẫu theo sự khác biệt"= 1,
+                                                     "Biểu đồ power theo cỡ mẫu" = 2)),
+                            conditionalPanel(
+                                condition = "input.plot_type_2props_hypo_plot == 1",
+                                textInput(inputId = "p1_2props_hypo_plot1",
+                                          label = "p1",
+                                          value = 0.2),
+                                uiOutput(outputId = "diff_range_2props_hypo_plot1"),
+                                textInput(inputId = "diff_by_2props_hypo_plot1",
+                                          label = "Khoảng cách khác biệt",
+                                          value = 0.05),
+                                textInput(inputId = "power_2props_hypo_plot1",
+                                          label = "Power",
+                                          value = "0.7 0.8 0.9"),
+                                helpText("Có thể nhập nhiều power, cách nhau bằng dấu khoảng trắng (space)"),
+                                textInput(inputId = "alpha_2props_hypo_plot1",
+                                          label = "Alpha",
+                                          value = 0.05)
+                            ),
+                            conditionalPanel(
+                                condition = "input.plot_type_2props_hypo_plot == 2",
+                                textInput(inputId = "p1_2props_hypo_plot2",
+                                          label = "p1",
+                                          value = 0.5),
+                                textInput(inputId = "p2_2props_hypo_plot2",
+                                          label = "p2",
+                                          value = 0.3),
+                                textInput(inputId = "alpha_2props_hypo_plot2",
+                                          label = "Alpha",
+                                          value = 0.05),
+                                sliderInput(inputId = "power_range_2props_hypo_plot2",
+                                            label = "Chọn khoảng power muốn vẽ",
+                                            min = 0, max = 1, value = c(0.5, 0.95)),
+                                textInput(inputId = "power_by_2props_hypo_plot2",
+                                          label = "Khoảng cách power",
+                                          value = 0.05)
+                            ),
+                        ),
+                        box(title = "Biểu đồ", width = 8,
+                            conditionalPanel(
+                                condition = "input.plot_type_2props_hypo_plot == 1",
+                                plotlyOutput(outputId = "plot1_2props_hypo")
+                            ),
+                            conditionalPanel(
+                                condition = "input.plot_type_2props_hypo_plot == 2",
+                                plotlyOutput(outputId = "plot2_2props_hypo")
+                            )
+                        )
+                    )
                 )
+                # tabPanel(
+                #     title = "Biểu đồ cỡ mẫu theo sự khác biệt",
+                #     fluidRow(
+                #         box(title = "Tham số", width = 4,
+                #             textInput(inputId = "p1_2props_hypo_plot1",
+                #                       label = "p1",
+                #                       value = 0.2),
+                #             uiOutput(outputId = "diff_range_2props_hypo_plot1"),
+                #             textInput(inputId = "diff_by_2props_hypo_plot1",
+                #                       label = "Khoảng cách khác biệt",
+                #                       value = 0.05),
+                #             textInput(inputId = "power_2props_hypo_plot1",
+                #                       label = "Power",
+                #                       value = "0.7 0.8 0.9"),
+                #             helpText("Có thể nhập nhiều power, cách nhau bằng dấu khoảng trắng (space)"),
+                #             textInput(inputId = "alpha_2props_hypo_plot1",
+                #                       label = "Alpha",
+                #                       value = 0.05)
+                #         ),
+                #         box(title = "Biểu đồ", width = 8,
+                #             plotlyOutput(outputId = "plot1_2props_hypo")
+                #         )
+                #     )
+                # )
             )
         ),
         
