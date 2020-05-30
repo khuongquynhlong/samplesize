@@ -270,9 +270,10 @@ shinyServer(function(input, output) {
                                      "<extra></extra>")
       ) %>%
         layout(
-          xaxis = list(title = "Tỷ lệ",
+          xaxis = list(title = list(text = "<b>Tỷ lệ</b>"),
                        zeroline = F),
-          yaxis = list(title = "Cỡ mẫu"),
+          yaxis = list(title = list(text = "<b>Cỡ mẫu</b>")),
+          legend = list(title = list(text = "<b>Sai số tuyệt đối</b>")),
           font = list(family = "Arial")
         )
     } else if (input$precision_type_1prop_est_plot == 2) {
@@ -284,9 +285,10 @@ shinyServer(function(input, output) {
                                      "<extra></extra>")
       ) %>%
         layout(
-          xaxis = list(title = "Tỷ lệ",
+          xaxis = list(title = list(text = "<b>Tỷ lệ</b>"),
                        zeroline = F),
-          yaxis = list(title = "Cỡ mẫu"),
+          yaxis = list(title = list(text = "<b>Cỡ mẫu</b>")),
+          legend = list(title = list(text = "<b>Sai số tương đối</b>")),
           font = list(family = "Arial")
         )
     }
@@ -410,6 +412,85 @@ shinyServer(function(input, output) {
     )
   })
   
+  # Plot 1
+  output$diff_range_2props_hypo_plot1 <- renderUI({
+    sliderInput(inputId = "diff_range_2props_hypo_plot1",
+                label = "Chọn khoảng khác biệt muốn vẽ",
+                min = 0, max = 1-as.numeric(input$p1_2props_hypo_plot1), 
+                value = c(0.1, 1-as.numeric(input$p1_2props_hypo_plot1))
+    )
+  })
+  df_plot1_2props_hypo <- reactive({
+    req(as.numeric(input$p1_2props_hypo_plot1)>=0&
+          as.numeric(input$alpha_2props_hypo_plot1)>0&
+          as.numeric(input$diff_by_2props_hypo_plot1)>0&
+          !is.null(input$power_2props_hypo_plot1)>0&
+          !is.null(input$diff_range_2props_hypo_plot1[1]),
+        cancelOutput = TRUE)
+    p1 <- as.numeric(input$p1_2props_hypo_plot1)
+    diff <- seq(from = input$diff_range_2props_hypo_plot1[1],
+                to = input$diff_range_2props_hypo_plot1[2],
+                by = as.numeric(input$diff_by_2props_hypo_plot1))
+    alpha <- as.numeric(input$alpha_2props_hypo_plot1)
+    power <- as.numeric(unlist(strsplit(input$power_2props_hypo_plot1, " ")))
+    df <- expand.grid(p1, diff, alpha, power)
+    colnames(df) <- c("p1", "diff", "alpha", "power")
+    df$p2 <- df$p1+df$diff
+    df$n <- fun_2props_hypo(p1 = df$p1, p2 = df$p2, alpha = df$alpha, power = df$power)
+    df$power <- as.factor(df$power)
+    return(df)
+  })
+  output$plot1_2props_hypo <- renderPlotly({
+    plot_ly(df_plot1_2props_hypo(), x = ~diff, y = ~n, color = ~power,
+            type = "scatter", mode = "lines+markers",
+            text = paste0("<b>p1:</b> ", df_plot1_2props_hypo()$p1, "<br>",
+                          "<b>p2:</b> ", df_plot1_2props_hypo()$p2, "<br>",
+                          "<b>Power:</b> ", df_plot1_2props_hypo()$power, "<br>",
+                          "<b>Cỡ mẫu:</b> ", df_plot1_2props_hypo()$n),
+            hoverinfo = "text") %>%
+      layout(
+        xaxis = list(title = list(text = "<b>Sự khác biệt</b>"),
+                     zeroline = F),
+        yaxis = list(title = list(text = "<b>Cỡ mẫu</b>")),
+        legend = list(title = list(text = "<b>Power</b>")),
+        font = list(family = "Arial")
+      )
+  })
+  
+  # Plot 2
+  df_plot2_2props_hypo <- reactive({
+    req(as.numeric(input$p1_2props_hypo_plot2)>=0&
+          as.numeric(input$p2_2props_hypo_plot2)>=0&
+          as.numeric(input$alpha_2props_hypo_plot2)>0&
+          as.numeric(input$power_by_2props_hypo_plot2)>0,
+        cancelOutput = TRUE)
+    p1 <- as.numeric(input$p1_2props_hypo_plot2)
+    p2 <- as.numeric(input$p2_2props_hypo_plot2)
+    alpha <- as.numeric(input$alpha_2props_hypo_plot2)
+    power <- seq(from = input$power_range_2props_hypo_plot2[1],
+                 to = input$power_range_2props_hypo_plot2[2],
+                 by = as.numeric(input$power_by_2props_hypo_plot2))
+    df <- expand.grid(p1, p2, alpha, power)
+    colnames(df) <- c("p1", "p2", "alpha", "power")
+    df$n <- fun_2props_hypo(p1 = df$p1, p2 = df$p2, alpha = df$alpha, power = df$power)
+    return(df)
+  })
+  output$plot2_2props_hypo <- renderPlotly({
+    plot_ly(df_plot2_2props_hypo(), x = ~n, y = ~power,
+            type = "scatter", mode = "lines+markers",
+            text = paste0("<b>p1:</b> ", df_plot2_2props_hypo()$p1, "<br>",
+                          "<b>p2:</b> ", df_plot2_2props_hypo()$p2, "<br>",
+                          "<b>Power:</b> ", df_plot2_2props_hypo()$power, "<br>",
+                          "<b>Cỡ mẫu:</b> ", df_plot2_2props_hypo()$n),
+            hoverinfo = "text") %>%
+      layout(
+        xaxis = list(title = list(text = "<b>Cỡ mẫu</b>"),
+                     zeroline = F),
+        yaxis = list(title = list(text = "<b>Power</b>")),
+        font = list(family = "Arial")
+      )
+  })
+
   ##### Hypothesis test for 2 proportions (small proportion) #####
   n_2props_hypo_small <- reactive({
     req(as.numeric(input$p1_2props_hypo_small)>0&
