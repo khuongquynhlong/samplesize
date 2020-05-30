@@ -272,7 +272,8 @@ shinyServer(function(input, output) {
         layout(
           xaxis = list(title = "Tỷ lệ",
                        zeroline = F),
-          yaxis = list(title = "Cỡ mẫu")
+          yaxis = list(title = "Cỡ mẫu"),
+          font = list(family = "Arial")
         )
     } else if (input$precision_type_1prop_est_plot == 2) {
       plot_ly(df_plot_1prop_est(), x = ~p, y = ~n, color = ~eps,
