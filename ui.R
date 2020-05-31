@@ -94,7 +94,13 @@ body <- dashboardBody(
                                           value = 0.2),
                                 textInput(inputId = "alpha_1prop_est",
                                           label = "Alpha",
-                                          value = 0.05)
+                                          value = 0.05),
+                                textInput(inputId = "nonrep_1prop_est", 
+                                          label = "Tỷ lệ không trả lời", 
+                                          value = 0),
+                                numericInput(inputId = "deseff_1prop_est", 
+                                             label = "Design effect", 
+                                             value = 1)
                             ),
                             box(
                                 uiOutput(outputId = "precision_1prop_est")
@@ -133,7 +139,13 @@ body <- dashboardBody(
                                       label = "Khoảng cách tỷ lệ",
                                       value = 0.01),
                             uiOutput(outputId = "precision_1prop_est_plot"),
-                            helpText("Có thể nhập nhiều sai số, cách nhau bằng dấu khoảng trắng (space)")
+                            helpText("Có thể nhập nhiều sai số, cách nhau bằng dấu khoảng trắng (space)"),
+                            textInput(inputId = "nonrep_1prop_est_plot",
+                                      label = "Tỷ lệ không trả lời",
+                                      value = 0),
+                            numericInput(inputId = "deseff_1prop_est_plot",
+                                         label = "Design effect",
+                                         value = 1)
                         ),
                         box(title = "Biểu đồ", width = 8,
                             plotlyOutput(outputId = "plot_1prop_est")
