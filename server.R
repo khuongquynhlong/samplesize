@@ -4,27 +4,29 @@ library(DT)
 library(plotly)
 
 # Function estimating a population proportion
-fun1_1prop_est <- function(p, d, alpha) {
+fun1_1prop_est <- function(p, d, alpha, nonrep, deseff) {
   z <- qnorm(1-alpha/2)
   n <- z^2*p*(1-p)/d^2
+  n <- n*deseff/(1-nonrep)
   return(ceiling(n))
 }
 
-fun2_1prop_est <- function(p, eps, alpha) {
+fun2_1prop_est <- function(p, eps, alpha, nonrep, deseff) {
   z <- qnorm(1-alpha/2)
   n <- z^2*(1-p)/(eps^2*p)
+  n <- n*deseff/(1-nonrep)
   return(ceiling(n))
 }
 
 # Function hypothesis test a population proportion
-fun_1prop_hypo <- function(p_0, p_a, alpha, power) {
+fun_1prop_hypo <- function(p_0, p_a, alpha, power, nonrep, deseff) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   n <- (z_a*sqrt(p_0*(1-p_0))+z_b*sqrt(p_a*(1-p_a)))^2/(p_a-p_0)^2
   return(ceiling(n))
 }
 
-fun_1prop_hypo_power <- function(p_0, p_a, alpha, n) {
+fun_1prop_hypo_power <- function(p_0, p_a, alpha, n, nonrep, deseff) {
   z_a <- qnorm(1-alpha/2)
   z_b <- (sqrt(n*(p_a-p_0)^2)-z_a*sqrt(p_0*(1-p_0)))/sqrt(p_a*(1-p_a))
   power <- pnorm(z_b)
@@ -32,14 +34,14 @@ fun_1prop_hypo_power <- function(p_0, p_a, alpha, n) {
 }
 
 # Function estimate 2 props difference
-fun_2props_est <- function(p1, p2, alpha, d) {
+fun_2props_est <- function(p1, p2, alpha, d, nonrep, deseff) {
   z <- qnorm(1-alpha/2)
   n <- z^2*(p1*(1-p1)+p2*(1-p2))/d^2
   return(ceiling(n))
 }
 
 # Function hypothesis test for 2 props
-fun_2props_hypo <- function(p1, p2, alpha, power) {
+fun_2props_hypo <- function(p1, p2, alpha, power, nonrep, deseff) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   p <- mean(c(p1, p2))
@@ -56,7 +58,7 @@ fun_2props_hypo_power <- function(p1, p2, alpha, n) {
 }
 
 # Hypothesis test for 2 props (small props)
-fun_2props_hypo_small <- function(p1, p2, alpha, power) {
+fun_2props_hypo_small <- function(p1, p2, alpha, power, nonrep, deseff) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   n <- (z_a+z_b)^2/(2*(asin(sqrt(p2))-asin(sqrt(p1)))^2)
@@ -71,20 +73,20 @@ fun_2props_hypo_small_power <- function(p1, p2, alpha, n) {
 }
 
 # Function estimating the population mean
-fun1_1mean_est <- function(sd, d, alpha) {
+fun1_1mean_est <- function(sd, d, alpha, nonrep, deseff) {
   z <- qnorm(1-alpha/2)
   n <- z^2*sd^2/d^2
   return(ceiling(n))
 }
 
-fun2_1mean_est <- function(sd, alpha, mean, eps) {
+fun2_1mean_est <- function(sd, alpha, mean, eps, nonrep, deseff) {
   z <- qnorm(1-alpha/2)
   n <- z^2*sd^2/(eps^2*mean^2)
   return(ceiling(n))
 }
 
 # Function hypothesis testing for 1 population mean
-fun_1mean_hypo <- function(sd, m_0, m_a, alpha, power) {
+fun_1mean_hypo <- function(sd, m_0, m_a, alpha, power, nonrep, deseff) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   n <- sd^2*(z_a+z_b)^2/(m_0-m_a)^2
@@ -99,14 +101,14 @@ fun_1mean_hypo_power <- function(sd, m_0, m_a, alpha, n) {
 }
 
 # Function estimating the difference between 2 population means
-fun_2means_est <- function(sd, d, alpha) {
+fun_2means_est <- function(sd, d, alpha, nonrep, deseff) {
   z <- qnorm(1-alpha/2)
   n <- 2*z^2*sd^2/d^2
   return(ceiling(n))
 }
 
 # Function for 2 means hypothesis testing
-fun_2means_hypo <- function(m1, m2, sd1, sd2, alpha, power) {
+fun_2means_hypo <- function(m1, m2, sd1, sd2, alpha, power, nonrep, deseff) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   sd <- sqrt((sd1^2+sd2^2)/2)
@@ -123,14 +125,14 @@ fun_2means_hypo_power <- function(m1, m2, sd1, sd2, alpha, n) {
 }
 
 # Function for estimating a RR
-fun_cohort_est <- function(p1, p2, rr, alpha, eps) {
+fun_cohort_est <- function(p1, p2, rr, alpha, eps, nonrep, deseff) {
   z <- qnorm(1-alpha/2)
   n <- z^2*((1-p1)/p1+(1-p2)/p2)/log(1-eps, base = exp(1))^2
   return(ceiling(n))
 }
 
 # Function for hypothesis test for a RR
-fun_cohort_hypo <- function(p1, p2, alpha, power) {
+fun_cohort_hypo <- function(p1, p2, alpha, power, nonrep, deseff) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   p <- mean(c(p1, p2))
@@ -148,14 +150,14 @@ fun_cohort_hypo_power <- function(p1, p2, alpha, n) {
 
 # Case control studies #
 # Estimating a OR with specified relative precision #
-fun_case_est <- function(p1, p2, or, alpha, eps) {
+fun_case_est <- function(p1, p2, or, alpha, eps, nonrep, deseff) {
   z = qnorm(1-alpha/2)
   n = z^2/(log(1-eps))^2*(1/(p1*(1-p1))+1/(p2*(1-p2)))
   return(ceiling(n))
 }
 
 # Function for hypothesis test for a OR
-fun_case_hypo <- function(p1, p2, alpha, power) {
+fun_case_hypo <- function(p1, p2, alpha, power, nonrep, deseff) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   n <- (z_a*sqrt(2*p2*(1-p2)) + z_b*sqrt(p1*(1-p1) + p2*(1-p2)))^2/(p1-p2)^2
@@ -171,7 +173,7 @@ fun_case_hypo_power <- function(p1, p2, alpha, n) {
 
 
 # Function for simple random sampling
-fun_simple_random <- function(N, P, alpha, d, eps) {
+fun_simple_random <- function(N, P, alpha, d, eps, nonrep, deseff) {
   z <- qnorm(1-alpha/2)
   n <- z^2*P*(1-P)*N/(d^2*(N-1)+z^2*P*(1-P))
   return(ceiling(n))
@@ -196,12 +198,16 @@ shinyServer(function(input, output) {
     req(as.numeric(input$p_1prop_est)>0&
           as.numeric(input$alpha_1prop_est)>0&
           (as.numeric(input$d_1prop_est)>0||
-             as.numeric(input$eps_1prop_est)>0),
+             as.numeric(input$eps_1prop_est)>0)&
+          as.numeric(input$nonrep_1prop_est)>=0&
+          as.numeric(input$nonrep_1prop_est)<=1,
         cancelOutput = TRUE)
     if (input$precision_type_1prop_est == 1) {
       fun1_1prop_est(p = as.numeric(input$p_1prop_est), 
                      d = as.numeric(input$d_1prop_est), 
-                     alpha = as.numeric(input$alpha_1prop_est))
+                     alpha = as.numeric(input$alpha_1prop_est),
+                     nonrep = as.numeric(input$nonrep_1prop_est),
+                     deseff = input$deseff_1prop_est)
     } else if (input$precision_type_1prop_est == 2) {
       fun2_1prop_est(p = as.numeric(input$p_1prop_est), 
                      eps = as.numeric(input$eps_1prop_est), 
@@ -230,6 +236,8 @@ shinyServer(function(input, output) {
     }
   })
   df_plot_1prop_est <- reactive({
+    nonrep <- as.numeric(input$nonrep_1prop_est_plot)
+    deseff <- input$deseff_1prop_est_plot
     if (input$precision_type_1prop_est_plot == 1) {
       req(!is.null(input$d_1prop_est_plot)&
               as.numeric(input$p_by_1prop_est_plot)>0,
@@ -241,7 +249,8 @@ shinyServer(function(input, output) {
       alpha <- as.numeric(input$alpha_1prop_est_plot)
       df <- expand.grid(d, p)
       names(df) <- c("d", "p")
-      df$n <- fun1_1prop_est(p = df$p, d = df$d, alpha = alpha)
+      df$n <- fun1_1prop_est(p = df$p, d = df$d, alpha = alpha, 
+                             nonrep = nonrep, deseff = deseff)
       df$d <- as.factor(df$d)
       return(df)
     } else if (input$precision_type_1prop_est_plot == 2) {
@@ -255,7 +264,8 @@ shinyServer(function(input, output) {
       alpha <- as.numeric(input$alpha_1prop_est_plot)
       df <- expand.grid(eps, p)
       names(df) <- c("eps", "p")
-      df$n <- fun2_1prop_est(p = df$p, eps = df$eps, alpha = alpha)
+      df$n <- fun2_1prop_est(p = df$p, eps = df$eps, alpha = alpha,
+                             nonrep = nonrep, deseff = deseff)
       df$eps <- as.factor(df$eps)
       return(df)
     }
@@ -264,11 +274,12 @@ shinyServer(function(input, output) {
     if (input$precision_type_1prop_est_plot == 1) {
       plot_ly(df_plot_1prop_est(), x = ~p, y = ~n, color = ~d,
               type = "scatter", mode = "lines+markers",
-              hovertemplate = paste0("<b>Sai số tuyệt đối:</b> %{fullData.name}<br>",
-                                     "<b>Tỷ lệ:</b> %{x}<br>",
-                                     "<b>Cỡ mẫu:</b> %{y}<br>",
-                                     "<extra></extra>")
-      ) %>%
+              text = paste0("<b>Sai số tuyệt đối:</b> ", df_plot_1prop_est()$d, "<br>",
+                            "<b>Tỷ lệ:</b> ", df_plot_1prop_est()$p, "<br>",
+                            "<b>Cỡ mẫu:</b> ", df_plot_1prop_est()$n, "<br>",
+                            "<b>Tỷ lệ không trả lời:</b> ", input$nonrep_1prop_est_plot, "<br>",
+                            "<b>Design effect:</b> ", input$deseff_1prop_est_plot),
+              hoverinfo = "text") %>%
         layout(
           xaxis = list(title = list(text = "<b>Tỷ lệ</b>"),
                        zeroline = F),
@@ -279,11 +290,12 @@ shinyServer(function(input, output) {
     } else if (input$precision_type_1prop_est_plot == 2) {
       plot_ly(df_plot_1prop_est(), x = ~p, y = ~n, color = ~eps,
               type = "scatter", mode = "lines+markers",
-              hovertemplate = paste0("<b>Sai số tương đối:</b> %{fullData.name}<br>",
-                                     "<b>Tỷ lệ:</b> %{x}<br>",
-                                     "<b>Cỡ mẫu:</b> %{y}<br>",
-                                     "<extra></extra>")
-      ) %>%
+              text = paste0("<b>Sai số tuyệt đối:</b> ", df_plot_1prop_est()$d, "<br>",
+                            "<b>Tỷ lệ:</b> ", df_plot_1prop_est()$p, "<br>",
+                            "<b>Cỡ mẫu:</b> ", df_plot_1prop_est()$n, "<br>",
+                            "<b>Tỷ lệ không trả lời:</b> ", input$nonrep_1prop_est_plot, "<br>",
+                            "<b>Design effect:</b> ", input$deseff_1prop_est_plot),
+              hoverinfo = "text") %>%
         layout(
           xaxis = list(title = list(text = "<b>Tỷ lệ</b>"),
                        zeroline = F),
