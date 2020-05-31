@@ -3,74 +3,7 @@ library(shinydashboard)
 library(DT)
 library(plotly)
 
-# Function estimating a population proportion
-fun1_1prop_est <- function(p, d, alpha, nonrep, deseff) {
-  z <- qnorm(1-alpha/2)
-  n <- z^2*p*(1-p)/d^2
-  n <- n*deseff/(1-nonrep)
-  return(ceiling(n))
-}
-
-fun2_1prop_est <- function(p, eps, alpha, nonrep, deseff) {
-  z <- qnorm(1-alpha/2)
-  n <- z^2*(1-p)/(eps^2*p)
-  n <- n*deseff/(1-nonrep)
-  return(ceiling(n))
-}
-
-# Function hypothesis test a population proportion
-fun_1prop_hypo <- function(p_0, p_a, alpha, power, nonrep, deseff) {
-  z_a <- qnorm(1-alpha/2)
-  z_b <- qnorm(power)
-  n <- (z_a*sqrt(p_0*(1-p_0))+z_b*sqrt(p_a*(1-p_a)))^2/(p_a-p_0)^2
-  return(ceiling(n))
-}
-
-fun_1prop_hypo_power <- function(p_0, p_a, alpha, n, nonrep, deseff) {
-  z_a <- qnorm(1-alpha/2)
-  z_b <- (sqrt(n*(p_a-p_0)^2)-z_a*sqrt(p_0*(1-p_0)))/sqrt(p_a*(1-p_a))
-  power <- pnorm(z_b)
-  return(round(power, 2))
-}
-
-# Function estimate 2 props difference
-fun_2props_est <- function(p1, p2, alpha, d, nonrep, deseff) {
-  z <- qnorm(1-alpha/2)
-  n <- z^2*(p1*(1-p1)+p2*(1-p2))/d^2
-  return(ceiling(n))
-}
-
-# Function hypothesis test for 2 props
-fun_2props_hypo <- function(p1, p2, alpha, power, nonrep, deseff) {
-  z_a <- qnorm(1-alpha/2)
-  z_b <- qnorm(power)
-  p <- mean(c(p1, p2))
-  n <- (z_a*sqrt(2*p*(1-p))+z_b*sqrt(p1*(1-p1)+p2*(1-p2)))^2/(p1-p2)^2
-  return(ceiling(n))
-}
-
-fun_2props_hypo_power <- function(p1, p2, alpha, n) {
-  z_a <- qnorm(1-alpha/2)
-  p <- mean(c(p1, p2))
-  z_b <- (sqrt(n*(p1-p2)^2)-z_a*sqrt(2*p*(1-p)))/sqrt(p1*(1-p1)+p2*(1-p2))
-  power <- pnorm(z_b)
-  return(round(power, 2))
-}
-
-# Hypothesis test for 2 props (small props)
-fun_2props_hypo_small <- function(p1, p2, alpha, power, nonrep, deseff) {
-  z_a <- qnorm(1-alpha/2)
-  z_b <- qnorm(power)
-  n <- (z_a+z_b)^2/(2*(asin(sqrt(p2))-asin(sqrt(p1)))^2)
-  return(ceiling(n))
-}
-
-fun_2props_hypo_small_power <- function(p1, p2, alpha, n) {
-  z_a <- qnorm(1-alpha/2)
-  z_b <- sqrt(2*n*(asin(sqrt(p2))-asin(sqrt(p1)))^2)-z_a
-  power <- pnorm(z_b)
-  return(round(power, 2))
-}
+source(file = "functions/categorical.R", local = TRUE)
 
 # Function estimating the population mean
 fun1_1mean_est <- function(sd, d, alpha, nonrep, deseff) {
@@ -211,7 +144,9 @@ shinyServer(function(input, output) {
     } else if (input$precision_type_1prop_est == 2) {
       fun2_1prop_est(p = as.numeric(input$p_1prop_est), 
                      eps = as.numeric(input$eps_1prop_est), 
-                     alpha = as.numeric(input$alpha_1prop_est))
+                     alpha = as.numeric(input$alpha_1prop_est),
+                     nonrep = as.numeric(input$nonrep_1prop_est),
+                     deseff = input$deseff_1prop_est)
     }
   })
   output$n_1prop_est <- renderValueBox({
