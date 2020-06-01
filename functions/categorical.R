@@ -1,5 +1,5 @@
 ##### Uoc luong 1 ty le ####
-fun1_1prop_est <- function(p, d, alpha, nonrep, deseff) {
+fun1_1prop_est <- function(p, d, alpha, nonrep = 0, deseff = 1) {
   z <- qnorm(1-alpha/2)
   n <- z^2*p*(1-p)/d^2
   n <- n*deseff/(1-nonrep)
