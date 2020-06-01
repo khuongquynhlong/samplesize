@@ -10,6 +10,10 @@ library(plotly)
 sidebar <- dashboardSidebar(
     sidebarMenu(
         menuItem(
+            "Giới thiệu", selected = TRUE,
+            tabName = "landing_page"
+        ),
+        menuItem(
             "Biến định tính", 
             icon = icon("percentage"), startExpanded = FALSE,
             menuSubItem("Ước lượng 1 tỷ lệ", tabName = "1prop_est"),
@@ -60,10 +64,6 @@ sidebar <- dashboardSidebar(
             "Hồi quy đa biến", 
             icon = icon("registered"), startExpanded = FALSE,
             tabName = "samregress"
-        ),
-        menuItem(
-            "Credit", selected = TRUE,
-            tabName = "credit"
         )
     )
 )
@@ -1090,19 +1090,19 @@ body <- dashboardBody(
         
         
         tabItem(
-            tabName = "credit",
+            tabName = "landing_page",
             fluidRow(
-                box(title = "Credit", width = 6,
-                    p("Tác giả")),
-                box(title = "Book", width = 6)
+                box(title = "Giới thiệu", width = 12,
+                    p("Tác giả")
+                    )
                 )
             )
         )
     )
 
-dashboardPage(title = "SampleSizeCalc: Ước lượng cỡ mẫu",
+dashboardPage(title = "Phần mềm tính cỡ mẫu hàng đầu Việt Nam",
     dashboardHeader(
-        title = span(icon("dna"), "SampleSizeCalc"),
+        title = span(icon("dna"), "Phần mềm tính cỡ mẫu"),
         tags$li(
             a(icon("question-circle"),
               strong("Help"),

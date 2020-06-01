@@ -184,8 +184,8 @@ shinyServer(function(input, output) {
       alpha <- as.numeric(input$alpha_1prop_est_plot)
       df <- expand.grid(d, p)
       names(df) <- c("d", "p")
-      df$n <- fun1_1prop_est(p = df$p, d = df$d, alpha = alpha, 
-                             nonrep = nonrep, deseff = deseff)
+      df$n <- fun1_1prop_est(p = df$p, d = df$d, alpha = alpha) 
+                             # nonrep = nonrep, deseff = deseff)
       df$d <- as.factor(df$d)
       return(df)
     } else if (input$precision_type_1prop_est_plot == 2) {
@@ -199,8 +199,8 @@ shinyServer(function(input, output) {
       alpha <- as.numeric(input$alpha_1prop_est_plot)
       df <- expand.grid(eps, p)
       names(df) <- c("eps", "p")
-      df$n <- fun2_1prop_est(p = df$p, eps = df$eps, alpha = alpha,
-                             nonrep = nonrep, deseff = deseff)
+      df$n <- fun2_1prop_est(p = df$p, eps = df$eps, alpha = alpha)
+                             # nonrep = nonrep, deseff = deseff)
       df$eps <- as.factor(df$eps)
       return(df)
     }
@@ -211,9 +211,9 @@ shinyServer(function(input, output) {
               type = "scatter", mode = "lines+markers",
               text = paste0("<b>Sai số tuyệt đối:</b> ", df_plot_1prop_est()$d, "<br>",
                             "<b>Tỷ lệ:</b> ", df_plot_1prop_est()$p, "<br>",
-                            "<b>Cỡ mẫu:</b> ", df_plot_1prop_est()$n, "<br>",
-                            "<b>Tỷ lệ không trả lời:</b> ", input$nonrep_1prop_est_plot, "<br>",
-                            "<b>Design effect:</b> ", input$deseff_1prop_est_plot),
+                            "<b>Cỡ mẫu:</b> ", df_plot_1prop_est()$n, "<br>"),
+                            # "<b>Tỷ lệ không trả lời:</b> ", input$nonrep_1prop_est_plot, "<br>",
+                            # "<b>Design effect:</b> ", input$deseff_1prop_est_plot),
               hoverinfo = "text") %>%
         layout(
           xaxis = list(title = list(text = "<b>Tỷ lệ</b>"),
