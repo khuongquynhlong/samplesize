@@ -884,7 +884,13 @@ body <- dashboardBody(
                                           value = 0.2),
                                 textInput(inputId = "or_case_est", 
                                           label = "Tỷ số số chênh (OR)", 
-                                          value = 2)
+                                          value = 2),
+                                textInput(inputId = "nonrep_case_est",
+                                          label = "Tỷ lệ không trả lời",
+                                          value = 0),
+                                numericInput(inputId = "deseff_case_est",
+                                             label = "Design effect",
+                                             value = 1)
                             ),
                             box(
                                 textInput(inputId = "alpha_case_est",
@@ -930,7 +936,13 @@ body <- dashboardBody(
                                                   value = 1),
                                         textInput(inputId = "ora_case_hypo", 
                                                   label = "Anticipated OR", 
-                                                  value = 0.5)
+                                                  value = 0.5),
+                                        textInput(inputId = "nonrep_case_hypo",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_case_hypo",
+                                                     label = "Design effect",
+                                                     value = 1)
                                     ),
                                     box(
                                         textInput(inputId = "alpha_case_hypo",
