@@ -43,14 +43,13 @@ sidebar <- dashboardSidebar(
             menuSubItem("So sánh 2 OR", tabName = "case_hypo")
         ),
         menuItem(
-            "Sample surveys",
+            "Lấy mẫu ngẫu nhiên đơn",
             icon = icon("poll"), startExpanded = FALSE,
-            menuSubItem("Simple random sampling", tabName = "simple_random"),
-            menuSubItem("Stratified sampling", tabName = "stratified")
+            tabName = "simple_random"
         ),
         menuItem(
             "Hệ số tương quan", 
-            icon = icon("dribbble"), startExpanded = FALSE,
+            icon = icon("chart-area"), startExpanded = FALSE,
             tabName = "corr"
             ),
         menuItem(
@@ -1008,7 +1007,13 @@ body <- dashboardBody(
                                           value = 4000),
                                 textInput(inputId = "P_simple_random", 
                                           label = "Anticipated population proportion", 
-                                          value = 0.6)
+                                          value = 0.6),
+                                textInput(inputId = "nonrep_simple_random",
+                                          label = "Tỷ lệ không trả lời",
+                                          value = 0),
+                                numericInput(inputId = "deseff_simple_random",
+                                             label = "Design effect",
+                                             value = 1)
                             ),
                             box(
                                 textInput(inputId = "alpha_simple_random",
@@ -1145,7 +1150,7 @@ body <- dashboardBody(
 
 dashboardPage(title = "Phần mềm tính cỡ mẫu hàng đầu Việt Nam",
     dashboardHeader(
-        title = span(icon("dna"), "Phần mềm tính cỡ mẫu"),
+        title = span(icon("dna"), "Ước lượng cỡ mẫu"),
         tags$li(
             a(icon("question-circle"),
               strong("Help"),
