@@ -139,13 +139,7 @@ body <- dashboardBody(
                                       label = "Khoảng cách tỷ lệ",
                                       value = 0.01),
                             uiOutput(outputId = "precision_1prop_est_plot"),
-                            helpText("Có thể nhập nhiều sai số, cách nhau bằng dấu khoảng trắng (space)"),
-                            textInput(inputId = "nonrep_1prop_est_plot",
-                                      label = "Tỷ lệ không trả lời",
-                                      value = 0),
-                            numericInput(inputId = "deseff_1prop_est_plot",
-                                         label = "Design effect",
-                                         value = 1)
+                            helpText("Có thể nhập nhiều sai số, cách nhau bằng dấu khoảng trắng (space)")
                         ),
                         box(title = "Biểu đồ", width = 8,
                             plotlyOutput(outputId = "plot_1prop_est")
@@ -175,7 +169,13 @@ body <- dashboardBody(
                                                   value = 0.30),
                                         textInput(inputId = "pa_1prop_hypo",
                                                   label = "Tỷ lệ ước tính",
-                                                  value = 0.20)
+                                                  value = 0.20),
+                                        textInput(inputId = "nonrep_1prop_hypo",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_1prop_hypo",
+                                                     label = "Design effect",
+                                                     value = 1)
                                     ),
                                     box(
                                         status = "warning",
@@ -237,7 +237,13 @@ body <- dashboardBody(
                                           value = 0.2),
                                 textInput(inputId = "p2_2props_est", 
                                           label = "Tỷ lệ nhóm 2", 
-                                          value = 0.5)
+                                          value = 0.5),
+                                textInput(inputId = "nonrep_2props_est",
+                                          label = "Tỷ lệ không trả lời",
+                                          value = 0),
+                                numericInput(inputId = "deseff_2props_est",
+                                             label = "Design effect",
+                                             value = 1)
                             ),
                             box(
                                 textInput(inputId = "alpha_2props_est",
@@ -282,6 +288,14 @@ body <- dashboardBody(
                                         numericInput(inputId = "k_2props_hypo",
                                                      label = "Tỷ số 2 nhóm",
                                                      value = 1),
+                                        textInput(inputId = "nonrep_2props_hypo",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_2props_hypo",
+                                                     label = "Design effect",
+                                                     value = 1)
+                                    ),
+                                    box(
                                         textInput(inputId = "alpha_2props_hypo",
                                                   label = "Alpha",
                                                   value = 0.05),
@@ -381,30 +395,6 @@ body <- dashboardBody(
                         )
                     )
                 )
-                # tabPanel(
-                #     title = "Biểu đồ cỡ mẫu theo sự khác biệt",
-                #     fluidRow(
-                #         box(title = "Tham số", width = 4,
-                #             textInput(inputId = "p1_2props_hypo_plot1",
-                #                       label = "p1",
-                #                       value = 0.2),
-                #             uiOutput(outputId = "diff_range_2props_hypo_plot1"),
-                #             textInput(inputId = "diff_by_2props_hypo_plot1",
-                #                       label = "Khoảng cách khác biệt",
-                #                       value = 0.05),
-                #             textInput(inputId = "power_2props_hypo_plot1",
-                #                       label = "Power",
-                #                       value = "0.7 0.8 0.9"),
-                #             helpText("Có thể nhập nhiều power, cách nhau bằng dấu khoảng trắng (space)"),
-                #             textInput(inputId = "alpha_2props_hypo_plot1",
-                #                       label = "Alpha",
-                #                       value = 0.05)
-                #         ),
-                #         box(title = "Biểu đồ", width = 8,
-                #             plotlyOutput(outputId = "plot1_2props_hypo")
-                #         )
-                #     )
-                # )
             )
         ),
         
@@ -432,6 +422,14 @@ body <- dashboardBody(
                                         numericInput(inputId = "k_2props_hypo_small",
                                                      label = "Tỷ số 2 nhóm",
                                                      value = 1),
+                                        textInput(inputId = "nonrep_2props_hypo_small",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_2props_hypo_small",
+                                                     label = "Design effect",
+                                                     value = 1)
+                                    ),
+                                    box(    
                                         textInput(inputId = "alpha_2props_hypo_small",
                                                   label = "Alpha",
                                                   value = 0.05),

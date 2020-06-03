@@ -150,12 +150,16 @@ shinyServer(function(input, output) {
     req(as.numeric(input$p0_1prop_hypo)>0&
           as.numeric(input$pa_1prop_hypo)>0&
           as.numeric(input$alpha_1prop_hypo)>0&
-          as.numeric(input$power_1prop_hypo)>0,
+          as.numeric(input$power_1prop_hypo)>0&
+          as.numeric(input$nonrep_1prop_hypo)>=0&
+          as.numeric(input$nonrep_1prop_hypo)<=1,
         cancelOutput = TRUE)
     fun_1prop_hypo(p_0 = as.numeric(input$p0_1prop_hypo), 
                    p_a = as.numeric(input$pa_1prop_hypo), 
                    alpha = as.numeric(input$alpha_1prop_hypo), 
-                   power = as.numeric(input$power_1prop_hypo))
+                   power = as.numeric(input$power_1prop_hypo),
+                   nonrep = as.numeric(input$nonrep_1prop_hypo), 
+                   deseff = input$deseff_1prop_hypo)
   })
   output$n_1prop_hypo <- renderValueBox({
     valueBox(
@@ -192,12 +196,16 @@ shinyServer(function(input, output) {
     req(as.numeric(input$p1_2props_est)>0&
           as.numeric(input$p2_2props_est)>0&
           as.numeric(input$alpha_2props_est)>0&
-          as.numeric(input$d_2props_est)>0,
+          as.numeric(input$d_2props_est)>0&
+          as.numeric(input$nonrep_2props_est)>=0&
+          as.numeric(input$nonrep_2props_est)<=1,
         cancelOutput = TRUE)
     fun_2props_est(p1 = as.numeric(input$p1_2props_est), 
                    p2 = as.numeric(input$p2_2props_est), 
                    alpha = as.numeric(input$alpha_2props_est), 
-                   d = as.numeric(input$d_2props_est))
+                   d = as.numeric(input$d_2props_est),
+                   nonrep = as.numeric(input$nonrep_2props_est), 
+                   deseff = input$deseff_2props_est)
   })
   output$n_2props_est <- renderValueBox({
     valueBox(
@@ -213,12 +221,16 @@ shinyServer(function(input, output) {
     req(as.numeric(input$p1_2props_hypo)>0&
           as.numeric(input$p2_2props_hypo)>0&
           as.numeric(input$alpha_2props_hypo)>0&
-          as.numeric(input$power_2props_hypo)>0,
+          as.numeric(input$power_2props_hypo)>0&
+          as.numeric(input$nonrep_2props_hypo)>=0&
+          as.numeric(input$nonrep_2props_hypo)<=1,
         cancelOutput = TRUE)
     fun_2props_hypo(p1 = as.numeric(input$p1_2props_hypo),
                     p2 = as.numeric(input$p2_2props_hypo),
                     alpha = as.numeric(input$alpha_2props_hypo),
-                    power = as.numeric(input$power_2props_hypo))
+                    power = as.numeric(input$power_2props_hypo),
+                    nonrep = as.numeric(input$nonrep_2props_hypo), 
+                    deseff = input$deseff_2props_hypo)
   })
   n1_2props_hypo <- reactive({
     req(input$k_2props_hypo>=1, cancelOutput = TRUE)
@@ -347,12 +359,16 @@ shinyServer(function(input, output) {
     req(as.numeric(input$p1_2props_hypo_small)>0&
           as.numeric(input$p2_2props_hypo_small)>0&
           as.numeric(input$alpha_2props_hypo_small)>0&
-          as.numeric(input$power_2props_hypo_small)>0,
+          as.numeric(input$power_2props_hypo_small)>0&
+          as.numeric(input$nonrep_2props_hypo_small)>=0&
+          as.numeric(input$nonrep_2props_hypo_small)<=1,
         cancelOutput = TRUE)
     fun_2props_hypo_small(p1 = as.numeric(input$p1_2props_hypo_small),
                     p2 = as.numeric(input$p2_2props_hypo_small),
                     alpha = as.numeric(input$alpha_2props_hypo_small),
-                    power = as.numeric(input$power_2props_hypo_small))
+                    power = as.numeric(input$power_2props_hypo_small),
+                    nonrep = as.numeric(input$nonrep_2props_hypo_small), 
+                    deseff = input$deseff_2props_hypo_small)
   })
   n1_2props_hypo_small <- reactive({
     req(input$k_2props_hypo_small>=1, cancelOutput = TRUE)
