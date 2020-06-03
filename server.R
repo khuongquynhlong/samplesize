@@ -3,32 +3,11 @@ library(shinydashboard)
 library(DT)
 library(plotly)
 
+# Load functions
 source(file = "functions/categorical.R", local = TRUE)
 source(file = "functions/continuous.R", local = TRUE)
-
-# Function for estimating a RR
-fun_cohort_est <- function(p1, p2, rr, alpha, eps, nonrep, deseff) {
-  z <- qnorm(1-alpha/2)
-  n <- z^2*((1-p1)/p1+(1-p2)/p2)/log(1-eps, base = exp(1))^2
-  return(ceiling(n))
-}
-
-# Function for hypothesis test for a RR
-fun_cohort_hypo <- function(p1, p2, alpha, power, nonrep, deseff) {
-  z_a <- qnorm(1-alpha/2)
-  z_b <- qnorm(power)
-  p <- mean(c(p1, p2))
-  n <- (z_a*sqrt(2*p*(1-p))+z_b*sqrt(p1*(1-p1)+p2*(1-p2)))^2/(p1-p2)^2
-  return(ceiling(n))
-}
-
-fun_cohort_hypo_power <- function(p1, p2, alpha, n) {
-  z_a <- qnorm(1-alpha/2)
-  p <- mean(c(p1, p2))
-  z_b <- (sqrt(n*(p1-p2)^2)-z_a*sqrt(2*p*(1-p)))/sqrt(p1*(1-p1)+p2*(1-p2))
-  power <- pnorm(z_b)
-  return(round(power, 2))
-}
+source(file = "functions/cohort.R", local = TRUE)
+# source(file = "functions/case_control.R", local = TRUE)
 
 # Case control studies #
 # Estimating a OR with specified relative precision #
@@ -644,13 +623,17 @@ shinyServer(function(input, output) {
           as.numeric(input$p2_cohort_est)>0&
           as.numeric(input$rr_cohort_est)>0&
           as.numeric(input$alpha_cohort_est)>0&
-          as.numeric(input$eps_cohort_est)>0,
+          as.numeric(input$eps_cohort_est)>0&
+          as.numeric(input$nonrep_cohort_est)>=0&
+          as.numeric(input$nonrep_cohort_est)<=1,
         cancelOutput = TRUE)
     fun_cohort_est(p1 = as.numeric(input$p1_cohort_est), 
                    p2 = as.numeric(input$p2_cohort_est), 
                    rr = as.numeric(input$rr_cohort_est), 
                    alpha = as.numeric(input$alpha_cohort_est), 
-                   eps = as.numeric(input$eps_cohort_est))
+                   eps = as.numeric(input$eps_cohort_est),
+                   nonrep = as.numeric(input$nonrep_cohort_est), 
+                   deseff = input$deseff_cohort_est)
   })
   output$n_cohort_est <- renderValueBox({
     valueBox(
@@ -669,12 +652,16 @@ shinyServer(function(input, output) {
           as.numeric(input$rr0_cohort_hypo)>0&
           as.numeric(input$rra_cohort_hypo)>0&
           as.numeric(input$alpha_cohort_hypo)>0&
-          as.numeric(input$power_cohort_hypo)>0,
+          as.numeric(input$power_cohort_hypo)>0&
+          as.numeric(input$nonrep_cohort_hypo)>=0&
+          as.numeric(input$nonrep_cohort_hypo)<=1,
         cancelOutput = TRUE)
     fun_cohort_hypo(p1 = as.numeric(input$p1_cohort_hypo),
                     p2 = as.numeric(input$p2_cohort_hypo),
                     alpha = as.numeric(input$alpha_cohort_hypo),
-                    power = as.numeric(input$power_cohort_hypo))
+                    power = as.numeric(input$power_cohort_hypo),
+                    nonrep = as.numeric(input$nonrep_cohort_hypo), 
+                    deseff = input$deseff_cohort_hypo)
   })
   output$n_cohort_hypo <- renderValueBox({
     valueBox(

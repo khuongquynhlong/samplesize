@@ -755,7 +755,13 @@ body <- dashboardBody(
                                           value = 0.2),
                                 textInput(inputId = "rr_cohort_est", 
                                           label = "Nguy cơ tương đối (RR)", 
-                                          value = 2)
+                                          value = 2),
+                                textInput(inputId = "nonrep_cohort_est",
+                                          label = "Tỷ lệ không trả lời",
+                                          value = 0),
+                                numericInput(inputId = "deseff_cohort_est",
+                                             label = "Design effect",
+                                             value = 1)
                             ),
                             box(
                                 textInput(inputId = "alpha_cohort_est",
@@ -801,7 +807,13 @@ body <- dashboardBody(
                                                   value = 1),
                                         textInput(inputId = "rra_cohort_hypo", 
                                                   label = "Anticipated RR", 
-                                                  value = 0.5)
+                                                  value = 0.5),
+                                        textInput(inputId = "nonrep_cohort_hypo",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_cohort_hypo",
+                                                     label = "Design effect",
+                                                     value = 1)
                                     ),
                                     box(
                                         textInput(inputId = "alpha_cohort_hypo",
