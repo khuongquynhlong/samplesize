@@ -4,58 +4,7 @@ library(DT)
 library(plotly)
 
 source(file = "functions/categorical.R", local = TRUE)
-
-# Function estimating the population mean
-fun1_1mean_est <- function(sd, d, alpha, nonrep, deseff) {
-  z <- qnorm(1-alpha/2)
-  n <- z^2*sd^2/d^2
-  return(ceiling(n))
-}
-
-fun2_1mean_est <- function(sd, alpha, mean, eps, nonrep, deseff) {
-  z <- qnorm(1-alpha/2)
-  n <- z^2*sd^2/(eps^2*mean^2)
-  return(ceiling(n))
-}
-
-# Function hypothesis testing for 1 population mean
-fun_1mean_hypo <- function(sd, m_0, m_a, alpha, power, nonrep, deseff) {
-  z_a <- qnorm(1-alpha/2)
-  z_b <- qnorm(power)
-  n <- sd^2*(z_a+z_b)^2/(m_0-m_a)^2
-  return(ceiling(n))
-}
-
-fun_1mean_hypo_power <- function(sd, m_0, m_a, alpha, n) {
-  z_a <- qnorm(1-alpha/2)
-  z_b <- sqrt(n*(m_0-m_a)^2/sd^2)-z_a
-  power <- pnorm(z_b)
-  return(round(power, 2))
-}
-
-# Function estimating the difference between 2 population means
-fun_2means_est <- function(sd, d, alpha, nonrep, deseff) {
-  z <- qnorm(1-alpha/2)
-  n <- 2*z^2*sd^2/d^2
-  return(ceiling(n))
-}
-
-# Function for 2 means hypothesis testing
-fun_2means_hypo <- function(m1, m2, sd1, sd2, alpha, power, nonrep, deseff) {
-  z_a <- qnorm(1-alpha/2)
-  z_b <- qnorm(power)
-  sd <- sqrt((sd1^2+sd2^2)/2)
-  n <- 2*sd^2*(z_a+z_b)^2/(m1-m2)^2
-  return(ceiling(n))
-}
-
-fun_2means_hypo_power <- function(m1, m2, sd1, sd2, alpha, n) {
-  z_a <- qnorm(1-alpha/2)
-  sd <- sqrt((sd1^2+sd2^2)/2)
-  z_b <- sqrt(n*(m1-m2)^2/(2*sd^2))-z_a
-  power <- pnorm(z_b)
-  return(round(power, 2))
-}
+source(file = "functions/continuous.R", local = TRUE)
 
 # Function for estimating a RR
 fun_cohort_est <- function(p1, p2, rr, alpha, eps, nonrep, deseff) {
@@ -518,17 +467,23 @@ shinyServer(function(input, output) {
           as.numeric(input$alpha_1mean_est)>0&
           (as.numeric(input$d_1mean_est)>0||
           as.numeric(input$eps_1mean_est)>0||
-          as.numeric(input$mean_1mean_est)>=0),
+          as.numeric(input$mean_1mean_est)>=0)&
+          as.numeric(input$nonrep_1mean_est)>=0&
+          as.numeric(input$nonrep_1mean_est)<=1,
         cancelOutput = TRUE)
     if (input$precision_type_1mean_est == 1) {
       fun1_1mean_est(sd = as.numeric(input$sd_1mean_est), 
                      d = as.numeric(input$d_1mean_est), 
-                     alpha = as.numeric(input$alpha_1mean_est))
+                     alpha = as.numeric(input$alpha_1mean_est),
+                     nonrep = as.numeric(input$nonrep_1mean_est), 
+                     deseff = input$deseff_1mean_est)
     } else if (input$precision_type_1mean_est == 2) {
       fun2_1mean_est(sd = as.numeric(input$sd_1mean_est), 
                      mean = as.numeric(input$mean_1mean_est),
                      eps = as.numeric(input$eps_1mean_est), 
-                     alpha = as.numeric(input$alpha_1mean_est))
+                     alpha = as.numeric(input$alpha_1mean_est),
+                     nonrep = as.numeric(input$nonrep_1mean_est), 
+                     deseff = input$deseff_1mean_est)
     }
   })
   output$n_1mean_est <- renderValueBox({
@@ -547,13 +502,17 @@ shinyServer(function(input, output) {
           as.numeric(input$ma_1mean_hypo)>0&
           as.numeric(input$sd_1mean_hypo)>0&
           as.numeric(input$alpha_1mean_hypo)>0&
-          as.numeric(input$power_1mean_hypo)>0,
+          as.numeric(input$power_1mean_hypo)>0&
+          as.numeric(input$nonrep_1mean_hypo)>=0&
+          as.numeric(input$nonrep_1mean_hypo)<=1,
         cancelOutput = TRUE)
     fun_1mean_hypo(sd = as.numeric(input$sd_1mean_hypo), 
                    m_0 = as.numeric(input$m0_1mean_hypo), 
                    m_a = as.numeric(input$ma_1mean_hypo), 
                    alpha = as.numeric(input$alpha_1mean_hypo), 
-                   power = as.numeric(input$power_1mean_hypo))
+                   power = as.numeric(input$power_1mean_hypo),
+                   nonrep = as.numeric(input$nonrep_1mean_hypo), 
+                   deseff = input$deseff_1mean_hypo)
   })
   output$n_1mean_hypo <- renderValueBox({
     valueBox(
@@ -591,11 +550,15 @@ shinyServer(function(input, output) {
   n_2means_est <- reactive({
     req(as.numeric(input$sd_2means_est)>0&
           as.numeric(input$alpha_2means_est)>0&
-          as.numeric(input$d_2means_est)>0,
+          as.numeric(input$d_2means_est)>0&
+          as.numeric(input$nonrep_2means_est)>=0&
+          as.numeric(input$nonrep_2means_est)<=1,
         cancelOutput = TRUE)
     fun_2means_est(sd = as.numeric(input$sd_2means_est), 
                    d = as.numeric(input$d_2means_est), 
-                   alpha = as.numeric(input$alpha_2means_est))
+                   alpha = as.numeric(input$alpha_2means_est),
+                   nonrep = as.numeric(input$nonrep_2means_est), 
+                   deseff = input$deseff_2means_est)
   })
   output$n_2means_est <- renderValueBox({
     valueBox(
@@ -614,14 +577,18 @@ shinyServer(function(input, output) {
           as.numeric(input$m2_2means_hypo)>=0&
           as.numeric(input$sd2_2means_hypo)>0&
           as.numeric(input$alpha_2means_hypo)>0&
-          as.numeric(input$power_2means_hypo)>0, 
+          as.numeric(input$power_2means_hypo)>0&
+          as.numeric(input$nonrep_2means_hypo)>=0&
+          as.numeric(input$nonrep_2means_hypo)<=1, 
         cancelOutput = TRUE)
     fun_2means_hypo(m1 = as.numeric(input$m1_2means_hypo), 
                     m2 = as.numeric(input$m2_2means_hypo), 
                     sd1 = as.numeric(input$sd1_2means_hypo), 
                     sd2 = as.numeric(input$sd2_2means_hypo), 
                     alpha = as.numeric(input$alpha_2means_hypo), 
-                    power = as.numeric(input$power_2means_hypo))
+                    power = as.numeric(input$power_2means_hypo),
+                    nonrep = as.numeric(input$nonrep_2means_hypo), 
+                    deseff = input$deseff_2means_hypo)
   })
   n1_2means_hypo <- reactive({
     req(input$k_2means_hypo>=1, cancelOutput = TRUE)
@@ -630,7 +597,7 @@ shinyServer(function(input, output) {
   })
   output$n1_2means_hypo <- renderValueBox({
     valueBox(
-      value = n1_2means_hypo(),
+      value = ceiling(n1_2means_hypo()),
       subtitle = "Nhóm 1",
       icon = icon("capsules"),
       color = "green",
@@ -638,7 +605,7 @@ shinyServer(function(input, output) {
   })
   output$n2_2means_hypo <- renderValueBox({
     valueBox(
-      value = input$k_2means_hypo*n1_2means_hypo(),
+      value = ceiling(input$k_2means_hypo*n1_2means_hypo()),
       subtitle = "Nhóm 2",
       icon = icon("tablets"),
       color = "orange",

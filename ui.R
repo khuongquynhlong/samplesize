@@ -497,7 +497,13 @@ body <- dashboardBody(
                                           value = 2),
                                 textInput(inputId = "alpha_1mean_est",
                                           label = "Alpha",
-                                          value = 0.05)
+                                          value = 0.05),
+                                textInput(inputId = "nonrep_1mean_est",
+                                          label = "Tỷ lệ không trả lời",
+                                          value = 0),
+                                numericInput(inputId = "deseff_1mean_est",
+                                             label = "Design effect",
+                                             value = 1)
                             ),
                             box(
                                 uiOutput(outputId = "precision_1mean_est")
@@ -543,7 +549,13 @@ body <- dashboardBody(
                                                   value = 85),
                                         textInput(inputId = "sd_1mean_hypo",
                                                   label = "Độ lệch chuẩn quần thể",
-                                                  value = 20)
+                                                  value = 20),
+                                        textInput(inputId = "nonrep_1mean_hypo",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_1mean_hypo",
+                                                     label = "Design effect",
+                                                     value = 1)
                                     ),
                                     box(
                                         textInput(inputId = "alpha_1mean_hypo",
@@ -606,7 +618,13 @@ body <- dashboardBody(
                                           value = 0.75),
                                 textInput(inputId = "d_2means_est", 
                                           label = "Absolute precision required", 
-                                          value = 0.2)
+                                          value = 0.2),
+                                textInput(inputId = "nonrep_2means_est",
+                                          label = "Tỷ lệ không trả lời",
+                                          value = 0),
+                                numericInput(inputId = "deseff_2means_est",
+                                             label = "Design effect",
+                                             value = 1)
                             ),
                             box(
                                 textInput(inputId = "alpha_2means_est",
@@ -645,16 +663,19 @@ body <- dashboardBody(
                                                   value = 100),
                                         textInput(inputId = "sd1_2means_hypo",
                                                   label = "Độ lệch chuẩn nhóm 1",
-                                                  value = 20)
-                                    ),
-                                    box(
-                                        status = "warning",
+                                                  value = 20),
                                         textInput(inputId = "m2_2means_hypo", 
                                                   label = "Trung bình nhóm 2", 
                                                   value = 95),
                                         textInput(inputId = "sd2_2means_hypo",
                                                   label = "Độ lệch chuẩn nhóm 2",
-                                                  value = 15)
+                                                  value = 15),
+                                        textInput(inputId = "nonrep_2means_hypo",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_2means_hypo",
+                                                     label = "Design effect",
+                                                     value = 1)
                                     ),
                                     box(
                                         textInput(inputId = "alpha_2means_hypo",
