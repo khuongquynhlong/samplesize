@@ -8,13 +8,7 @@ source(file = "functions/categorical.R", local = TRUE)
 source(file = "functions/continuous.R", local = TRUE)
 source(file = "functions/cohort.R", local = TRUE)
 source(file = "functions/case_control.R", local = TRUE)
-
-# Function for simple random sampling
-fun_simple_random <- function(N, P, alpha, d, eps, nonrep, deseff) {
-  z <- qnorm(1-alpha/2)
-  n <- z^2*P*(1-P)*N/(d^2*(N-1)+z^2*P*(1-P))
-  return(ceiling(n))
-}
+source(file = "functions/simple_random.R", local = TRUE)
 
 shinyServer(function(input, output) {
   
@@ -771,12 +765,16 @@ shinyServer(function(input, output) {
     req(as.numeric(input$N_simple_random)>0&
           as.numeric(input$P_simple_random)>0&
           as.numeric(input$alpha_simple_random)>0&
-          as.numeric(input$d_simple_random)>0,
+          as.numeric(input$d_simple_random)>0&
+          as.numeric(input$nonrep_simple_random)>=0&
+          as.numeric(input$nonrep_simple_random)<=1,
         cancelOutput = TRUE)
     fun_simple_random(N = as.numeric(input$N_simple_random), 
                       P = as.numeric(input$P_simple_random), 
                       alpha = as.numeric(input$alpha_simple_random), 
-                      d = as.numeric(input$d_simple_random))
+                      d = as.numeric(input$d_simple_random),
+                      nonrep = as.numeric(input$nonrep_simple_random), 
+                      deseff = input$deseff_simple_random)
   })
   output$n_simple_random <- renderValueBox({
     valueBox(
@@ -786,17 +784,6 @@ shinyServer(function(input, output) {
       color = "green",
     )
   })
-  
-  ##### Stratified sampling #####
-  # observeEvent(input$no_strata_stratified, {
-  #   output$strata <- renderUI({
-  #     input_list <- lapply(1:input$no_strata_stratified, function(i) {
-  #       inputName <- paste("N", i)
-  #       numericInput(inputName, inputName, 1)
-  #     })
-  #     do.call(tagList, input_list)
-  #   })
-  # })
   
   ##### Correlation #####
   n_corr <- reactive({
