@@ -121,7 +121,7 @@ shinyServer(function(input, output) {
     } else if (input$precision_type_1prop_est_plot == 2) {
       plot_ly(df_plot_1prop_est(), x = ~p, y = ~n, color = ~eps,
               type = "scatter", mode = "lines+markers",
-              text = paste0("<b>Sai số tuyệt đối:</b> ", df_plot_1prop_est()$d, "<br>",
+              text = paste0("<b>Sai số tương đối:</b> ", df_plot_1prop_est()$eps, "<br>",
                             "<b>Tỷ lệ:</b> ", df_plot_1prop_est()$p, "<br>",
                             "<b>Cỡ mẫu:</b> ", df_plot_1prop_est()$n),
               hoverinfo = "text") %>%
