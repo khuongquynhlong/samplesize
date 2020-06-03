@@ -109,9 +109,7 @@ shinyServer(function(input, output) {
               type = "scatter", mode = "lines+markers",
               text = paste0("<b>Sai số tuyệt đối:</b> ", df_plot_1prop_est()$d, "<br>",
                             "<b>Tỷ lệ:</b> ", df_plot_1prop_est()$p, "<br>",
-                            "<b>Cỡ mẫu:</b> ", df_plot_1prop_est()$n, "<br>"),
-                            # "<b>Tỷ lệ không trả lời:</b> ", input$nonrep_1prop_est_plot, "<br>",
-                            # "<b>Design effect:</b> ", input$deseff_1prop_est_plot),
+                            "<b>Cỡ mẫu:</b> ", df_plot_1prop_est()$n),
               hoverinfo = "text") %>%
         layout(
           xaxis = list(title = list(text = "<b>Tỷ lệ</b>"),
@@ -125,9 +123,7 @@ shinyServer(function(input, output) {
               type = "scatter", mode = "lines+markers",
               text = paste0("<b>Sai số tuyệt đối:</b> ", df_plot_1prop_est()$d, "<br>",
                             "<b>Tỷ lệ:</b> ", df_plot_1prop_est()$p, "<br>",
-                            "<b>Cỡ mẫu:</b> ", df_plot_1prop_est()$n, "<br>",
-                            "<b>Tỷ lệ không trả lời:</b> ", input$nonrep_1prop_est_plot, "<br>",
-                            "<b>Design effect:</b> ", input$deseff_1prop_est_plot),
+                            "<b>Cỡ mẫu:</b> ", df_plot_1prop_est()$n),
               hoverinfo = "text") %>%
         layout(
           xaxis = list(title = list(text = "<b>Tỷ lệ</b>"),
