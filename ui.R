@@ -98,7 +98,7 @@ body <- dashboardBody(
                                           label = "Tỷ lệ không trả lời", 
                                           value = 0),
                                 numericInput(inputId = "deseff_1prop_est", 
-                                             label = "Design effect", 
+                                             label = "Hệ số thiết kế", 
                                              value = 1)
                             ),
                             box(
@@ -173,7 +173,7 @@ body <- dashboardBody(
                                                   label = "Tỷ lệ không trả lời",
                                                   value = 0),
                                         numericInput(inputId = "deseff_1prop_hypo",
-                                                     label = "Design effect",
+                                                     label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
                                     box(
@@ -241,7 +241,7 @@ body <- dashboardBody(
                                           label = "Tỷ lệ không trả lời",
                                           value = 0),
                                 numericInput(inputId = "deseff_2props_est",
-                                             label = "Design effect",
+                                             label = "Hệ số thiết kế",
                                              value = 1)
                             ),
                             box(
@@ -291,7 +291,7 @@ body <- dashboardBody(
                                                   label = "Tỷ lệ không trả lời",
                                                   value = 0),
                                         numericInput(inputId = "deseff_2props_hypo",
-                                                     label = "Design effect",
+                                                     label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
                                     box(
@@ -425,7 +425,7 @@ body <- dashboardBody(
                                                   label = "Tỷ lệ không trả lời",
                                                   value = 0),
                                         numericInput(inputId = "deseff_2props_hypo_small",
-                                                     label = "Design effect",
+                                                     label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
                                     box(    
@@ -499,7 +499,7 @@ body <- dashboardBody(
                                           label = "Tỷ lệ không trả lời",
                                           value = 0),
                                 numericInput(inputId = "deseff_1mean_est",
-                                             label = "Design effect",
+                                             label = "Hệ số thiết kế",
                                              value = 1)
                             ),
                             box(
@@ -551,7 +551,7 @@ body <- dashboardBody(
                                                   label = "Tỷ lệ không trả lời",
                                                   value = 0),
                                         numericInput(inputId = "deseff_1mean_hypo",
-                                                     label = "Design effect",
+                                                     label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
                                     box(
@@ -620,7 +620,7 @@ body <- dashboardBody(
                                           label = "Tỷ lệ không trả lời",
                                           value = 0),
                                 numericInput(inputId = "deseff_2means_est",
-                                             label = "Design effect",
+                                             label = "Hệ số thiết kế",
                                              value = 1)
                             ),
                             box(
@@ -671,7 +671,7 @@ body <- dashboardBody(
                                                   label = "Tỷ lệ không trả lời",
                                                   value = 0),
                                         numericInput(inputId = "deseff_2means_hypo",
-                                                     label = "Design effect",
+                                                     label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
                                     box(
@@ -757,7 +757,7 @@ body <- dashboardBody(
                                           label = "Tỷ lệ không trả lời",
                                           value = 0),
                                 numericInput(inputId = "deseff_cohort_est",
-                                             label = "Design effect",
+                                             label = "Hệ số thiết kế",
                                              value = 1)
                             ),
                             box(
@@ -809,7 +809,7 @@ body <- dashboardBody(
                                                   label = "Tỷ lệ không trả lời",
                                                   value = 0),
                                         numericInput(inputId = "deseff_cohort_hypo",
-                                                     label = "Design effect",
+                                                     label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
                                     box(
@@ -886,7 +886,7 @@ body <- dashboardBody(
                                           label = "Tỷ lệ không trả lời",
                                           value = 0),
                                 numericInput(inputId = "deseff_case_est",
-                                             label = "Design effect",
+                                             label = "Hệ số thiết kế",
                                              value = 1)
                             ),
                             box(
@@ -938,7 +938,7 @@ body <- dashboardBody(
                                                   label = "Tỷ lệ không trả lời",
                                                   value = 0),
                                         numericInput(inputId = "deseff_case_hypo",
-                                                     label = "Design effect",
+                                                     label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
                                     box(
@@ -1012,7 +1012,7 @@ body <- dashboardBody(
                                           label = "Tỷ lệ không trả lời",
                                           value = 0),
                                 numericInput(inputId = "deseff_simple_random",
-                                             label = "Design effect",
+                                             label = "Hệ số thiết kế",
                                              value = 1)
                             ),
                             box(
@@ -1148,7 +1148,7 @@ body <- dashboardBody(
         )
     )
 
-dashboardPage(title = "Phần mềm tính cỡ mẫu hàng đầu Việt Nam",
+dashboardPage(title = "Phần mềm ước lượng cỡ mẫu",
     dashboardHeader(
         title = span(icon("dna"), "Ước lượng cỡ mẫu"),
         tags$li(
