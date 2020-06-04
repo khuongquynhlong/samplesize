@@ -1141,6 +1141,7 @@ body <- dashboardBody(
             tabName = "landing_page",
             fluidRow(
                 box(title = "Giới thiệu", width = 12,
+                    p(HTML('<center><img src="logo.png"></center>')),
                     p("Tác giả")
                     )
                 )
