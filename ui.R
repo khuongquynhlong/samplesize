@@ -1141,9 +1141,9 @@ body <- dashboardBody(
             tabName = "landing_page",
             fluidRow(
                 box(width = 12,
-                    p(HTML('<center><img src="logo.png"></center>')),
+                    p(HTML('<left><img src="adhere.png" style="width: 25vw; min-width: 330px;"></left>')),
                     p(HTML("<br>")),
-                    p(HTML("<center> <b> <p style='font-size:30px;color:#014636;'> Giới thiệu </p> </b> </center>"))
+                    p(HTML("<center> <b> <p style='font-size:30px;color:#ff7200;'> Giới thiệu </p> </b> </center>"))
                     )
                 )
             )
