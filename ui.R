@@ -123,7 +123,7 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Biểu đồ",
                     fluidRow(
-                        box(title = "Tham số", width = 4,
+                        box(width = 4,
                             radioButtons(inputId = "precision_type_1prop_est_plot", 
                                          label = "Chọn loại sai số", 
                                          choices = c("Sai số tuyệt đối" = 1,
@@ -140,8 +140,20 @@ body <- dashboardBody(
                             uiOutput(outputId = "precision_1prop_est_plot"),
                             helpText("Có thể nhập nhiều sai số, cách nhau bằng dấu khoảng trắng (space)")
                         ),
-                        box(title = "Biểu đồ", width = 8,
-                            plotlyOutput(outputId = "plot_1prop_est")
+                        tabBox(
+                            width = 8, side = "left",
+                            tabPanel(
+                                title = "Biểu đồ",
+                                fluidPage(
+                                    plotlyOutput(outputId = "plot_1prop_est")
+                                )
+                            ),
+                            tabPanel(
+                                title = "Bảng",
+                                fluidPage(
+                                    dataTableOutput(outputId = "table_1prop_est")
+                                )
+                            )
                         )
                     )
                 )
@@ -1012,13 +1024,11 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(title = "Tham số", width = 4,
+                        box(title = "Tham số", width = 6,
                             box(
                                 textInput(inputId = "r_corr", 
-                                          label = "Hệ số tương quan", 
-                                          value = 0.3)
-                            ),
-                            box(
+                                          label = "Hệ số tương quan (r)", 
+                                          value = 0.3),
                                 textInput(inputId = "alpha_corr",
                                           label = HTML("Alpha (&alpha;)"),
                                           value = 0.05),
@@ -1026,12 +1036,12 @@ body <- dashboardBody(
                                           label = HTML("Power (1-&beta;)"),
                                           value = 0.8)
                             ),
+                            valueBoxOutput(outputId = "n_corr", width = 6)
                         ),
-                        box(title = "Hướng dẫn", width = 8,
+                        box(title = "Hướng dẫn", width = 6,
                             p("Phần này sẽ dùng để giải thích ý nghĩa các tham số"),
                             p("alpha, power")
-                        ),
-                        valueBoxOutput(outputId = "n_corr")
+                        )
                     )
                 )
             )
