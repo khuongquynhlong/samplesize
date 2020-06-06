@@ -1,5 +1,5 @@
 ##### Uoc luong nguy co tuong doi #####
-fun_cohort_est <- function(p1, p2, rr, alpha, eps, nonrep = 0, deseff = 1) {
+fun_cohort_est <- function(p1, p2, alpha, eps, nonrep = 0, deseff = 1) {
   z <- qnorm(1-alpha/2)
   n <- z^2*((1-p1)/p1+(1-p2)/p2)/log(1-eps, base = exp(1))^2
   n <- n*deseff/(1-nonrep)

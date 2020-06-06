@@ -1,5 +1,5 @@
 ##### Uoc luong OR voi sai so tuong doi #####
-fun_case_est <- function(p1, p2, or, alpha, eps, nonrep = 0, deseff = 1) {
+fun_case_est <- function(p1, p2, alpha, eps, nonrep = 0, deseff = 1) {
   z = qnorm(1-alpha/2)
   n = z^2/(log(1-eps))^2*(1/(p1*(1-p1))+1/(p2*(1-p2)))
   n <- n*deseff/(1-nonrep)
