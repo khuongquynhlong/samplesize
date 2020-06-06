@@ -17,11 +17,11 @@ shinyServer(function(input, output) {
   output$precision_1prop_est <- renderUI({
     if (input$precision_type_1prop_est == 1) {
       textInput(inputId = "d_1prop_est",
-                label = "Sai số tuyệt đối",
+                label = "Sai số tuyệt đối (d)",
                 value = 0.05)
     } else if (input$precision_type_1prop_est == 2) {
       textInput(inputId = "eps_1prop_est",
-                label = "Sai số tương đối",
+                label = HTML("Sai số tương đối (&epsilon;)"),
                 value = 0.2)
     }
   })
@@ -410,15 +410,15 @@ shinyServer(function(input, output) {
   output$precision_1mean_est <- renderUI({
     if (input$precision_type_1mean_est == 1) {
       textInput(inputId = "d_1mean_est",
-                label = "Sai số tuyệt đối",
+                label = "Sai số tuyệt đối (d)",
                 value = 0.1)
     } else if (input$precision_type_1mean_est == 2) {
       list(
         textInput(inputId = "mean_1mean_est", 
-                  label = "Population mean", 
+                  label = HTML("Trung bình quần thể (&mu;)"), 
                   value = 10),
         textInput(inputId = "eps_1mean_est",
-                  label = "Sai số tương đối",
+                  label = HTML("Sai số tương đối (&epsilon;)"),
                   value = 0.05)
       )
     }
@@ -603,7 +603,6 @@ shinyServer(function(input, output) {
   n_cohort_est <- reactive({
     req(as.numeric(input$p1_cohort_est)>0&
           as.numeric(input$p2_cohort_est)>0&
-          as.numeric(input$rr_cohort_est)>0&
           as.numeric(input$alpha_cohort_est)>0&
           as.numeric(input$eps_cohort_est)>0&
           as.numeric(input$nonrep_cohort_est)>=0&
@@ -611,7 +610,6 @@ shinyServer(function(input, output) {
         cancelOutput = TRUE)
     fun_cohort_est(p1 = as.numeric(input$p1_cohort_est), 
                    p2 = as.numeric(input$p2_cohort_est), 
-                   rr = as.numeric(input$rr_cohort_est), 
                    alpha = as.numeric(input$alpha_cohort_est), 
                    eps = as.numeric(input$eps_cohort_est),
                    nonrep = as.numeric(input$nonrep_cohort_est), 
@@ -631,8 +629,6 @@ shinyServer(function(input, output) {
   n_cohort_hypo <- reactive({
     req(as.numeric(input$p1_cohort_hypo)>0&
           as.numeric(input$p2_cohort_hypo)>0&
-          as.numeric(input$rr0_cohort_hypo)>0&
-          as.numeric(input$rra_cohort_hypo)>0&
           as.numeric(input$alpha_cohort_hypo)>0&
           as.numeric(input$power_cohort_hypo)>0&
           as.numeric(input$nonrep_cohort_hypo)>=0&
@@ -678,9 +674,8 @@ shinyServer(function(input, output) {
   # Case control studies #
   # Estimating a OR with specified relative precision #
   n_case_est <- reactive({
-    req(as.numeric(input$p1_case_est)>0 &
-          as.numeric(input$p2_case_est)>0 &
-          as.numeric(input$or_case_est)>0 &
+    req(as.numeric(input$p1_case_est)>0&
+          as.numeric(input$p2_case_est)>0&
           as.numeric(input$alpha_case_est)>0&
           as.numeric(input$eps_case_est)>0&
           as.numeric(input$nonrep_case_est)>=0&
@@ -688,7 +683,6 @@ shinyServer(function(input, output) {
         cancelOutput = TRUE)
     fun_case_est(p1 = as.numeric(input$p1_case_est),
                  p2 = as.numeric(input$p2_case_est),
-                 or = as.numeric(input$or_case_est),
                  alpha = as.numeric(input$alpha_case_est),
                  eps = as.numeric(input$eps_case_est),
                  nonrep = as.numeric(input$nonrep_case_est), 
@@ -705,12 +699,9 @@ shinyServer(function(input, output) {
   })
   
   # Hypothesis test for a OR
-  
   n_case_hypo <- reactive({
-    req(as.numeric(input$p1_case_hypo)>0 &
-          as.numeric(input$p2_case_hypo)>0 &
-          as.numeric(input$oro_case_hypo)>0 &
-          as.numeric(input$ora_case_hypo)>0 &
+    req(as.numeric(input$p1_case_hypo)>0&
+          as.numeric(input$p2_case_hypo)>0&
           as.numeric(input$alpha_case_hypo)>0&
           as.numeric(input$power_case_hypo)>0&
           as.numeric(input$nonrep_case_hypo)>=0&

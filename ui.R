@@ -42,11 +42,11 @@ sidebar <- dashboardSidebar(
             menuSubItem("Ước lượng OR với sai số tương đối", tabName = "case_est"),
             menuSubItem("So sánh 2 OR", tabName = "case_hypo")
         ),
-        menuItem(
-            "Lấy mẫu ngẫu nhiên đơn",
-            icon = icon("poll"), startExpanded = FALSE,
-            tabName = "simple_random"
-        ),
+        # menuItem(
+        #     "Lấy mẫu ngẫu nhiên đơn",
+        #     icon = icon("poll"), startExpanded = FALSE,
+        #     tabName = "simple_random"
+        # ),
         menuItem(
             "Hệ số tương quan", 
             icon = icon("chart-area"), startExpanded = FALSE,
@@ -89,10 +89,10 @@ body <- dashboardBody(
                                              choices = c("Sai số tuyệt đối" = 1,
                                                          "Sai số tương đối" = 2)),
                                 textInput(inputId = "p_1prop_est", 
-                                          label = "Tỷ lệ ước lượng", 
+                                          label = "Tỷ lệ ước lượng (P)", 
                                           value = 0.2),
                                 textInput(inputId = "alpha_1prop_est",
-                                          label = "Alpha",
+                                          label = HTML("Alpha (&alpha;)"),
                                           value = 0.05),
                                 textInput(inputId = "nonrep_1prop_est", 
                                           label = "Tỷ lệ không trả lời", 
@@ -129,7 +129,7 @@ body <- dashboardBody(
                                          choices = c("Sai số tuyệt đối" = 1,
                                                      "Sai số tương đối" = 2)),
                             textInput(inputId = "alpha_1prop_est_plot",
-                                      label = "Alpha",
+                                      label = HTML("Alpha (&alpha;)"),
                                       value = 0.05),
                             sliderInput(inputId = "p_range_1prop_est_plot",
                                         label = "Chọn khoảng tỷ lệ muốn vẽ",
@@ -164,10 +164,10 @@ body <- dashboardBody(
                                     box(
                                         status = "success",
                                         textInput(inputId = "p0_1prop_hypo", 
-                                                  label = "Tỷ lệ quần thể", 
+                                                  label = HTML("Tỷ lệ quần thể (P<sub>0</sub>)"), 
                                                   value = 0.30),
                                         textInput(inputId = "pa_1prop_hypo",
-                                                  label = "Tỷ lệ ước tính",
+                                                  label = HTML("Tỷ lệ ước tính (P<sub>a</sub>)"),
                                                   value = 0.20),
                                         textInput(inputId = "nonrep_1prop_hypo",
                                                   label = "Tỷ lệ không trả lời",
@@ -179,10 +179,10 @@ body <- dashboardBody(
                                     box(
                                         status = "warning",
                                         textInput(inputId = "alpha_1prop_hypo",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_1prop_hypo",
-                                                  label = "Power",
+                                                  label = HTML("Power (1-&beta;)"),
                                                   value = 0.8)
                                     ),
                                     valueBoxOutput(outputId = "n_1prop_hypo", width = 6)
@@ -193,18 +193,18 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         textInput(inputId = "p0_1prop_hypo_power", 
-                                                  label = "Tỷ lệ quần thể", 
+                                                  label = HTML("Tỷ lệ quần thể (P<sub>0</sub>)"), 
                                                   value = 0.30),
                                         textInput(inputId = "pa_1prop_hypo_power",
-                                                  label = "Tỷ lệ ước tính",
+                                                  label = HTML("Tỷ lệ ước tính (P<sub>a</sub>)"),
                                                   value = 0.20)
                                     ),
                                     box(
                                         textInput(inputId = "alpha_1prop_hypo_power",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "n_1prop_hypo_power",
-                                                  label = "Cỡ mẫu",
+                                                  label = "Cỡ mẫu (n)",
                                                   value = 100)
                                     ),
                                     valueBoxOutput(outputId = "power_1prop_hypo", width = 6)
@@ -214,7 +214,7 @@ body <- dashboardBody(
                         
                         box(title = "Hướng dẫn", width = 6,
                             withMathJax(),
-                            p("$$n=\\frac{\\left\\{Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_o(1-P_o)} + Z_{1-\\beta}\\sqrt{P_a(1-P_a)}\\right\\}^2}{(P_a - P_o)^2}$$")
+                            p("$$n=\\frac{\\left\\{Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_0(1-P_0)} + Z_{1-\\beta}\\sqrt{P_a(1-P_a)}\\right\\}^2}{(P_a - P_0)^2}$$")
                         )
                     )
                 )
@@ -232,10 +232,10 @@ body <- dashboardBody(
                         box(title = "Tính cỡ mẫu", width = 6,
                             box(
                                 textInput(inputId = "p1_2props_est", 
-                                          label = "Tỷ lệ nhóm 1", 
+                                          label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
                                           value = 0.2),
                                 textInput(inputId = "p2_2props_est", 
-                                          label = "Tỷ lệ nhóm 2", 
+                                          label = HTML("Tỷ lệ nhóm 2 (P<sub>2</sub>)"), 
                                           value = 0.5),
                                 textInput(inputId = "nonrep_2props_est",
                                           label = "Tỷ lệ không trả lời",
@@ -246,10 +246,10 @@ body <- dashboardBody(
                             ),
                             box(
                                 textInput(inputId = "alpha_2props_est",
-                                          label = "Alpha",
+                                          label = HTML("Alpha (&alpha;)"),
                                           value = 0.05),
                                 textInput(inputId = "d_2props_est",
-                                          label = "Sai số tuyệt đối",
+                                          label = "Sai số tuyệt đối (d)",
                                           value = 0.05)
                             ),
                             valueBoxOutput(outputId = "n_2props_est", width = 6)
@@ -279,10 +279,10 @@ body <- dashboardBody(
                                     box(
                                         status = "success",
                                         textInput(inputId = "p1_2props_hypo", 
-                                                  label = "Tỷ lệ nhóm 1", 
+                                                  label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
                                                   value = 0.60),
                                         textInput(inputId = "p2_2props_hypo",
-                                                  label = "Tỷ lệ nhóm 2",
+                                                  label = HTML("Tỷ lệ nhóm 2 (P<sub>2</sub>)"),
                                                   value = 0.50),
                                         numericInput(inputId = "k_2props_hypo",
                                                      label = "Tỷ số 2 nhóm",
@@ -296,10 +296,10 @@ body <- dashboardBody(
                                     ),
                                     box(
                                         textInput(inputId = "alpha_2props_hypo",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_2props_hypo",
-                                                  label = "Power",
+                                                  label = HTML("Power (1-&beta;)"),
                                                   value = 0.8)
                                     ),
                                     valueBoxOutput(outputId = "n1_2props_hypo", width = 6),
@@ -312,19 +312,19 @@ body <- dashboardBody(
                                     box(
                                         status = "success",
                                         textInput(inputId = "p1_2props_hypo_power", 
-                                                  label = "Tỷ lệ nhóm 1", 
+                                                  label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
                                                   value = 0.60),
                                         textInput(inputId = "p2_2props_hypo_power",
-                                                  label = "Tỷ lệ nhóm 2",
+                                                  label = HTML("Tỷ lệ nhóm 2 (P<sub>2</sub>)"),
                                                   value = 0.50)
                                     ),
                                     box(
                                         status = "warning",
                                         textInput(inputId = "alpha_2props_hypo_power",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "n_2props_hypo_power",
-                                                  label = "Cỡ mẫu",
+                                                  label = "Cỡ mẫu (n)",
                                                   value = 500)
                                     ),
                                     valueBoxOutput(outputId = "power_2props_hypo", width = 6)
@@ -356,11 +356,11 @@ body <- dashboardBody(
                                           label = "Khoảng cách khác biệt",
                                           value = 0.05),
                                 textInput(inputId = "power_2props_hypo_plot1",
-                                          label = "Power",
+                                          label = HTML("Power (1-&beta;)"),
                                           value = "0.7 0.8 0.9"),
                                 helpText("Có thể nhập nhiều power, cách nhau bằng dấu khoảng trắng (space)"),
                                 textInput(inputId = "alpha_2props_hypo_plot1",
-                                          label = "Alpha",
+                                          label = HTML("Alpha (&alpha;)"),
                                           value = 0.05)
                             ),
                             conditionalPanel(
@@ -372,7 +372,7 @@ body <- dashboardBody(
                                           label = "p2",
                                           value = 0.3),
                                 textInput(inputId = "alpha_2props_hypo_plot2",
-                                          label = "Alpha",
+                                          label = HTML("Alpha (&alpha;)"),
                                           value = 0.05),
                                 sliderInput(inputId = "power_range_2props_hypo_plot2",
                                             label = "Chọn khoảng power muốn vẽ",
@@ -413,10 +413,10 @@ body <- dashboardBody(
                                     box(
                                         status = "success",
                                         textInput(inputId = "p1_2props_hypo_small", 
-                                                  label = "Tỷ lệ nhóm 1", 
+                                                  label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
                                                   value = 0.001),
                                         textInput(inputId = "p2_2props_hypo_small",
-                                                  label = "Tỷ lệ nhóm 2",
+                                                  label = HTML("Tỷ lệ nhóm 2 (P<sub>2</sub>)"),
                                                   value = 0.010),
                                         numericInput(inputId = "k_2props_hypo_small",
                                                      label = "Tỷ số 2 nhóm",
@@ -430,10 +430,10 @@ body <- dashboardBody(
                                     ),
                                     box(    
                                         textInput(inputId = "alpha_2props_hypo_small",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_2props_hypo_small",
-                                                  label = "Power",
+                                                  label = HTML("Power (1-&beta;)"),
                                                   value = 0.8)
                                     ),
                                     valueBoxOutput(outputId = "n1_2props_hypo_small", width = 6),
@@ -446,19 +446,19 @@ body <- dashboardBody(
                                     box(
                                         status = "success",
                                         textInput(inputId = "p1_2props_hypo_small_power", 
-                                                  label = "Tỷ lệ nhóm 1", 
+                                                  label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
                                                   value = 0.001),
                                         textInput(inputId = "p2_2props_hypo_small_power",
-                                                  label = "Tỷ lệ nhóm 2",
+                                                  label = HTML("Tỷ lệ nhóm 2 (P<sub>2</sub>)"),
                                                   value = 0.010)
                                     ),
                                     box(
                                         status = "warning",
                                         textInput(inputId = "alpha_2props_hypo_small_power",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "n_2props_hypo_small_power",
-                                                  label = "Cỡ mẫu",
+                                                  label = "Cỡ mẫu (n)",
                                                   value = 1000)
                                     ),
                                     valueBoxOutput(outputId = "power_2props_hypo_small", width = 6)
@@ -490,10 +490,10 @@ body <- dashboardBody(
                                              choices = c("Sai số tuyệt đối" = 1,
                                                          "Sai số tương đối" = 2)),
                                 textInput(inputId = "sd_1mean_est", 
-                                          label = "Độ lệch chuẩn", 
+                                          label = HTML("Độ lệch chuẩn (&sigma;)"), 
                                           value = 2),
                                 textInput(inputId = "alpha_1mean_est",
-                                          label = "Alpha",
+                                          label = HTML("Alpha (&alpha;)"),
                                           value = 0.05),
                                 textInput(inputId = "nonrep_1mean_est",
                                           label = "Tỷ lệ không trả lời",
@@ -539,13 +539,13 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         textInput(inputId = "m0_1mean_hypo", 
-                                                  label = "Trung bình quần thể", 
+                                                  label = HTML("Trung bình quần thể (&mu;<sub>0</sub>)"), 
                                                   value = 90),
                                         textInput(inputId = "ma_1mean_hypo", 
-                                                  label = "Trung bình nhóm so sánh", 
+                                                  label = HTML("Trung bình nhóm so sánh (&mu;<sub>a</sub>)"), 
                                                   value = 85),
                                         textInput(inputId = "sd_1mean_hypo",
-                                                  label = "Độ lệch chuẩn quần thể",
+                                                  label = HTML("Độ lệch chuẩn quần thể (&sigma;)"),
                                                   value = 20),
                                         textInput(inputId = "nonrep_1mean_hypo",
                                                   label = "Tỷ lệ không trả lời",
@@ -556,10 +556,10 @@ body <- dashboardBody(
                                     ),
                                     box(
                                         textInput(inputId = "alpha_1mean_hypo",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_1mean_hypo",
-                                                  label = "Power",
+                                                  label = HTML("Power (1-&beta;)"),
                                                   value = 0.8)
                                     ),
                                     valueBoxOutput(outputId = "n_1mean_hypo", width = 6)        )
@@ -569,21 +569,21 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         textInput(inputId = "m0_1mean_hypo_power", 
-                                                  label = "Trung bình quần thể", 
+                                                  label = HTML("Trung bình quần thể (&mu;<sub>0</sub>)"), 
                                                   value = 90),
                                         textInput(inputId = "ma_1mean_hypo_power", 
-                                                  label = "Trung bình nhóm so sánh", 
+                                                  label = HTML("Trung bình nhóm so sánh (&mu;<sub>a</sub>)"), 
                                                   value = 85),
                                         textInput(inputId = "sd_1mean_hypo_power",
-                                                  label = "Độ lệch chuẩn quần thể",
+                                                  label = HTML("Độ lệch chuẩn quần thể (&sigma;)"),
                                                   value = 20)
                                     ),
                                     box(
                                         textInput(inputId = "alpha_1mean_hypo_power",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "n_1mean_hypo_power",
-                                                  label = "Cỡ mẫu",
+                                                  label = "Cỡ mẫu (n)",
                                                   value = 100)
                                     ),
                                     valueBoxOutput(outputId = "power_1mean_hypo", width = 6)
@@ -611,10 +611,10 @@ body <- dashboardBody(
                         box(title = "Tính cỡ mẫu", width = 6,
                             box(
                                 textInput(inputId = "sd_2means_est", 
-                                          label = "Population standard deviation", 
+                                          label = HTML("Độ lệch chuẩn quần thể (&sigma;)"), 
                                           value = 0.75),
                                 textInput(inputId = "d_2means_est", 
-                                          label = "Absolute precision required", 
+                                          label = "Sai số tuyệt đối (d)", 
                                           value = 0.2),
                                 textInput(inputId = "nonrep_2means_est",
                                           label = "Tỷ lệ không trả lời",
@@ -625,7 +625,7 @@ body <- dashboardBody(
                             ),
                             box(
                                 textInput(inputId = "alpha_2means_est",
-                                          label = "Alpha",
+                                          label = HTML("Alpha (&alpha;)"),
                                           value = 0.05)
                             ),
                             valueBoxOutput(outputId = "n_2means_est", width = 6)
@@ -656,16 +656,16 @@ body <- dashboardBody(
                                     box(
                                         status = "success",
                                         textInput(inputId = "m1_2means_hypo", 
-                                                  label = "Trung bình nhóm 1", 
+                                                  label = HTML("Trung bình nhóm 1 (&mu;<sub>1</sub>)"), 
                                                   value = 100),
                                         textInput(inputId = "sd1_2means_hypo",
-                                                  label = "Độ lệch chuẩn nhóm 1",
+                                                  label = HTML("Độ lệch chuẩn nhóm 1 (&sigma;<sub>1</sub>)"),
                                                   value = 20),
                                         textInput(inputId = "m2_2means_hypo", 
-                                                  label = "Trung bình nhóm 2", 
+                                                  label = HTML("Trung bình nhóm 2 (&mu;<sub>2</sub>)"), 
                                                   value = 95),
                                         textInput(inputId = "sd2_2means_hypo",
-                                                  label = "Độ lệch chuẩn nhóm 2",
+                                                  label = HTML("Độ lệch chuẩn nhóm 2 (&sigma;<sub>2</sub>)"),
                                                   value = 15),
                                         textInput(inputId = "nonrep_2means_hypo",
                                                   label = "Tỷ lệ không trả lời",
@@ -676,10 +676,10 @@ body <- dashboardBody(
                                     ),
                                     box(
                                         textInput(inputId = "alpha_2means_hypo",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_2means_hypo",
-                                                  label = "Power",
+                                                  label = HTML("Power (1-&beta;)"),
                                                   value = 0.8),
                                         numericInput(inputId = "k_2means_hypo",
                                                      label = "Tỷ số 2 nhóm",
@@ -695,27 +695,27 @@ body <- dashboardBody(
                                     box(
                                         status = "success",
                                         textInput(inputId = "m1_2means_hypo_power", 
-                                                  label = "Trung bình nhóm 1", 
+                                                  label = HTML("Trung bình nhóm 1 (&mu;<sub>1</sub>)"), 
                                                   value = 100),
                                         textInput(inputId = "sd1_2means_hypo_power",
-                                                  label = "Độ lệch chuẩn nhóm 1",
+                                                  label = HTML("Độ lệch chuẩn nhóm 1 (&sigma;<sub>1</sub>)"),
                                                   value = 20)
                                     ),
                                     box(
                                         status = "warning",
                                         textInput(inputId = "m2_2means_hypo_power", 
-                                                  label = "Trung bình nhóm 2", 
+                                                  label = HTML("Trung bình nhóm 2 (&mu;<sub>2</sub>)"), 
                                                   value = 95),
                                         textInput(inputId = "sd2_2means_hypo_power",
-                                                  label = "Độ lệch chuẩn nhóm 2",
+                                                  label = HTML("Độ lệch chuẩn nhóm 2 (&sigma;<sub>2</sub>)"),
                                                   value = 15)
                                     ),
                                     box(
                                         textInput(inputId = "n_2means_hypo_power",
-                                                  label = "Cỡ mẫu",
+                                                  label = "Cỡ mẫu (n)",
                                                   value = 250),
                                         textInput(inputId = "alpha_2means_hypo_power",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05)
                                     ),
                                     valueBoxOutput(outputId = "power_2means_hypo", width = 6)
@@ -745,14 +745,11 @@ body <- dashboardBody(
                         box(title = "Tính cỡ mẫu", width = 6,
                             box(
                                 textInput(inputId = "p1_cohort_est", 
-                                          label = "Tỷ lệ biến cố nhóm 1", 
+                                          label = HTML("Tỷ lệ phơi nhiễm trong nhóm bệnh (P<sub>1</sub>)"), 
                                           value = 0.4),
                                 textInput(inputId = "p2_cohort_est", 
-                                          label = "Tỷ lệ biến cố nhóm 2", 
+                                          label = HTML("Tỷ lệ phơi nhiễm trong nhóm chứng (P<sub>2</sub>)"), 
                                           value = 0.2),
-                                textInput(inputId = "rr_cohort_est", 
-                                          label = "Nguy cơ tương đối (RR)", 
-                                          value = 2),
                                 textInput(inputId = "nonrep_cohort_est",
                                           label = "Tỷ lệ không trả lời",
                                           value = 0),
@@ -762,10 +759,10 @@ body <- dashboardBody(
                             ),
                             box(
                                 textInput(inputId = "alpha_cohort_est",
-                                          label = "Alpha",
+                                          label = HTML("Alpha (&alpha;)"),
                                           value = 0.05),
                                 textInput(inputId = "eps_cohort_est",
-                                          label = "Epsilon",
+                                          label = HTML("Epsilon (&epsilon;)"),
                                           value = 0.5),
                             ),
                             valueBoxOutput(outputId = "n_cohort_est", width = 6)
@@ -794,17 +791,11 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         textInput(inputId = "p1_cohort_hypo", 
-                                                  label = "Tỷ lệ biến cố nhóm 1", 
+                                                  label = HTML("Tỷ lệ phơi nhiễm trong nhóm bệnh (P<sub>1</sub>)"), 
                                                   value = 0.175),
                                         textInput(inputId = "p2_cohort_hypo", 
-                                                  label = "Tỷ lệ biến cố nhóm 2", 
+                                                  label = HTML("Tỷ lệ phơi nhiễm trong nhóm chứng (P<sub>2</sub>)"), 
                                                   value = 0.35),
-                                        textInput(inputId = "rr0_cohort_hypo", 
-                                                  label = "Test value RR", 
-                                                  value = 1),
-                                        textInput(inputId = "rra_cohort_hypo", 
-                                                  label = "Anticipated RR", 
-                                                  value = 0.5),
                                         textInput(inputId = "nonrep_cohort_hypo",
                                                   label = "Tỷ lệ không trả lời",
                                                   value = 0),
@@ -814,10 +805,10 @@ body <- dashboardBody(
                                     ),
                                     box(
                                         textInput(inputId = "alpha_cohort_hypo",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_cohort_hypo",
-                                                  label = "Power",
+                                                  label = HTML("Power (1-&beta;)"),
                                                   value = 0.8)
                                     ),
                                     valueBoxOutput(outputId = "n_cohort_hypo", width = 6)
@@ -828,24 +819,18 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         textInput(inputId = "p1_cohort_hypo_power", 
-                                                  label = "Tỷ lệ biến cố nhóm 1", 
+                                                  label = HTML("Tỷ lệ phơi nhiễm trong nhóm bệnh (P<sub>1</sub>)"), 
                                                   value = 0.175),
                                         textInput(inputId = "p2_cohort_hypo_power", 
-                                                  label = "Tỷ lệ biến cố nhóm 2", 
-                                                  value = 0.35),
-                                        textInput(inputId = "rr0_cohort_hypo_power", 
-                                                  label = "Test value RR", 
-                                                  value = 1),
-                                        textInput(inputId = "rra_cohort_hypo_power", 
-                                                  label = "Anticipated RR", 
-                                                  value = 0.5)
+                                                  label = HTML("Tỷ lệ phơi nhiễm trong nhóm chứng (P<sub>2</sub>)"), 
+                                                  value = 0.35)
                                     ),
                                     box(
                                         textInput(inputId = "alpha_cohort_hypo_power",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "n_cohort_hypo_power",
-                                                  label = "Cỡ mẫu",
+                                                  label = "Cỡ mẫu (n)",
                                                   value = 100)
                                     ),
                                     valueBoxOutput(outputId = "power_cohort_hypo", width = 6)
@@ -874,14 +859,11 @@ body <- dashboardBody(
                         box(title = "Tính cỡ mẫu", width = 6,
                             box(
                                 textInput(inputId = "p1_case_est", 
-                                          label = "Tỷ lệ phơi nhiễm trong nhóm bệnh", 
+                                          label = HTML("Tỷ lệ phơi nhiễm trong nhóm bệnh (P<sub>1</sub>)"), 
                                           value = 0.4),
                                 textInput(inputId = "p2_case_est", 
-                                          label = "Tỷ lệ phơi nhiễm trong nhóm chứng", 
+                                          label = HTML("Tỷ lệ phơi nhiễm trong nhóm chứng (P<sub>2</sub>)"), 
                                           value = 0.2),
-                                textInput(inputId = "or_case_est", 
-                                          label = "Tỷ số số chênh (OR)", 
-                                          value = 2),
                                 textInput(inputId = "nonrep_case_est",
                                           label = "Tỷ lệ không trả lời",
                                           value = 0),
@@ -891,7 +873,7 @@ body <- dashboardBody(
                             ),
                             box(
                                 textInput(inputId = "alpha_case_est",
-                                          label = "Alpha",
+                                          label = HTML("Alpha (&alpha;)"),
                                           value = 0.05),
                                 textInput(inputId = "eps_case_est",
                                           label = HTML("Sai số tương đối (&epsilon;)"),
@@ -923,17 +905,11 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         textInput(inputId = "p1_case_hypo", 
-                                                  label = "Tỷ lệ phơi nhiễm trong nhóm bệnh", 
+                                                  label = HTML("Tỷ lệ phơi nhiễm trong nhóm bệnh (P<sub>1</sub>)"), 
                                                   value = 0.175),
                                         textInput(inputId = "p2_case_hypo", 
-                                                  label = "Tỷ lệ phơi nhiễm trong nhóm chứng", 
+                                                  label = HTML("Tỷ lệ phơi nhiễm trong nhóm chứng (P<sub>2</sub>)"), 
                                                   value = 0.35),
-                                        textInput(inputId = "oro_case_hypo", 
-                                                  label = "Test value OR", 
-                                                  value = 1),
-                                        textInput(inputId = "ora_case_hypo", 
-                                                  label = "Anticipated OR", 
-                                                  value = 0.5),
                                         textInput(inputId = "nonrep_case_hypo",
                                                   label = "Tỷ lệ không trả lời",
                                                   value = 0),
@@ -943,10 +919,10 @@ body <- dashboardBody(
                                     ),
                                     box(
                                         textInput(inputId = "alpha_case_hypo",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_case_hypo",
-                                                  label = "Power",
+                                                  label = HTML("Power (1-&beta;)"),
                                                   value = 0.8)
                                     ),
                                     valueBoxOutput(outputId = "n_case_hypo", width = 6)
@@ -957,24 +933,18 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         textInput(inputId = "p1_case_hypo_power", 
-                                                  label = "Tỷ lệ phơi nhiễm trong nhóm bệnh", 
+                                                  label = HTML("Tỷ lệ phơi nhiễm trong nhóm bệnh (P<sub>1</sub>)"), 
                                                   value = 0.175),
                                         textInput(inputId = "p2_case_hypo_power", 
-                                                  label = "Tỷ lệ phơi nhiễm trong nhóm chứng", 
+                                                  label = HTML("Tỷ lệ phơi nhiễm trong nhóm chứng (P<sub>2</sub>)"), 
                                                   value = 0.35),
-                                        textInput(inputId = "oro_case_hypo_power", 
-                                                  label = "Test value OR", 
-                                                  value = 1),
-                                        textInput(inputId = "ora_case_hypo_power", 
-                                                  label = "Anticipated OR", 
-                                                  value = 0.5)
                                     ),
                                     box(
                                         textInput(inputId = "alpha_case_hypo_power",
-                                                  label = "Alpha",
+                                                  label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "n_case_hypo_power",
-                                                  label = "Cỡ mẫu",
+                                                  label = "Cỡ mẫu (n)",
                                                   value = 100)
                                     ),
                                     valueBoxOutput(outputId = "power_case_hypo", width = 6)
@@ -1017,7 +987,7 @@ body <- dashboardBody(
                             ),
                             box(
                                 textInput(inputId = "alpha_simple_random",
-                                          label = "Alpha",
+                                          label = HTML("Alpha (&alpha;)"),
                                           value = 0.05),
                                 textInput(inputId = "d_simple_random",
                                           label = "Absolute precision required",
@@ -1050,10 +1020,10 @@ body <- dashboardBody(
                             ),
                             box(
                                 textInput(inputId = "alpha_corr",
-                                          label = "Alpha",
+                                          label = HTML("Alpha (&alpha;)"),
                                           value = 0.05),
                                 textInput(inputId = "power_corr",
-                                          label = "Power",
+                                          label = HTML("Power (1-&beta;)"),
                                           value = 0.8)
                             ),
                         ),
