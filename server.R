@@ -134,6 +134,10 @@ shinyServer(function(input, output) {
         )
     }
   })
+  output$table_1prop_est <- renderDataTable({
+    df_plot_1prop_est()
+  })
+  
   ##### Hypothesis test for a population proportion #####
   # Sample size
   n_1prop_hypo <- reactive({
