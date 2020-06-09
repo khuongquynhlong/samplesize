@@ -1132,7 +1132,8 @@ body <- dashboardBody(
                     p(HTML('<center><img src="Sampling.gif" style="width: 45vw; min-width: 250x;"></center>')),
                     tags$br(),
                     tags$br(),
-                    tags$br()
+                    tags$br(),
+                    p(HTML("<i> <p style='font-size:10px;color:darkblue;text-align:right'> @Phần mềm được viết bằng ngôn ngữ R với ứng dụng Shiny    </p> </i>"))
                     )
                 )
             )
