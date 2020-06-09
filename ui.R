@@ -1125,7 +1125,7 @@ body <- dashboardBody(
                     tags$br(),
                     p(HTML("<center> <b> <p style='font-size:20px;color:darkblue;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU TRONG CÁC NGHIÊN CỨU KHOA HỌC SỨC KHỎE </p> </b> </center>")),
                     p(HTML("<center> <i> <p style='font-size:15px;color:darkblue;'>  (Phiên bản v1.0-2020) </p> </i> </center>")),
-                    p(HTML("<center> <b> <p style='font-size:17px;color:darkblue;'> Tác giả: </b> <i> Khương Quỳnh Long, Ong Phúc Thịnh, Hoàng Văn Minh </i> </p>  </center>")),
+                    p(HTML("<center> <b> <p style='font-size:17px;color:darkblue;'> Tác giả: </b> <i> Khương Quỳnh Long, Ong Phúc Thịnh, GS.Hoàng Văn Minh </i> </p>  </center>")),
                     tags$br(),
                     tags$br(),
                     tags$br(),
