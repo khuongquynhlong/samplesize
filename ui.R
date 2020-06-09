@@ -1121,16 +1121,19 @@ body <- dashboardBody(
             tabName = "landing_page",
             fluidRow(
                 box(width = 12,
-                    p(HTML('<center><img src="Logo.png" style="width: 18vw; min-width: 250x;"></center>')),
-                    p(HTML(" ")),
-                    p(HTML("<center> <b> <p style='font-size:15px;color:darkblue;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU TRONG CÁC NGHIÊN CỨU KHOA HỌC SỨC KHỎE </p> </b> </center>")),
-                    p(HTML("<center> <i> <p style='font-size:10px;color:darkblue;'>  (Phiên bản v1.0-2020) </p> </i> </center>")),
-                    p(HTML('<center><img src="Sampling.gif" style="width: 30vw; min-width: 250x;"></center>'))
-                    ),
-                box(width = 6,
-                    p(HTML("<center> <b> <p style='font-size:20px;color:#ff7200;'> Giới thiệu </p> </b> </center>"))),
-                box(width = 6,
-                    p(HTML("<center> <b> <p style='font-size:20px;color:#ff7200;'> Tác giả </p> </b> </center>")))
+                    p(HTML('<center><img src="Logo.png" style="width: 20vw; min-width: 250x;"></center>')),
+                    tags$br(),
+                    p(HTML("<center> <b> <p style='font-size:20px;color:darkblue;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU TRONG CÁC NGHIÊN CỨU KHOA HỌC SỨC KHỎE </p> </b> </center>")),
+                    p(HTML("<center> <i> <p style='font-size:15px;color:darkblue;'>  (Phiên bản v1.0-2020) </p> </i> </center>")),
+                    p(HTML("<center> <b> <p style='font-size:17px;color:darkblue;'> Tác giả: </b> <i> Khương Quỳnh Long, Ong Phúc Thịnh, Hoàng Văn Minh </i> </p>  </center>")),
+                    tags$br(),
+                    tags$br(),
+                    tags$br(),
+                    p(HTML('<center><img src="Sampling.gif" style="width: 45vw; min-width: 250x;"></center>')),
+                    tags$br(),
+                    tags$br(),
+                    tags$br()
+                    )
                 )
             )
         )
