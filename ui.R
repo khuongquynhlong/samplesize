@@ -174,7 +174,7 @@ body <- dashboardBody(
                                 title = "Tính cỡ mẫu",
                                 fluidRow(
                                     box(
-                                        status = "success",
+                                        
                                         textInput(inputId = "p0_1prop_hypo", 
                                                   label = HTML("Tỷ lệ quần thể (P<sub>0</sub>)"), 
                                                   value = 0.30),
@@ -189,7 +189,7 @@ body <- dashboardBody(
                                                      value = 1)
                                     ),
                                     box(
-                                        status = "warning",
+                                        
                                         textInput(inputId = "alpha_1prop_hypo",
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
@@ -289,7 +289,7 @@ body <- dashboardBody(
                                 title = "Tính cỡ mẫu",
                                 fluidRow(
                                     box(
-                                        status = "success",
+                                        
                                         textInput(inputId = "p1_2props_hypo", 
                                                   label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
                                                   value = 0.60),
@@ -322,7 +322,7 @@ body <- dashboardBody(
                                 title = "Tính power",
                                 fluidRow(
                                     box(
-                                        status = "success",
+                                        
                                         textInput(inputId = "p1_2props_hypo_power", 
                                                   label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
                                                   value = 0.60),
@@ -331,7 +331,7 @@ body <- dashboardBody(
                                                   value = 0.50)
                                     ),
                                     box(
-                                        status = "warning",
+                                        
                                         textInput(inputId = "alpha_2props_hypo_power",
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
@@ -423,7 +423,7 @@ body <- dashboardBody(
                                 title = "Tính cỡ mẫu",
                                 fluidRow(
                                     box(
-                                        status = "success",
+                                        
                                         textInput(inputId = "p1_2props_hypo_small", 
                                                   label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
                                                   value = 0.001),
@@ -456,7 +456,7 @@ body <- dashboardBody(
                                 title = "Tính power",
                                 fluidRow(
                                     box(
-                                        status = "success",
+                                        
                                         textInput(inputId = "p1_2props_hypo_small_power", 
                                                   label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
                                                   value = 0.001),
@@ -465,7 +465,7 @@ body <- dashboardBody(
                                                   value = 0.010)
                                     ),
                                     box(
-                                        status = "warning",
+                                        
                                         textInput(inputId = "alpha_2props_hypo_small_power",
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
@@ -666,7 +666,7 @@ body <- dashboardBody(
                                 title = "Tính cỡ mẫu",
                                 fluidRow(
                                     box(
-                                        status = "success",
+                                        
                                         textInput(inputId = "m1_2means_hypo", 
                                                   label = HTML("Trung bình nhóm 1 (&mu;<sub>1</sub>)"), 
                                                   value = 100),
@@ -705,7 +705,7 @@ body <- dashboardBody(
                                 title = "Tính power",
                                 fluidRow(
                                     box(
-                                        status = "success",
+                                        
                                         textInput(inputId = "m1_2means_hypo_power", 
                                                   label = HTML("Trung bình nhóm 1 (&mu;<sub>1</sub>)"), 
                                                   value = 100),
@@ -714,7 +714,7 @@ body <- dashboardBody(
                                                   value = 20)
                                     ),
                                     box(
-                                        status = "warning",
+                                        
                                         textInput(inputId = "m2_2means_hypo_power", 
                                                   label = HTML("Trung bình nhóm 2 (&mu;<sub>2</sub>)"), 
                                                   value = 95),
@@ -1141,12 +1141,12 @@ dashboardPage(title = "Phần mềm ước lượng cỡ mẫu",
         tags$li(
             a(icon("question-circle"),
               strong("Help"),
-              href = "https://github.com/khuongquynhlong/samplesize/blob/master/README.md"),
+              href = ""),
             class = "dropdown"
         ),
         tags$li(
             a(strong("Source code"),
-              href = "https://github.com/khuongquynhlong/samplesize"),
+              href = ""),
             class = "dropdown"
         )
     ),
