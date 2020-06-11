@@ -184,7 +184,7 @@ body <- dashboardBody(
                                                   label = HTML("Tỷ lệ quần thể (P<sub>0</sub>)"), 
                                                   value = 0.30),
                                         textInput(inputId = "power_1prop_hypo",
-                                                  label = HTML("Power (1-&beta;)"),
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
                                                   value = 0.8),
                                         textInput(inputId = "pa_1prop_hypo",
                                                   label = HTML("Tỷ lệ ước tính (P<sub>a</sub>)"),
@@ -205,7 +205,7 @@ body <- dashboardBody(
                                 )
                             ),
                             tabPanel(
-                                title = "Tính power",
+                                title = "Tính lực thống kê",
                                 fluidRow(
                                     box(
                                         textInput(inputId = "p0_1prop_hypo_power", 
@@ -303,7 +303,7 @@ body <- dashboardBody(
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_2props_hypo",
-                                                  label = HTML("Power (1-&beta;)"),
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
                                                   value = 0.8),
                                         textInput(inputId = "p1_2props_hypo", 
                                                   label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
@@ -334,7 +334,7 @@ body <- dashboardBody(
                                 )
                             ),
                             tabPanel(
-                                title = "Tính power",
+                                title = "Tính lực thống kê",
                                 fluidRow(
                                     box(
                                         
@@ -386,7 +386,7 @@ body <- dashboardBody(
                                           label = "Khoảng cách khác biệt",
                                           value = 0.05),
                                 textInput(inputId = "power_2props_hypo_plot1",
-                                          label = HTML("Power (1-&beta;)"),
+                                          label = HTML("Lực thống kê (1-&beta;)"),
                                           value = "0.7 0.8 0.9"),
                                 helpText("Có thể nhập nhiều power, cách nhau bằng dấu khoảng trắng (space)"),
                                 textInput(inputId = "alpha_2props_hypo_plot1",
@@ -445,7 +445,7 @@ body <- dashboardBody(
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_2props_hypo_small",
-                                                  label = HTML("Power (1-&beta;)"),
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
                                                   value = 0.8),
                                         textInput(inputId = "p1_2props_hypo_small", 
                                                   label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
@@ -476,7 +476,7 @@ body <- dashboardBody(
                                 )
                             ),
                             tabPanel(
-                                title = "Tính power",
+                                title = "Tính lực thống kê",
                                 fluidRow(
                                     box(
                                         
@@ -586,7 +586,7 @@ body <- dashboardBody(
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_1mean_hypo",
-                                                  label = HTML("Power (1-&beta;)"),
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
                                                   value = 0.8),
                                         textInput(inputId = "m0_1mean_hypo", 
                                                   label = HTML("Trung bình quần thể (&mu;<sub>0</sub>)"), 
@@ -610,7 +610,7 @@ body <- dashboardBody(
                                 )
                             ),
                             tabPanel(
-                                title = "Tính power",
+                                title = "Tính lực thống kê",
                                 fluidRow(
                                     box(
                                         textInput(inputId = "m0_1mean_hypo_power", 
@@ -715,7 +715,7 @@ body <- dashboardBody(
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_2means_hypo",
-                                                  label = HTML("Power (1-&beta;)"),
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
                                                   value = 0.8),
                                         textInput(inputId = "m1_2means_hypo", 
                                                   label = HTML("Trung bình nhóm 1 (&mu;<sub>1</sub>)"), 
@@ -746,7 +746,7 @@ body <- dashboardBody(
                                 )
                             ),
                             tabPanel(
-                                title = "Tính power",
+                                title = "Tính lực thống kê",
                                 fluidRow(
                                     box(
                                         
@@ -856,7 +856,7 @@ body <- dashboardBody(
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_cohort_hypo",
-                                                  label = HTML("Power (1-&beta;)"),
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
                                                   value = 0.8),
                                         textInput(inputId = "p1_cohort_hypo", 
                                                   label = HTML("Tỷ lệ phơi nhiễm trong nhóm bệnh (P<sub>1</sub>)"), 
@@ -880,7 +880,7 @@ body <- dashboardBody(
                                 )
                             ),
                             tabPanel(
-                                title = "Tính power",
+                                title = "Tính lực thống kê",
                                 fluidRow(
                                     box(
                                         textInput(inputId = "p1_cohort_hypo_power", 
@@ -982,7 +982,7 @@ body <- dashboardBody(
                                                   label = HTML("Tỷ lệ phơi nhiễm trong nhóm chứng (P<sub>2</sub>)"), 
                                                   value = 0.35),
                                         textInput(inputId = "power_case_hypo",
-                                                  label = HTML("Power (1-&beta;)"),
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
                                                   value = 0.8),
                                         textInput(inputId = "p1_case_hypo", 
                                                   label = HTML("Tỷ lệ phơi nhiễm trong nhóm bệnh (P<sub>1</sub>)"), 
@@ -1003,7 +1003,7 @@ body <- dashboardBody(
                                 )
                             ),
                             tabPanel(
-                                title = "Tính power",
+                                title = "Tính lực thống kê",
                                 fluidRow(
                                     box(
                                         textInput(inputId = "p1_case_hypo_power", 
@@ -1098,7 +1098,7 @@ body <- dashboardBody(
                                           label = HTML("Alpha (&alpha;)"),
                                           value = 0.05),
                                 textInput(inputId = "power_corr",
-                                          label = HTML("Power (1-&beta;)"),
+                                          label = HTML("Lực thống kê (1-&beta;)"),
                                           value = 0.8)
                             ),
                             box(
