@@ -47,13 +47,8 @@ shinyServer(function(input, output) {
                      deseff = input$deseff_1prop_est)
     }
   })
-  output$n_1prop_est <- renderValueBox({
-    valueBox(
-      value = n_1prop_est(),
-      subtitle = "Cỡ mẫu",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n_1prop_est <- renderText({
+    n_1prop_est()
   })
   
   # Plot
@@ -155,13 +150,8 @@ shinyServer(function(input, output) {
                    nonrep = as.numeric(input$nonrep_1prop_hypo), 
                    deseff = input$deseff_1prop_hypo)
   })
-  output$n_1prop_hypo <- renderValueBox({
-    valueBox(
-      value = n_1prop_hypo(),
-      subtitle = "Cỡ mẫu",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n_1prop_hypo <- renderText({
+    n_1prop_hypo()
   })
   
   # Power
@@ -176,13 +166,8 @@ shinyServer(function(input, output) {
                          alpha = as.numeric(input$alpha_1prop_hypo_power), 
                          n = as.numeric(input$n_1prop_hypo_power))
   })
-  output$power_1prop_hypo <- renderValueBox({
-    valueBox(
-      value = power_1prop_hypo(),
-      subtitle = "Power",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$power_1prop_hypo <- renderText({
+    power_1prop_hypo()
   })
   
   ##### Estimate 2 proportions difference #####
@@ -201,13 +186,8 @@ shinyServer(function(input, output) {
                    nonrep = as.numeric(input$nonrep_2props_est), 
                    deseff = input$deseff_2props_est)
   })
-  output$n_2props_est <- renderValueBox({
-    valueBox(
-      value = n_2props_est(),
-      subtitle = "Cỡ mẫu",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n_2props_est <- renderText({
+    n_2props_est()
   })
   
   ##### Hypothesis test for 2 proportions #####
@@ -231,21 +211,11 @@ shinyServer(function(input, output) {
     big_n <- 2*n_2props_hypo()*(1+input$k_2props_hypo)^2/(4*input$k_2props_hypo)
     big_n/(1+input$k_2props_hypo)
   })
-  output$n1_2props_hypo <- renderValueBox({
-    valueBox(
-      value = n1_2props_hypo(),
-      subtitle = "Nhóm 1",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n1_2props_hypo <- renderText({
+    n1_2props_hypo()
   })
-  output$n2_2props_hypo <- renderValueBox({
-    valueBox(
-      value = input$k_2props_hypo*n1_2props_hypo(),
-      subtitle = "Nhóm 2",
-      icon = icon("tablets"),
-      color = "orange",
-    )
+  output$n2_2props_hypo <- renderText({
+    input$k_2props_hypo*n1_2props_hypo()
   })
   
   # Power
@@ -260,13 +230,8 @@ shinyServer(function(input, output) {
                           alpha = as.numeric(input$alpha_2props_hypo_power), 
                           n = as.numeric(input$n_2props_hypo_power))
   })
-  output$power_2props_hypo <- renderValueBox({
-    valueBox(
-      value = power_2props_hypo(),
-      subtitle = "Power",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$power_2props_hypo <- renderText({
+    power_2props_hypo()
   })
   
   # Plot 1
@@ -369,21 +334,11 @@ shinyServer(function(input, output) {
     big_n <- 2*n_2props_hypo_small()*(1+input$k_2props_hypo_small)^2/(4*input$k_2props_hypo_small)
     big_n/(1+input$k_2props_hypo_small)
   })
-  output$n1_2props_hypo_small <- renderValueBox({
-    valueBox(
-      value = n1_2props_hypo_small(),
-      subtitle = "Nhóm 1",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n1_2props_hypo_small <- renderText({
+    n1_2props_hypo_small()
   })
-  output$n2_2props_hypo_small <- renderValueBox({
-    valueBox(
-      value = input$k_2props_hypo_small*n1_2props_hypo_small(),
-      subtitle = "Nhóm 2",
-      icon = icon("tablets"),
-      color = "orange",
-    )
+  output$n2_2props_hypo_small <- renderText({
+    input$k_2props_hypo_small*n1_2props_hypo_small()
   })
   
   # Power
@@ -398,13 +353,8 @@ shinyServer(function(input, output) {
                                 alpha = as.numeric(input$alpha_2props_hypo_small_power), 
                                 n = as.numeric(input$n_2props_hypo_small_power))
   })
-  output$power_2props_hypo_small <- renderValueBox({
-    valueBox(
-      value = power_2props_hypo_small(),
-      subtitle = "Power",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$power_2props_hypo_small <- renderText({
+    power_2props_hypo_small()
   })
   
  
@@ -451,13 +401,8 @@ shinyServer(function(input, output) {
                      deseff = input$deseff_1mean_est)
     }
   })
-  output$n_1mean_est <- renderValueBox({
-    valueBox(
-      value = n_1mean_est(),
-      subtitle = "Cỡ mẫu",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n_1mean_est <- renderText({
+    n_1mean_est()
   })
   
   ##### Hypothesis testing for 1 population mean #####
@@ -479,13 +424,8 @@ shinyServer(function(input, output) {
                    nonrep = as.numeric(input$nonrep_1mean_hypo), 
                    deseff = input$deseff_1mean_hypo)
   })
-  output$n_1mean_hypo <- renderValueBox({
-    valueBox(
-      value = n_1mean_hypo(),
-      subtitle = "Cỡ mẫu",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n_1mean_hypo <- renderText({
+    n_1mean_hypo()
   })
   
   # Power
@@ -502,13 +442,8 @@ shinyServer(function(input, output) {
                          alpha = as.numeric(input$alpha_1mean_hypo_power), 
                          n = as.numeric(input$n_1mean_hypo_power))
   })
-  output$power_1mean_hypo <- renderValueBox({
-    valueBox(
-      value = power_1mean_hypo(),
-      subtitle = "Power",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$power_1mean_hypo <- renderText({
+    power_1mean_hypo()
   })
   
   ##### Estimating the difference between 2 population means #####
@@ -525,13 +460,8 @@ shinyServer(function(input, output) {
                    nonrep = as.numeric(input$nonrep_2means_est), 
                    deseff = input$deseff_2means_est)
   })
-  output$n_2means_est <- renderValueBox({
-    valueBox(
-      value = n_2means_est(),
-      subtitle = "Cỡ mẫu",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n_2means_est <- renderText({
+    n_2means_est()
   })
   
   ##### Hypothesis test for 2 means #####
@@ -560,21 +490,11 @@ shinyServer(function(input, output) {
     big_n <- 2*n_2means_hypo()*(1+input$k_2means_hypo)^2/(4*input$k_2means_hypo)
     big_n/(1+input$k_2means_hypo)
   })
-  output$n1_2means_hypo <- renderValueBox({
-    valueBox(
-      value = ceiling(n1_2means_hypo()),
-      subtitle = "Nhóm 1",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n1_2means_hypo <- renderText({
+    ceiling(n1_2means_hypo())
   })
-  output$n2_2means_hypo <- renderValueBox({
-    valueBox(
-      value = ceiling(input$k_2means_hypo*n1_2means_hypo()),
-      subtitle = "Nhóm 2",
-      icon = icon("tablets"),
-      color = "orange",
-    )
+  output$n2_2means_hypo <- renderText({
+    ceiling(input$k_2means_hypo*n1_2means_hypo())
   })
   
   # Power
@@ -593,13 +513,8 @@ shinyServer(function(input, output) {
                           alpha = as.numeric(input$alpha_2means_hypo_power), 
                           n = as.numeric(input$n_2means_hypo_power))
   })
-  output$power_2means_hypo <- renderValueBox({
-    valueBox(
-      value = power_2means_hypo(),
-      subtitle = "Power",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$power_2means_hypo <- renderText({
+    power_2means_hypo()
   })
   
   ##### Cohort studies #####
@@ -619,13 +534,8 @@ shinyServer(function(input, output) {
                    nonrep = as.numeric(input$nonrep_cohort_est), 
                    deseff = input$deseff_cohort_est)
   })
-  output$n_cohort_est <- renderValueBox({
-    valueBox(
-      value = n_cohort_est(),
-      subtitle = "Cỡ mẫu",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n_cohort_est <- renderText({
+    n_cohort_est()
   })
   
   ##### Hypothesis test for a RR #####
@@ -645,13 +555,8 @@ shinyServer(function(input, output) {
                     nonrep = as.numeric(input$nonrep_cohort_hypo), 
                     deseff = input$deseff_cohort_hypo)
   })
-  output$n_cohort_hypo <- renderValueBox({
-    valueBox(
-      value = n_cohort_hypo(),
-      subtitle = "Cỡ mẫu",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n_cohort_hypo <- renderText({
+    n_cohort_hypo()
   })
   
   # Power
@@ -666,13 +571,8 @@ shinyServer(function(input, output) {
                           alpha = as.numeric(input$alpha_cohort_hypo_power), 
                           n = as.numeric(input$n_cohort_hypo_power))
   })
-  output$power_cohort_hypo <- renderValueBox({
-    valueBox(
-      value = power_cohort_hypo(),
-      subtitle = "Power",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$power_cohort_hypo <- renderText({
+    power_cohort_hypo()
   })
   
   # Case control studies #
@@ -693,13 +593,8 @@ shinyServer(function(input, output) {
                  deseff = input$deseff_case_est)
   })
   
-  output$n_case_est <- renderValueBox({
-    valueBox(
-      value = n_case_est(),
-      subtitle = "Cỡ mẫu",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n_case_est <- renderText({
+    n_case_est()
   })
   
   # Hypothesis test for a OR
@@ -718,13 +613,8 @@ shinyServer(function(input, output) {
                   nonrep = as.numeric(input$nonrep_case_hypo), 
                   deseff = input$deseff_case_hypo)
   })
-  output$n_case_hypo <- renderValueBox({
-    valueBox(
-      value = n_case_hypo(),
-      subtitle = "Cỡ mẫu",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$n_case_hypo <- renderText({
+    n_case_hypo()
   })
   
   # Power
@@ -740,13 +630,8 @@ shinyServer(function(input, output) {
                         n = as.numeric(input$n_case_hypo_power))
   })
   
-  output$power_case_hypo <- renderValueBox({
-    valueBox(
-      value = power_case_hypo(),
-      subtitle = "Power",
-      icon = icon("capsules"),
-      color = "green",
-    )
+  output$power_case_hypo <- renderText({
+    power_case_hypo()
   })
   
   
@@ -787,12 +672,7 @@ shinyServer(function(input, output) {
                       power = as.numeric(input$power_corr))
     pwr$n
   })
-  output$n_corr <- renderValueBox({
-    valueBox(
-      value = ceiling(n_corr()),
-      subtitle = "Cỡ mẫu",
-      icon = icon("users"),
-      color = "green",
-    )
+  output$n_corr <- renderText({
+    ceiling(n_corr())
   })
 })
