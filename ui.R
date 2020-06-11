@@ -1123,26 +1123,25 @@ body <- dashboardBody(
                 box(width = 12,
                     p(HTML('<center><img src="Logo.png" style="width: 20vw; min-width: 250x;"></center>')),
                     tags$br(),
-                    p(HTML("<center> <b> <p style='font-size:20px;color:darkblue;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU TRONG CÁC NGHIÊN CỨU KHOA HỌC SỨC KHỎE </p> </b> </center>")),
+                    p(HTML("<center> <b> <p style='font-size:35px;color:darkblue;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU LTM<sup>&trade;</sup> </p> </b> </center>")),
+                    p(HTML("<center> <b> <p style='font-size:20px;color:darkblue;'> (Dùng trong các Nghiên cứu Khoa học Sức khỏe) </p> </b> </center>")),
                     p(HTML("<center> <i> <p style='font-size:15px;color:darkblue;'>  (Phiên bản v1.0-2020) </p> </i> </center>")),
-                    p(HTML("<center> <b> <p style='font-size:17px;color:darkblue;'> Tác giả: </b> <i> Khương Quỳnh Long, Ong Phúc Thịnh, GS.Hoàng Văn Minh </i> </p>  </center>")),
+                    p(HTML("<center> <b> <p style='font-size:17px;color:darkblue;'> Tác giả: </b> <i> Khương Quỳnh Long, Ong Phúc Thịnh, Hoàng Văn Minh </i> </p>  </center>")),
                     tags$br(),
+                    p(HTML('<center><img src="Sampling.gif" style="width: 30vw; min-width: 250x;"></center>')),
                     tags$br(),
-                    tags$br(),
-                    p(HTML('<center><img src="Sampling.gif" style="width: 45vw; min-width: 250x;"></center>')),
-                    tags$br(),
-                    tags$br(),
-                    tags$br(),
-                    p(HTML("<i> <p style='font-size:10px;color:darkblue;text-align:right'> @Phần mềm được viết bằng ngôn ngữ R với ứng dụng Shiny    </p> </i>"))
+                    p(HTML("<p style='font-size:15px;color:darkblue;text-align:left'> Trang web đang trong quá trình xây dựng và thử nghiệm </p>")),
+                    p(HTML("<p style='font-size:15px;color:darkblue;text-align:left'> Mọi thắc mắc vui lòng liên hệ nhóm tác giả; email: kql@huph.edu.vn </p>"))
+                    # p(HTML("<i> <p style='font-size:10px;color:darkblue;text-align:right'> @Phần mềm được viết bằng ngôn ngữ R với ứng dụng Shiny    </p> </i>"))
                     )
                 )
             )
         )
     )
 
-dashboardPage(title = "Phần mềm ước lượng cỡ mẫu",
+dashboardPage(title = "Phần mềm tính toán cỡ mẫu LTM",
     dashboardHeader(
-        title = span(icon("dna"), "Ước lượng cỡ mẫu"),
+        title = span(icon("dna"), HTML("Tính cỡ mẫu LTM<sup>&trade;")),
         tags$li(
             a(icon("question-circle"),
               strong("Help"),
