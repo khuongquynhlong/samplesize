@@ -10,18 +10,3 @@
    white-space: normal;
 }
 
-.small-box p {
-    font-size: 15px;
-    text-align: center;
-}
-
-.small-box h3 {
-    font-size: 38px;
-    font-weight: 700;
-    margin: 0 0 10px 0;
-    white-space: nowrap;
-    align-items: center;
-    text-align: center;
-    padding: 0;
-}
-

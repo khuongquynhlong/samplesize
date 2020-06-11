@@ -104,7 +104,10 @@ body <- dashboardBody(
                             box(
                                 uiOutput(outputId = "precision_1prop_est")
                             ),
-                            valueBoxOutput(outputId = "n_1prop_est", width = 6)
+                            box(
+                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1prop_est"), "</b>")), align = "center"))
+                            )
                         ),
                         box(title = "Hướng dẫn", width = 6,
                             conditionalPanel(
@@ -197,7 +200,10 @@ body <- dashboardBody(
                                                   label = HTML("Power (1-&beta;)"),
                                                   value = 0.8)
                                     ),
-                                    valueBoxOutput(outputId = "n_1prop_hypo", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1prop_hypo"), "</b>")), align = "center"))
+                                    )
                                 )
                             ),
                             tabPanel(
@@ -219,7 +225,10 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu (n)",
                                                   value = 100)
                                     ),
-                                    valueBoxOutput(outputId = "power_1prop_hypo", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_1prop_hypo"), "</b>")), align = "center"))
+                                    )
                                 )
                             )
                         ),
@@ -264,7 +273,10 @@ body <- dashboardBody(
                                           label = "Sai số tuyệt đối (d)",
                                           value = 0.05)
                             ),
-                            valueBoxOutput(outputId = "n_2props_est", width = 6)
+                            box(
+                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_2props_est"), "</b>")), align = "center"))
+                            )
                         ),
                         box(title = "Hướng dẫn", width = 6,
                             withMathJax(),
@@ -289,7 +301,6 @@ body <- dashboardBody(
                                 title = "Tính cỡ mẫu",
                                 fluidRow(
                                     box(
-                                        
                                         textInput(inputId = "p1_2props_hypo", 
                                                   label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
                                                   value = 0.60),
@@ -314,8 +325,14 @@ body <- dashboardBody(
                                                   label = HTML("Power (1-&beta;)"),
                                                   value = 0.8)
                                     ),
-                                    valueBoxOutput(outputId = "n1_2props_hypo", width = 6),
-                                    valueBoxOutput(outputId = "n2_2props_hypo", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_2props_hypo"), "</b>")), align = "center"))
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu nhóm 2</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_2props_hypo"), "</b>")), align = "center"))
+                                    )
                                 )
                             ),
                             tabPanel(
@@ -339,7 +356,10 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu (n)",
                                                   value = 500)
                                     ),
-                                    valueBoxOutput(outputId = "power_2props_hypo", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_2props_hypo"), "</b>")), align = "center"))
+                                    )
                                 )
                             )
                         ),
@@ -448,8 +468,14 @@ body <- dashboardBody(
                                                   label = HTML("Power (1-&beta;)"),
                                                   value = 0.8)
                                     ),
-                                    valueBoxOutput(outputId = "n1_2props_hypo_small", width = 6),
-                                    valueBoxOutput(outputId = "n2_2props_hypo_small", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_2props_hypo_small"), "</b>")), align = "center"))
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_2props_hypo_small"), "</b>")), align = "center"))
+                                    )
                                 )
                             ),
                             tabPanel(
@@ -473,7 +499,10 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu (n)",
                                                   value = 1000)
                                     ),
-                                    valueBoxOutput(outputId = "power_2props_hypo_small", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_2props_hypo_small"), "</b>")), align = "center"))
+                                    )
                                 )
                             )
                         ),
@@ -517,7 +546,10 @@ body <- dashboardBody(
                             box(
                                 uiOutput(outputId = "precision_1mean_est")
                             ),
-                            valueBoxOutput(outputId = "n_1mean_est", width = 6)
+                            box(
+                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1mean_est"), "</b>")), align = "center"))
+                            )
                         ),
                         box(title = "Hướng dẫn", width = 6,
                             conditionalPanel(
@@ -574,7 +606,11 @@ body <- dashboardBody(
                                                   label = HTML("Power (1-&beta;)"),
                                                   value = 0.8)
                                     ),
-                                    valueBoxOutput(outputId = "n_1mean_hypo", width = 6)        )
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1mean_hypo"), "</b>")), align = "center"))
+                                    )
+                                )
                             ),
                             tabPanel(
                                 title = "Tính power",
@@ -598,7 +634,10 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu (n)",
                                                   value = 100)
                                     ),
-                                    valueBoxOutput(outputId = "power_1mean_hypo", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_1mean_hypo"), "</b>")), align = "center"))
+                                    )
                                 )
                             )
                         ),
@@ -640,7 +679,10 @@ body <- dashboardBody(
                                           label = HTML("Alpha (&alpha;)"),
                                           value = 0.05)
                             ),
-                            valueBoxOutput(outputId = "n_2means_est", width = 6)
+                            box(
+                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_2means_est"), "</b>")), align = "center"))
+                            )
                         ),
                         box(title = "Hướng dẫn", width = 6,
                             withMathJax(),
@@ -697,8 +739,14 @@ body <- dashboardBody(
                                                      label = "Tỷ số 2 nhóm",
                                                      value = 1)
                                     ),
-                                    valueBoxOutput(outputId = "n1_2means_hypo", width = 6),
-                                    valueBoxOutput(outputId = "n2_2means_hypo", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_2means_hypo"), "</b>")), align = "center"))
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu nhóm 2</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_2means_hypo"), "</b>")), align = "center"))
+                                    )
                                 )
                             ),
                             tabPanel(
@@ -730,7 +778,10 @@ body <- dashboardBody(
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05)
                                     ),
-                                    valueBoxOutput(outputId = "power_2means_hypo", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_2means_hypo"), "</b>")), align = "center"))
+                                    )
                                 )
                             )
                         ),
@@ -777,7 +828,10 @@ body <- dashboardBody(
                                           label = HTML("Epsilon (&epsilon;)"),
                                           value = 0.5),
                             ),
-                            valueBoxOutput(outputId = "n_cohort_est", width = 6)
+                            box(
+                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_cohort_est"), "</b>")), align = "center"))
+                            )
                         ),
                         box(title = "Hướng dẫn", width = 6,
                             p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2}{[log_e(1-\\varepsilon)]^2} \\left[ \\frac{1-P_1}{P_1}+\\frac{1-P_2}{P_2} \\right]$$"),
@@ -823,7 +877,10 @@ body <- dashboardBody(
                                                   label = HTML("Power (1-&beta;)"),
                                                   value = 0.8)
                                     ),
-                                    valueBoxOutput(outputId = "n_cohort_hypo", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n_cohort_hypo"), "</b>")), align = "center"))
+                                    )
                                 )
                             ),
                             tabPanel(
@@ -845,7 +902,10 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu (n)",
                                                   value = 100)
                                     ),
-                                    valueBoxOutput(outputId = "power_cohort_hypo", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_cohort_hypo"), "</b>")), align = "center"))
+                                    )
                                 )
                             )
                         ),
@@ -891,7 +951,10 @@ body <- dashboardBody(
                                           label = HTML("Sai số tương đối (&epsilon;)"),
                                           value = 0.5),
                             ),
-                            valueBoxOutput(outputId = "n_case_est", width = 6)
+                            box(
+                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_case_est"), "</b>")), align = "center"))
+                            )
                         ),
                         box(title = "Hướng dẫn", width = 6,
                             p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2}{[log_e(1-\\varepsilon)]^2} \\left[ \\frac{1}{P_1(1-P_1)}+\\frac{1}{P_2(1-P_2)} \\right]$$"),
@@ -937,7 +1000,10 @@ body <- dashboardBody(
                                                   label = HTML("Power (1-&beta;)"),
                                                   value = 0.8)
                                     ),
-                                    valueBoxOutput(outputId = "n_case_hypo", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n_case_hypo"), "</b>")), align = "center"))
+                                    )
                                 )
                             ),
                             tabPanel(
@@ -959,7 +1025,10 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu (n)",
                                                   value = 100)
                                     ),
-                                    valueBoxOutput(outputId = "power_case_hypo", width = 6)
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_case_hypo"), "</b>")), align = "center"))
+                                    )
                                 )
                             )
                         ),
@@ -1036,7 +1105,10 @@ body <- dashboardBody(
                                           label = HTML("Power (1-&beta;)"),
                                           value = 0.8)
                             ),
-                            valueBoxOutput(outputId = "n_corr", width = 6)
+                            box(
+                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_corr"), "</b>")), align = "center"))
+                            )
                         ),
                         box(title = "Hướng dẫn", width = 6,
                             p("Phần này sẽ dùng để giải thích ý nghĩa các tham số"),
