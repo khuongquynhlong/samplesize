@@ -368,12 +368,12 @@ shinyServer(function(input, output) {
                 value = 0.1)
     } else if (input$precision_type_1mean_est == 2) {
       list(
-        textInput(inputId = "mean_1mean_est", 
-                  label = HTML("Trung bình quần thể (&mu;)"), 
-                  value = 10),
         textInput(inputId = "eps_1mean_est",
                   label = HTML("Sai số tương đối (&epsilon;)"),
-                  value = 0.05)
+                  value = 0.05),
+        textInput(inputId = "mean_1mean_est", 
+                  label = HTML("Trung bình quần thể (&mu;)"), 
+                  value = 10)
       )
     }
   })
