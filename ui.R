@@ -110,7 +110,7 @@ body <- dashboardBody(
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1prop_est"), "</b>")), align = "center"))
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
+                        box(title = "Công thức", width = 6,
                             conditionalPanel(
                                 condition = "input.precision_type_1prop_est == 1",
                                 withMathJax(),
@@ -232,7 +232,7 @@ body <- dashboardBody(
                             )
                         ),
                         
-                        box(title = "Hướng dẫn", width = 6,
+                        box(title = "Công thức", width = 6,
                             withMathJax(),
                             p("$$n=\\frac{\\left\\{Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_0(1-P_0)} + Z_{1-\\beta}\\sqrt{P_a(1-P_a)}\\right\\}^2}{(P_a - P_0)^2}$$")
                         )
@@ -277,7 +277,7 @@ body <- dashboardBody(
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_2props_est"), "</b>")), align = "center"))
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
+                        box(title = "Công thức", width = 6,
                             withMathJax(),
                             p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2 \\left[P_1(1-P_1)+P_2(1-P_2)\\right]}{d^2}$$")
                         ),
@@ -362,7 +362,7 @@ body <- dashboardBody(
                                 )
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
+                        box(title = "Công thức", width = 6,
                             withMathJax(),
                             p("$$n=\\frac{ \\left\\{ Z_{1-\\frac{\\alpha}{2}}\\sqrt{2\\overline{P}(1-\\overline{P})}+Z_{1-\\beta}\\sqrt{P_1(1-P_1)+P_2(1-P_2)}\\right\\}^2}{(P_1-P_2)^2}$$"),
                             helpText("Công thức này giống với công thức kiểm định giả thuyết cho nguy cơ tương đối (nghiên cứu thuần tập)")
@@ -504,7 +504,7 @@ body <- dashboardBody(
                                 )
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
+                        box(title = "Công thức", width = 6,
                             withMathJax(),
                             p("$$n=\\frac{(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{2(\\arcsin\\sqrt{P_2}-\\arcsin\\sqrt{P_1})^2}$$")
                         )
@@ -549,7 +549,7 @@ body <- dashboardBody(
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1mean_est"), "</b>")), align = "center"))
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
+                        box(title = "Công thức", width = 6,
                             conditionalPanel(
                                 condition = "input.precision_type_1mean_est == 1",
                                 withMathJax(),
@@ -639,9 +639,8 @@ body <- dashboardBody(
                                 )
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
+                        box(title = "Công thức", width = 6,
                             withMathJax(),
-                            p("Phần này sẽ dùng để giải thích ý nghĩa các tham số"),
                             p("$$n=\\frac{\\sigma^2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{(\\mu_0-\\mu_a)^2}$$")
                         )
                     )
@@ -682,10 +681,9 @@ body <- dashboardBody(
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_2means_est"), "</b>")), align = "center"))
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
+                        box(title = "Công thức", width = 6,
                             withMathJax(),
-                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2(2\\sigma^2)}{d^2}$$"),
-                            p("alpha, power")
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2(2\\sigma^2)}{d^2}$$")
                         ),
                     )
                 )
@@ -782,7 +780,7 @@ body <- dashboardBody(
                                 )
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
+                        box(title = "Công thức", width = 6,
                             withMathJax(),
                             p("$$n=\\frac{2\\sigma^2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{(\\mu_1-\\mu_2)^2}$$"),
                             p(HTML("&sigma;: được tính bằng công thức")),
@@ -830,9 +828,8 @@ body <- dashboardBody(
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_cohort_est"), "</b>")), align = "center"))
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
-                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2}{[log_e(1-\\varepsilon)]^2} \\left[ \\frac{1-P_1}{P_1}+\\frac{1-P_2}{P_2} \\right]$$"),
-                            p("alpha, power")
+                        box(title = "Công thức", width = 6,
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2}{[log_e(1-\\varepsilon)]^2} \\left[ \\frac{1-P_1}{P_1}+\\frac{1-P_2}{P_2} \\right]$$")
                         )
                     )
                 )
@@ -906,9 +903,8 @@ body <- dashboardBody(
                                 )
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
-                            p("$$n=\\frac{ \\left\\{ Z_{1-\\frac{\\alpha}{2}}\\sqrt{2\\overline{P}(1-\\overline{P})}+Z_{1-\\beta}\\sqrt{P_1(1-P_1)+P_2(1-P_2)}\\right\\}^2}{(P_1-P_2)^2}$$"),
-                            p("alpha, power")
+                        box(title = "Công thức", width = 6,
+                            p("$$n=\\frac{ \\left\\{ Z_{1-\\frac{\\alpha}{2}}\\sqrt{2\\overline{P}(1-\\overline{P})}+Z_{1-\\beta}\\sqrt{P_1(1-P_1)+P_2(1-P_2)}\\right\\}^2}{(P_1-P_2)^2}$$")
                         )
                     )
                 )
@@ -953,9 +949,8 @@ body <- dashboardBody(
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_case_est"), "</b>")), align = "center"))
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
-                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2}{[log_e(1-\\varepsilon)]^2} \\left[ \\frac{1}{P_1(1-P_1)}+\\frac{1}{P_2(1-P_2)} \\right]$$"),
-                            p("alpha, power")
+                        box(title = "Công thức", width = 6,
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2}{[log_e(1-\\varepsilon)]^2} \\left[ \\frac{1}{P_1(1-P_1)}+\\frac{1}{P_2(1-P_2)} \\right]$$")
                         )
                     )
                 )
@@ -1029,9 +1024,8 @@ body <- dashboardBody(
                                 )
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
-                            p("$$n=\\frac{ \\left\\{ Z_{1-\\frac{\\alpha}{2}}\\sqrt{2P_2(1-P_2)}+Z_{1-\\beta}\\sqrt{P_1(1-P_1)+P_2(1-P_2)}\\right\\}^2}{(P_1-P_2)^2}$$"),
-                            p("alpha, power")
+                        box(title = "Công thức", width = 6,
+                            p("$$n=\\frac{ \\left\\{ Z_{1-\\frac{\\alpha}{2}}\\sqrt{2P_2(1-P_2)}+Z_{1-\\beta}\\sqrt{P_1(1-P_1)+P_2(1-P_2)}\\right\\}^2}{(P_1-P_2)^2}$$")
                         )
                     )
                 )
@@ -1073,9 +1067,8 @@ body <- dashboardBody(
                             ),
                             valueBoxOutput(outputId = "n_simple_random", width = 6)
                         ),
-                        box(title = "Hướng dẫn", width = 6,
-                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2P(1-P)N}{d^2(N-1)+Z_{1-\\frac{\\alpha}{2}}^2P(1-P)}$$"),
-                            p("alpha, power")
+                        box(title = "Công thức", width = 6,
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2P(1-P)N}{d^2(N-1)+Z_{1-\\frac{\\alpha}{2}}^2P(1-P)}$$")
                         )
                     )
                 )
@@ -1107,9 +1100,8 @@ body <- dashboardBody(
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_corr"), "</b>")), align = "center"))
                             )
                         ),
-                        box(title = "Hướng dẫn", width = 6,
-                            p("Phần này sẽ dùng để giải thích ý nghĩa các tham số"),
-                            p("alpha, power")
+                        box(title = "Công thức", width = 6,
+                            p("Đang cập nhật")
                         )
                     )
                 )
