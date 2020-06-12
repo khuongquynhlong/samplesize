@@ -1119,12 +1119,34 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(width = 6, side = "left", title = "Đang cập nhật"),
-                        box(title = "Đang cập nhật", width = 6)
+                        box(title = "Tính cỡ mẫu", width = 6,
+                            box(
+                                textInput(inputId = "alphasens", 
+                                          label = HTML("Alpha (&alpha;)"), 
+                                          value = 0.05),
+                                textInput(inputId = "sen_sens",
+                                          label = HTML("Độ nhạy ước tính (Sens)"),
+                                          value = 0.8),
+                                textInput(inputId = "error_sens",
+                                          label = HTML("Sai số tuyệt đối (d)"),
+                                          value = 0.05),
+                                textInput(inputId = "p_sens",
+                                          label = HTML("Tỷ lệ bệnh hiện hành (P)"),
+                                          value = 0.2)
+                            ),
+                            box(
+                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_sen"), "</b>")), align = "center"))
+                            )
+                        ),
+                        box(title = "Công thức", width = 6,
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2Sens(1-Sens)}{d^2*P}$$")
+                        )
                     )
                 )
             )
         ), 
+        
         
         ### Specificity
         
@@ -1135,12 +1157,34 @@ body <- dashboardBody(
                 tabPanel(
                     title = "Nhập số",
                     fluidRow(
-                        box(width = 6, side = "left", title = "Đang cập nhật"),
-                        box(title = "Đang cập nhật", width = 6)
+                        box(title = "Tính cỡ mẫu", width = 6,
+                            box(
+                                textInput(inputId = "alphaspec", 
+                                          label = HTML("Alpha (&alpha;)"), 
+                                          value = 0.05),
+                                textInput(inputId = "spec_spec",
+                                          label = HTML("Độ đặc hiệu ước tính (Spec)"),
+                                          value = 0.8),
+                                textInput(inputId = "error_spec",
+                                          label = HTML("Sai số tuyệt đối (d)"),
+                                          value = 0.05),
+                                textInput(inputId = "p_spec",
+                                          label = HTML("Tỷ lệ bệnh hiện hành (P)"),
+                                          value = 0.2)
+                            ),
+                            box(
+                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_spec"), "</b>")), align = "center"))
+                            )
+                        ),
+                        box(title = "Công thức", width = 6,
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2Spec(1-Spec)}{d^2*(1-P)}$$")
+                        )
                     )
                 )
             )
         ), 
+        
         
         ### AUC
         

@@ -9,6 +9,7 @@ source(file = "functions/continuous.R", local = TRUE)
 source(file = "functions/cohort.R", local = TRUE)
 source(file = "functions/case_control.R", local = TRUE)
 source(file = "functions/simple_random.R", local = TRUE)
+source(file = "functions/diagnosis.R", local = TRUE)
 
 shinyServer(function(input, output) {
   
@@ -675,4 +676,42 @@ shinyServer(function(input, output) {
   output$n_corr <- renderText({
     ceiling(n_corr())
   })
+  
+  ##### Sensitivity #####
+  # Sample size
+  n_sen <- reactive({
+    req(as.numeric(input$alphasens)>0&
+          as.numeric(input$sen_sens)>0&
+          as.numeric(input$error_sens)>0&
+          as.numeric(input$p_sens)>0,
+        cancelOutput = TRUE)
+    fun_sen_est(alpha = as.numeric(input$alphasens), 
+                sens = as.numeric(input$sen_sens), 
+                d = as.numeric(input$error_sens),
+                p = as.numeric(input$p_sens))
+  })
+  
+  output$n_sen <- renderText({
+    n_sen()
+  })
+  
+  ##### Specificity #####
+  # Sample size
+  n_spec <- reactive({
+    req(as.numeric(input$alphaspec)>0&
+          as.numeric(input$spec_spec)>0&
+          as.numeric(input$error_spec)>0&
+          as.numeric(input$p_spec)>0,
+        cancelOutput = TRUE)
+    fun_spec_est(alpha = as.numeric(input$alphaspec), 
+                spec = as.numeric(input$spec_spec), 
+                d = as.numeric(input$error_spec),
+                p = as.numeric(input$p_spec))
+  })
+  
+  output$n_spec <- renderText({
+    n_spec()
+  })
+  
 })
+
