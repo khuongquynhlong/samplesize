@@ -6,6 +6,7 @@ library(plotly)
 
 # shinydashboard icons were obtained at:
 # https://fontawesome.com/icons
+source(file = "functions/myBox.R", local = TRUE)
 
 sidebar <- dashboardSidebar(
     sidebarMenu(
@@ -1187,7 +1188,7 @@ body <- dashboardBody(
         tabItem(
             tabName = "landing_page",
             fluidRow(
-                box(width = 12, background = "navy",
+                myBox(width = 12, height = 900, background = "#222d32",color = "white",
                     #p(HTML('<left><img src="Logo1.png" style="width: 10vw; min-width: 250x;"></left>')),
                     #tags$br(),
                     p(HTML("<left> <b> <p style='font-size:35px;color:white;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU LTM 1.0 </sup> </p> </b> </left>")),
