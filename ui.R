@@ -1186,24 +1186,23 @@ body <- dashboardBody(
             )
         ), 
         
-        
-        
+
         
         tabItem(
             tabName = "landing_page",
             fluidRow(
-                box(width = 12,
-                    p(HTML('<center><img src="Logo.png" style="width: 20vw; min-width: 250x;"></center>')),
+                box(width = 12, background = "navy",
+                    #p(HTML('<left><img src="Logo1.png" style="width: 10vw; min-width: 250x;"></left>')),
+                    #tags$br(),
+                    p(HTML("<left> <b> <p style='font-size:35px;color:white;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU LTM 1.0 </sup> </p> </b> </left>")),
+                    p(HTML("<left> <b> <p style='font-size:30px;color:white;'> Dành cho các nghiên cứu khoa học sức khỏe </p> </b> </left>")),
+                    # p(HTML("<left> <i> <p style='font-size:15px;color:darkblue;'>  (Phiên bản v1.0-2020) </p> </i> </left>")),
+                    p(HTML("<left> <b> <p style='font-size:17px;color:white;'> </b> <i>  Tác giả: Khương Quỳnh Long, Ong Phúc Thịnh, Hoàng Văn Minh </i> </p>  </left>")),
                     tags$br(),
-                    p(HTML("<center> <b> <p style='font-size:35px;color:darkblue;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU LTM<sup>&trade;</sup> </p> </b> </center>")),
-                    p(HTML("<center> <b> <p style='font-size:20px;color:darkblue;'> (Dùng trong các Nghiên cứu Khoa học Sức khỏe) </p> </b> </center>")),
-                    p(HTML("<center> <i> <p style='font-size:15px;color:darkblue;'>  (Phiên bản v1.0-2020) </p> </i> </center>")),
-                    p(HTML("<center> <b> <p style='font-size:17px;color:darkblue;'> Tác giả: </b> <i> Khương Quỳnh Long, Ong Phúc Thịnh, Hoàng Văn Minh </i> </p>  </center>")),
+                    # p(HTML('<left><img src="Sampling.gif" style="width: 20vw; min-width: 250x;"></left>')),
+                    p(HTML('<left><img src="Sample1.jpg" style="width: 30vw; min-width: 250x;"></left>')),
                     tags$br(),
-                    p(HTML('<center><img src="Sampling.gif" style="width: 30vw; min-width: 250x;"></center>')),
-                    tags$br(),
-                    p(HTML("<p style='font-size:15px;color:darkblue;text-align:left'> Trang web đang trong quá trình xây dựng và thử nghiệm </p>")),
-                    p(HTML("<p style='font-size:15px;color:darkblue;text-align:left'> Mọi thắc mắc vui lòng liên hệ nhóm tác giả; email: kql@huph.edu.vn </p>"))
+                    p(HTML("<i> <p style='font-size:12px;color:white;text-align:left'> (Phần mềm đang trong quá trình xây dựng và thử nghiệm, mọi góp ý xin vui lòng liên hệ nhóm tác giả; <u> Email: kql@huph.edu.vn </u>) </p> </i>")),
                     # p(HTML("<i> <p style='font-size:10px;color:darkblue;text-align:right'> @Phần mềm được viết bằng ngôn ngữ R với ứng dụng Shiny    </p> </i>"))
                     )
                 )
@@ -1211,9 +1210,9 @@ body <- dashboardBody(
         )
     )
 
-dashboardPage(title = "Phần mềm tính toán cỡ mẫu LTM",
+dashboardPage(title = "Phần mềm tính toán cỡ mẫu LTM 1.0",
     dashboardHeader(
-        title = span(icon("dna"), HTML("Tính cỡ mẫu LTM<sup>&trade;")),
+        title = span(icon("dna"), HTML("Cỡ mẫu LTM 1.0")),
         tags$li(
             a(icon("question-circle"),
               strong("Help"),
