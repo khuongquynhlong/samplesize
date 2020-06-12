@@ -1180,7 +1180,7 @@ body <- dashboardBody(
         tabItem(
             tabName = "landing_page",
             fluidRow(
-                myBox(width = 6, background = "#222d32",color = "white",
+                myBox(width = 10, background = "#222d32",color = "white",
                     #p(HTML('<left><img src="Logo1.png" style="width: 10vw; min-width: 250x;"></left>')),
                     #tags$br(),
                     p(HTML("<left> <b> <p style='font-size:35px;color:white;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU LTM 1.0 </sup> </p> </b> </left>")),
@@ -1188,7 +1188,7 @@ body <- dashboardBody(
                     # p(HTML("<left> <i> <p style='font-size:15px;color:darkblue;'>  (Phiên bản v1.0-2020) </p> </i> </left>")),
                     p(HTML("<left> <b> <p style='font-size:15px;color:white;'> </b> <i>  Tác giả: Khương Quỳnh Long, Ong Phúc Thịnh, Hoàng Văn Minh </i> </p>  </left>")),
                     tags$br(),
-                    p(HTML('<left><img src="Sampling2.gif" style="width: 30vw; min-width: 250x;"></left>')),
+                    p(HTML('<left><img src="Sampling2.gif" style="width: 30w; min-width: 1000x;"></left>')),
                     # p(HTML('<left><img src="Sample1.jpg" style="width: 30vw; min-width: 250x;"></left>')),
                     tags$br(),
                     tags$br(),
