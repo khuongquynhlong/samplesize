@@ -15,55 +15,31 @@ sidebar <- dashboardSidebar(
             tabName = "landing_page"
         ),
         menuItem(
-            "Biến định tính", 
+            "Nghiên cứu dựa trên ước lượng khoảng", 
             icon = icon("percentage"), startExpanded = FALSE,
-            menuSubItem("Ước lượng 1 tỷ lệ", tabName = "1prop_est"),
-            menuSubItem("So sánh với tỷ lệ quần thể", tabName = "1prop_hypo"),
-            menuSubItem("Ước lượng khác biệt 2 tỷ lệ", tabName = "2props_est"),
-            menuSubItem("So sánh 2 tỷ lệ", tabName = "2props_hypo"),
-            menuSubItem("So sánh 2 tỷ lệ (tỷ lệ nhỏ)", tabName = "2props_hypo_small")
+            menuSubItem("Nghiên cứu gồm 1 mẫu, xác định 1 trung bình", tabName = "1mean_est"),
+            menuSubItem("Nghiên cứu gồm 1 mẫu, xác định 1 tỷ lệ", tabName = "1prop_est"),
+            menuSubItem("Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 trung bình", tabName = "2means_ind_est"),
+            menuSubItem("Nghiên cứu 2 mẫu ghép cặp, xác định sự khác biệt 2 trung bình", tabName = "2props_pair_est"),
+            menuSubItem("Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 tỷ lệ", tabName = "2props_est")
             ),
         menuItem(
-            "Biến định lượng", 
+            "Nghiên cứu dựa trên kiểm định giả thuyết", 
             icon = icon("chart-line"), startExpanded = FALSE,
-            menuSubItem("Ước lượng 1 trung bình", tabName = "1mean_est"),
-            menuSubItem("Kiểm định giả thuyết cho 1 trung bình", tabName = "1mean_hypo"),
-            menuSubItem("Ước lượng khác biệt giữa 2 trung bình", tabName = "2means_est"),
-            menuSubItem("So sánh 2 trung bình", tabName = "2means_hypo")
-            ),
-        menuItem(
-            "Nghiên cứu thuần tập",
-            icon = icon("university"), startExpanded = FALSE,
-            menuSubItem("Ước lượng nguy cơ tương đối", tabName = "cohort_est"),
-            menuSubItem("Kiểm định giả thuyết cho nguy cơ tương đối", tabName = "cohort_hypo")
-        ),
-        menuItem(
-            "Nghiên cứu bệnh chứng",
-            icon = icon("microscope"), startExpanded = FALSE,
-            menuSubItem("Ước lượng OR với sai số tương đối", tabName = "case_est"),
-            menuSubItem("So sánh 2 OR", tabName = "case_hypo")
-        ),
-        # menuItem(
-        #     "Lấy mẫu ngẫu nhiên đơn",
-        #     icon = icon("poll"), startExpanded = FALSE,
-        #     tabName = "simple_random"
-        # ),
-        menuItem(
-            "Hệ số tương quan", 
-            icon = icon("chart-area"), startExpanded = FALSE,
-            tabName = "corr"
-            ),
-        menuItem(
-            "Test chẩn đoán", 
-            icon = icon("vial"), startExpanded = FALSE,
-            menuSubItem("Độ nhạy", tabName = "sens"),
-            menuSubItem("Độ đặc hiệu", tabName = "spec"),
-            menuSubItem("Diện tích dưới đường cong", tabName = "AUC")
-        ),
-        menuItem(
-            "Hồi quy đa biến", 
-            icon = icon("registered"), startExpanded = FALSE,
-            tabName = "samregress"
+            menuSubItem("Nghiên cứu gồm 1 mẫu, kiểm định 1 trung bình", tabName = "1mean_hypo"),
+            menuSubItem("Nghiên cứu gồm 1 mẫu, kiểm định 1 tỷ lệ", tabName = "1prop_hypo"),
+            menuSubItem("Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 trung bình", tabName = "2means_ind_hypo"),
+            menuSubItem("Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 trung bình", tabName = "2means_pair_hypo"),
+            menuSubItem("Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 tỷ lệ", tabName = "2props_ind_hypo"),
+            menuSubItem("Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 tỷ lệ", tabName = "2props_pair_hypo"),
+            menuSubItem("Nghiên cứu bệnh chứng, kiểm định OR", tabName = "case_or"),
+            menuSubItem("Nghiên cứu thuần tập, kiểm định RR", tabName = "cohort_rr"),
+            menuSubItem("Nghiên cứu sống còn", tabName = "survive"),
+            menuSubItem("Nghiên cứu nghiệm pháp chẩn đoán", tabName = "diag_test"),
+            menuSubItem("Nghiên cứu tương đương", tabName = "equi_trial"),
+            menuSubItem("Nghiên cứu không kém hơn", tabName = "noninfer_trial"),
+            menuSubItem("Nghiên cứu thử nghiệm lâm sàng theo cụm", tabName = "cluster_randomize"),
+            menuSubItem("Cỡ mẫu cho mô hình hồi quy", tabName = "regression")
         )
     )
 )
