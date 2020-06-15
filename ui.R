@@ -542,7 +542,7 @@ body <- dashboardBody(
             )
         ),
         
-        ##### Hypothesis testing for 1 population mean #####
+        ##### NC 1 mau, kiem dinh 1 trung binh #####
         tabItem(
             tabName = "1mean_hypo",
             tabsetPanel(
@@ -556,21 +556,21 @@ body <- dashboardBody(
                                 title = "Tính cỡ mẫu",
                                 fluidRow(
                                     box(
-                                        textInput(inputId = "sd_1mean_hypo",
-                                                  label = HTML("Độ lệch chuẩn quần thể (&sigma;)"),
-                                                  value = 20),
                                         textInput(inputId = "alpha_1mean_hypo",
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         textInput(inputId = "power_1mean_hypo",
                                                   label = HTML("Lực thống kê (1-&beta;)"),
                                                   value = 0.8),
+                                        textInput(inputId = "m1_1mean_hypo", 
+                                                  label = HTML("Trung bình theo giả thuyết H<sub>1</sub> (&mu;<sub>1</sub>)"), 
+                                                  value = 100),
                                         textInput(inputId = "m0_1mean_hypo", 
-                                                  label = HTML("Trung bình quần thể (&mu;<sub>0</sub>)"), 
-                                                  value = 90),
-                                        textInput(inputId = "ma_1mean_hypo", 
-                                                  label = HTML("Trung bình nhóm so sánh (&mu;<sub>a</sub>)"), 
-                                                  value = 85)
+                                                  label = HTML("Trung bình theo giả thuyết H<sub>0</sub> (&mu;<sub>0</sub>)"), 
+                                                  value = 95),
+                                        textInput(inputId = "sd_1mean_hypo",
+                                                  label = HTML("Độ lệch chuẩn (&sigma;)"),
+                                                  value = 9.8)
                                     ),
                                     box(
                                         textInput(inputId = "nonrep_1mean_hypo",
@@ -590,15 +590,15 @@ body <- dashboardBody(
                                 title = "Tính lực thống kê",
                                 fluidRow(
                                     box(
+                                        textInput(inputId = "m1_1mean_hypo_power", 
+                                                  label = HTML("Trung bình theo giả thuyết H<sub>1</sub> (&mu;<sub>1</sub>)"), 
+                                                  value = 100),
                                         textInput(inputId = "m0_1mean_hypo_power", 
-                                                  label = HTML("Trung bình quần thể (&mu;<sub>0</sub>)"), 
-                                                  value = 90),
-                                        textInput(inputId = "ma_1mean_hypo_power", 
-                                                  label = HTML("Trung bình nhóm so sánh (&mu;<sub>a</sub>)"), 
-                                                  value = 85),
+                                                  label = HTML("Trung bình theo giả thuyết H<sub>0</sub> (&mu;<sub>0</sub>)"), 
+                                                  value = 95),
                                         textInput(inputId = "sd_1mean_hypo_power",
-                                                  label = HTML("Độ lệch chuẩn quần thể (&sigma;)"),
-                                                  value = 20)
+                                                  label = HTML("Độ lệch chuẩn (&sigma;)"),
+                                                  value = 9.8)
                                     ),
                                     box(
                                         textInput(inputId = "alpha_1mean_hypo_power",
@@ -606,7 +606,7 @@ body <- dashboardBody(
                                                   value = 0.05),
                                         textInput(inputId = "n_1mean_hypo_power",
                                                   label = "Cỡ mẫu (n)",
-                                                  value = 100)
+                                                  value = 31)
                                     ),
                                     box(
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
@@ -617,7 +617,8 @@ body <- dashboardBody(
                         ),
                         box(title = "Công thức", width = 6,
                             withMathJax(),
-                            p("$$n=\\frac{\\sigma^2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{(\\mu_0-\\mu_a)^2}$$")
+                            p("$$n=\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}}{ES}\\right)^2$$"),
+                            p("$$ES=\\frac{\\mu_1-\\mu_0}{\\sigma}$$")
                         )
                     )
                 )

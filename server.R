@@ -406,24 +406,24 @@ shinyServer(function(input, output) {
     n_1mean_est()
   })
   
-  ##### Hypothesis testing for 1 population mean #####
+  ##### NC 1 mau, kiem dinh 1 trung binh #####
   # Sample size
   n_1mean_hypo <- reactive({
-    req(as.numeric(input$m0_1mean_hypo)>0&
-          as.numeric(input$ma_1mean_hypo)>0&
+    req(as.numeric(input$m1_1mean_hypo)>0&
+          as.numeric(input$m0_1mean_hypo)>0&
           as.numeric(input$sd_1mean_hypo)>0&
           as.numeric(input$alpha_1mean_hypo)>0&
           as.numeric(input$power_1mean_hypo)>0&
           as.numeric(input$nonrep_1mean_hypo)>=0&
           as.numeric(input$nonrep_1mean_hypo)<=1,
         cancelOutput = TRUE)
-    fun_1mean_hypo(sd = as.numeric(input$sd_1mean_hypo), 
-                   m_0 = as.numeric(input$m0_1mean_hypo), 
-                   m_a = as.numeric(input$ma_1mean_hypo), 
+    fun_1mean_hypo(m1 = as.numeric(input$m1_1mean_hypo), 
+                   m0 = as.numeric(input$m0_1mean_hypo), 
+                   sd = as.numeric(input$sd_1mean_hypo), 
                    alpha = as.numeric(input$alpha_1mean_hypo), 
-                   power = as.numeric(input$power_1mean_hypo),
-                   nonrep = as.numeric(input$nonrep_1mean_hypo), 
-                   deseff = input$deseff_1mean_hypo)
+                   power = as.numeric(input$power_1mean_hypo), 
+                   nonrep = 0, 
+                   deseff = 1)
   })
   output$n_1mean_hypo <- renderText({
     n_1mean_hypo()
@@ -432,13 +432,13 @@ shinyServer(function(input, output) {
   # Power
   power_1mean_hypo <- reactive({
     req(as.numeric(input$m0_1mean_hypo_power)>=0&
-          as.numeric(input$ma_1mean_hypo_power)>=0&
+          as.numeric(input$m1_1mean_hypo_power)>=0&
           as.numeric(input$sd_1mean_hypo_power)>0&
           as.numeric(input$alpha_1mean_hypo_power)>0&
           as.numeric(input$n_1mean_hypo_power)>0,
         cancelOutput = TRUE)
-    fun_1mean_hypo_power(m_0 = as.numeric(input$m0_1mean_hypo_power), 
-                         m_a = as.numeric(input$ma_1mean_hypo_power), 
+    fun_1mean_hypo_power(m1 = as.numeric(input$m1_1mean_hypo_power), 
+                         m0 = as.numeric(input$m0_1mean_hypo_power), 
                          sd = as.numeric(input$sd_1mean_hypo_power), 
                          alpha = as.numeric(input$alpha_1mean_hypo_power), 
                          n = as.numeric(input$n_1mean_hypo_power))

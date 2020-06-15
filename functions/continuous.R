@@ -14,17 +14,19 @@ fun2_1mean_est <- function(sd, alpha, mean, eps, nonrep = 0, deseff = 1) {
 }
 
 ##### Kiem dinh gia thuyet cho 1 trung binh #####
-fun_1mean_hypo <- function(sd, m_0, m_a, alpha, power, nonrep = 0, deseff = 1) {
+fun_1mean_hypo <- function(m1, m0, sd, alpha, power, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
-  n <- sd^2*(z_a+z_b)^2/(m_0-m_a)^2
+  es <- (m1-m0)/sd
+  n <- ((z_a+z_b)/es)^2
   n <- n*deseff/(1-nonrep)
   return(ceiling(n))
 }
 
-fun_1mean_hypo_power <- function(sd, m_0, m_a, alpha, n) {
+fun_1mean_hypo_power <- function(m1, m0, sd, alpha, n) {
   z_a <- qnorm(1-alpha/2)
-  z_b <- sqrt(n*(m_0-m_a)^2/sd^2)-z_a
+  es <- (m1-m0)/sd
+  z_b <- sqrt(n)*es-z_a
   power <- pnorm(z_b)
   return(round(power, 2))
 }
