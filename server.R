@@ -134,22 +134,22 @@ shinyServer(function(input, output) {
     df_plot_1prop_est()
   })
   
-  ##### Hypothesis test for a population proportion #####
+  ##### NC 1 mau, kiem dinh 1 ty le #####
   # Sample size
   n_1prop_hypo <- reactive({
     req(as.numeric(input$p0_1prop_hypo)>0&
-          as.numeric(input$pa_1prop_hypo)>0&
+          as.numeric(input$p1_1prop_hypo)>0&
           as.numeric(input$alpha_1prop_hypo)>0&
           as.numeric(input$power_1prop_hypo)>0&
           as.numeric(input$nonrep_1prop_hypo)>=0&
-          as.numeric(input$nonrep_1prop_hypo)<=1,
+          as.numeric(input$deseff_1prop_hypo)<=1,
         cancelOutput = TRUE)
-    fun_1prop_hypo(p_0 = as.numeric(input$p0_1prop_hypo), 
-                   p_a = as.numeric(input$pa_1prop_hypo), 
+    fun_1prop_hypo(p1 = as.numeric(input$p1_1prop_hypo), 
+                   p0 = as.numeric(input$p0_1prop_hypo), 
                    alpha = as.numeric(input$alpha_1prop_hypo), 
-                   power = as.numeric(input$power_1prop_hypo),
+                   power = as.numeric(input$power_1prop_hypo), 
                    nonrep = as.numeric(input$nonrep_1prop_hypo), 
-                   deseff = input$deseff_1prop_hypo)
+                   deseff = as.numeric(input$deseff_1prop_hypo))
   })
   output$n_1prop_hypo <- renderText({
     n_1prop_hypo()
