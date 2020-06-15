@@ -140,82 +140,6 @@ body <- dashboardBody(
             )
         ),
         
-        ##### Hypothesis test for 1 population proportion #####
-        tabItem(
-            tabName = "1prop_hypo",
-            tabsetPanel(
-                type = "tabs",
-                tabPanel(
-                    title = "Nhập số",
-                    fluidRow(
-                        tabBox(
-                            width = 6, side = "left", 
-                            tabPanel(
-                                title = "Tính cỡ mẫu",
-                                fluidRow(
-                                    box(
-                                        textInput(inputId = "alpha_1prop_hypo",
-                                                  label = HTML("Alpha (&alpha;)"),
-                                                  value = 0.05),
-                                        textInput(inputId = "p0_1prop_hypo", 
-                                                  label = HTML("Tỷ lệ quần thể (P<sub>0</sub>)"), 
-                                                  value = 0.30),
-                                        textInput(inputId = "power_1prop_hypo",
-                                                  label = HTML("Lực thống kê (1-&beta;)"),
-                                                  value = 0.8),
-                                        textInput(inputId = "pa_1prop_hypo",
-                                                  label = HTML("Tỷ lệ ước tính (P<sub>a</sub>)"),
-                                                  value = 0.20)
-                                    ),
-                                    box(
-                                        textInput(inputId = "nonrep_1prop_hypo",
-                                                  label = "Tỷ lệ không trả lời",
-                                                  value = 0),
-                                        numericInput(inputId = "deseff_1prop_hypo",
-                                                     label = "Hệ số thiết kế",
-                                                     value = 1)
-                                    ),
-                                    box(
-                                        p(HTML("<center><b>Cỡ mẫu</b></center>")),
-                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1prop_hypo"), "</b>")), align = "center"))
-                                    )
-                                )
-                            ),
-                            tabPanel(
-                                title = "Tính lực thống kê",
-                                fluidRow(
-                                    box(
-                                        textInput(inputId = "p0_1prop_hypo_power", 
-                                                  label = HTML("Tỷ lệ quần thể (P<sub>0</sub>)"), 
-                                                  value = 0.30),
-                                        textInput(inputId = "pa_1prop_hypo_power",
-                                                  label = HTML("Tỷ lệ ước tính (P<sub>a</sub>)"),
-                                                  value = 0.20)
-                                    ),
-                                    box(
-                                        textInput(inputId = "alpha_1prop_hypo_power",
-                                                  label = HTML("Alpha (&alpha;)"),
-                                                  value = 0.05),
-                                        textInput(inputId = "n_1prop_hypo_power",
-                                                  label = "Cỡ mẫu (n)",
-                                                  value = 100)
-                                    ),
-                                    box(
-                                        p(HTML("<center><b>Lực thống kê</b></center>")),
-                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_1prop_hypo"), "</b>")), align = "center"))
-                                    )
-                                )
-                            )
-                        ),
-                        
-                        box(title = "Công thức", width = 6,
-                            withMathJax(),
-                            p("$$n=\\frac{\\left\\{Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_0(1-P_0)} + Z_{1-\\beta}\\sqrt{P_a(1-P_a)}\\right\\}^2}{(P_a - P_0)^2}$$")
-                        )
-                    )
-                )
-            )
-        ),
         
         ##### Estimate difference between 2 proportions #####
         tabItem(
@@ -624,6 +548,85 @@ body <- dashboardBody(
                 )
             )
         ),
+        
+        ##### NC 1 mau, kiem dinh 1 ty le #####
+        tabItem(
+            tabName = "1prop_hypo",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        tabBox(
+                            width = 6, side = "left", 
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "alpha_1prop_hypo",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "power_1prop_hypo",
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
+                                                  value = 0.8),
+                                        textInput(inputId = "p1_1prop_hypo", 
+                                                  label = HTML("Kết quả theo giả thuyết H<sub>1</sub> (p<sub>1</sub>)"), 
+                                                  value = 0.31),
+                                        textInput(inputId = "p0_1prop_hypo",
+                                                  label = HTML("Kết quả theo giả thuyết H<sub>0</sub> (p<sub>0</sub>)"),
+                                                  value = 0.26)
+                                    ),
+                                    box(
+                                        textInput(inputId = "nonrep_1prop_hypo",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_1prop_hypo",
+                                                     label = "Hệ số thiết kế",
+                                                     value = 1)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1prop_hypo"), "</b>")), align = "center"))
+                                    )
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính lực thống kê",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "p0_1prop_hypo_power", 
+                                                  label = HTML("Tỷ lệ quần thể (P<sub>0</sub>)"), 
+                                                  value = 0.30),
+                                        textInput(inputId = "pa_1prop_hypo_power",
+                                                  label = HTML("Tỷ lệ ước tính (P<sub>a</sub>)"),
+                                                  value = 0.20)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_1prop_hypo_power",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "n_1prop_hypo_power",
+                                                  label = "Cỡ mẫu (n)",
+                                                  value = 100)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_1prop_hypo"), "</b>")), align = "center"))
+                                    )
+                                )
+                            )
+                        ),
+                        
+                        box(title = "Công thức", width = 6,
+                            withMathJax(),
+                            p("$$n=\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}}{ES}\\right)^2$$"),
+                            p("$$ES=\\frac{p_1-p_0}{\\sqrt{p_0(1-p_0)}}$$")
+                        )
+                    )
+                )
+            )
+        ),
+        
         
         ##### Estimating the difference between 2 population means #####
         tabItem(
