@@ -760,5 +760,61 @@ shinyServer(function(input, output) {
     n_spec()
   })
   
+  ##### NC song con #####
+  value_survive <- reactive({
+    if (input$select_survive == 1) {
+      exp((log(as.numeric(input$p1_survive))/as.numeric(input$hr_survive)))
+    } else if (input$select_survive == 2) {
+      log(as.numeric(input$p1_survive))/log(as.numeric(input$p2_survive))
+    }
+  })
+
+  output$select_survive <- renderText({
+    if (input$select_survive == 1) {
+      paste0(HTML("<b>Tỷ lệ ở nhóm chứng (p<sub>2</sub>) = </b>"), round(value_survive(), 3))
+    } else if (input$select_survive == 2) {
+      paste0(HTML("<b>Tỷ số nguy hại (HR) = </b>"), round(value_survive(), 2))
+    }
+  })
+  
+  n_survive <- reactive({
+    req(as.numeric(input$p1_survive)>0&
+          as.numeric(input$alpha_survive)>0&
+          as.numeric(input$power_survive)>0&
+          as.numeric(input$nonrep_survive)>=0&
+          as.numeric(input$nonrep_survive)<=1,
+        cancelOutput = TRUE)
+    if (input$select_survive == 1) {
+      p2_value <- value_survive()
+      fun_survive(hr = as.numeric(input$hr_survive), 
+                  alpha = as.numeric(input$alpha_survive), 
+                  power = as.numeric(input$power_survive), 
+                  p1 = as.numeric(input$p1_survive), 
+                  p2 = p2_value, 
+                  nonrep = as.numeric(input$nonrep_survive), 
+                  deseff = input$deseff_survive)
+    } else if (input$select_survive == 2) {
+      hr_value <- value_survive()
+      fun_survive(hr = hr_value, 
+                  alpha = as.numeric(input$alpha_survive), 
+                  power = as.numeric(input$power_survive), 
+                  p1 = as.numeric(input$p1_survive), 
+                  p2 = as.numeric(input$p2_survive), 
+                  nonrep = as.numeric(input$nonrep_survive), 
+                  deseff = input$deseff_survive)
+    }
+  })
+  n1_survive <- reactive({
+    req(input$k_survive>=1, cancelOutput = TRUE)
+    big_n <- 2*n_survive()*(1+input$k_survive)^2/(4*input$k_survive)
+    big_n/(1+input$k_survive)
+  })
+  output$n1_survive <- renderText({
+    ceiling(n1_survive())
+  })
+  output$n2_survive <- renderText({
+    ceiling(input$k_survive*n1_survive())
+  })
+  
 })
 
