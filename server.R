@@ -11,6 +11,8 @@ source(file = "functions/case_control.R", local = TRUE)
 source(file = "functions/simple_random.R", local = TRUE)
 source(file = "functions/diagnosis.R", local = TRUE)
 
+source(file = "functions/kiemdinhgiathuyet.R", local = TRUE)
+
 shinyServer(function(input, output) {
   
   ##### Categorical variables #####
@@ -445,6 +447,51 @@ shinyServer(function(input, output) {
   })
   output$power_1mean_hypo <- renderText({
     power_1mean_hypo()
+  })
+  
+  ##### NC 2 mau doc lap, kiem dinh 2 ty le #####
+  # Sample size
+  n_2props_ind_hypo <- reactive({
+    req(as.numeric(input$p1_2props_ind_hypo)>0&
+          as.numeric(input$p2_2props_ind_hypo)>0&
+          as.numeric(input$alpha_2props_ind_hypo)>0&
+          as.numeric(input$power_2props_ind_hypo)>0&
+          as.numeric(input$nonrep_2props_ind_hypo)>=0&
+          as.numeric(input$nonrep_2props_ind_hypo)<=1,
+        cancelOutput = TRUE)
+    fun_2props_ind_hypo(alpha = as.numeric(input$alpha_2props_ind_hypo), 
+                        power = as.numeric(input$power_2props_ind_hypo), 
+                        p1 = as.numeric(input$p1_2props_ind_hypo), 
+                        p2 = as.numeric(input$p2_2props_ind_hypo), 
+                        nonrep = as.numeric(input$nonrep_2props_ind_hypo), 
+                        deseff = input$deseff_2props_ind_hypo)
+  })
+  n1_2props_ind_hypo <- reactive({
+    req(input$k_2props_ind_hypo>=1, cancelOutput = TRUE)
+    big_n <- 2*n_2props_ind_hypo()*(1+input$k_2props_ind_hypo)^2/(4*input$k_2props_ind_hypo)
+    big_n/(1+input$k_2props_ind_hypo)
+  })
+  output$n1_2props_ind_hypo <- renderText({
+    ceiling(n1_2props_ind_hypo())
+  })
+  output$n2_2props_ind_hypo <- renderText({
+    ceiling(input$k_2props_ind_hypo*n1_2props_ind_hypo())
+  })
+  
+  # Power
+  power_2props_ind_hypo <- reactive({
+    req(as.numeric(input$p1_2props_ind_hypo_power)>0&
+          as.numeric(input$p2_2props_ind_hypo_power)>0&
+          as.numeric(input$alpha_2props_ind_hypo_power)>0&
+          as.numeric(input$n_2props_ind_hypo_power)>0,
+        cancelOutput = TRUE)
+    fun_2props_ind_hypo_power(alpha = as.numeric(input$alpha_2props_ind_hypo_power), 
+                              n = as.numeric(input$n_2props_ind_hypo_power), 
+                              p1 = as.numeric(input$p1_2props_ind_hypo_power), 
+                              p2 = as.numeric(input$p2_2props_ind_hypo_power))
+  })
+  output$power_2props_ind_hypo <- renderText({
+    power_2props_ind_hypo()
   })
   
   ##### Estimating the difference between 2 population means #####
