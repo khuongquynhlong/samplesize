@@ -628,6 +628,90 @@ body <- dashboardBody(
         ),
         
         
+        ##### NC 2 mau doc lap, kiem dinh 2 ty le #####
+        tabItem(
+            tabName = "2props_ind_hypo",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        tabBox(
+                            width = 6, side = "left", 
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "alpha_2props_ind_hypo",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "power_2props_ind_hypo",
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
+                                                  value = 0.8),
+                                        textInput(inputId = "p1_2props_ind_hypo", 
+                                                  label = HTML("Tỷ lệ ở nhóm can thiệp (p<sub>1</sub>)"), 
+                                                  value = 0.001),
+                                        textInput(inputId = "p2_2props_ind_hypo",
+                                                  label = HTML("Tỷ lệ ở nhóm chứng (p<sub>2</sub>)"),
+                                                  value = 0.015)
+                                    ),
+                                    box(
+                                        textInput(inputId = "nonrep_2props_ind_hypo",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_2props_ind_hypo",
+                                                     label = "Hệ số thiết kế",
+                                                     value = 1),
+                                        numericInput(inputId = "k_2props_ind_hypo",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1),
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_2props_ind_hypo"), "</b>")), align = "center")),
+                                        p(HTML("<center><b>Cỡ mẫu nhóm 2</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_2props_ind_hypo"), "</b>")), align = "center"))
+                                    )
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính lực thống kê",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "p1_2props_ind_hypo_power", 
+                                                  label = HTML("Tỷ lệ ở nhóm can thiệp (p<sub>1</sub>)"), 
+                                                  value = 0.001),
+                                        textInput(inputId = "p2_2props_ind_hypo_power",
+                                                  label = HTML("Tỷ lệ ở nhóm chứng (p<sub>2</sub>)"),
+                                                  value = 0.015)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_2props_ind_hypo_power",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "n_2props_ind_hypo_power",
+                                                  label = "Cỡ mẫu mỗi nhóm (n)",
+                                                  value = 550)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_2props_ind_hypo"), "</b>")), align = "center"))
+                                    )
+                                )
+                            )
+                        ),
+                        
+                        box(title = "Công thức", width = 6,
+                            withMathJax(),
+                            p("$$n=2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}}{ES}\\right)^2$$"),
+                            p("$$ES=\\frac{p_1-p_2}{\\sqrt{p(1-p)}}$$"),
+                            p("$$p=\\frac{p_1+p_2}{2}$$")
+                        )
+                    )
+                )
+            )
+        ),
+        
         ##### Estimating the difference between 2 population means #####
         tabItem(
             tabName = "2means_est",
