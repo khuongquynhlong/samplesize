@@ -17,3 +17,12 @@ fun_2props_ind_hypo_power <- function(alpha, n, p1, p2) {
   power <- pnorm(z_b)
   return(round(power, 2))
 }
+
+##### NC song con #####
+fun_survive <- function(hr, alpha, power, p1, p2, nonrep, deseff) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- qnorm(power)
+  n <- (hr+1)^2*(z_a+z_b)/((hr-1)^2*(2-p1-p2))
+  n <- n*deseff/(1-nonrep)
+  return(ceiling(n))
+}
