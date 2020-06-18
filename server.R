@@ -908,5 +908,53 @@ shinyServer(function(input, output) {
     power_equi_cont()
   })
   
+  ##### NC tuong duong voi bien dinh tinh #####
+  n_equi_cat <- reactive({
+    req(as.numeric(input$p1_equi_cat)>=0&
+          as.numeric(input$p2_equi_cat)>=0&
+          as.numeric(input$alpha_equi_cat)>0&
+          as.numeric(input$power_equi_cat)>0&
+          as.numeric(input$nonrep_equi_cat)>=0&
+          as.numeric(input$nonrep_equi_cat)<=1, 
+        cancelOutput = TRUE)
+    fun_equi_cat(alpha = as.numeric(input$alpha_equi_cat), 
+                 power = as.numeric(input$power_equi_cat), 
+                 p1 = as.numeric(input$p1_equi_cat), 
+                 p2 = as.numeric(input$p2_equi_cat), 
+                 d = as.numeric(input$d_equi_cat), 
+                 nonrep = as.numeric(input$nonrep_equi_cat), 
+                 deseff = input$deseff_equi_cat)
+  })
+  n1_equi_cat <- reactive({
+    req(input$k_equi_cat>=1, cancelOutput = TRUE)
+    big_n <- 2*n_equi_cat()*(1+input$k_equi_cat)^2/(4*input$k_equi_cat)
+    big_n/(1+input$k_equi_cat)
+  })
+  output$n1_equi_cat <- renderText({
+    ceiling(n1_equi_cat())
+  })
+  output$n2_equi_cat <- renderText({
+    ceiling(input$k_equi_cat*n1_equi_cat())
+  })
+  
+  # Power
+  power_equi_cat <- reactive({
+    req(as.numeric(input$p1_equi_cat_power)>=0&
+          as.numeric(input$p2_equi_cat_power)>=0&
+          as.numeric(input$d_equi_cat_power)>0&
+          as.numeric(input$alpha_equi_cat_power)>0&
+          as.numeric(input$n_equi_cat_power)>0,
+        cancelOutput = TRUE)
+    fun_equi_cat_power(alpha = as.numeric(input$alpha_equi_cat_power), 
+                       n = as.numeric(input$n_equi_cat_power), 
+                       p1 = as.numeric(input$p1_equi_cat_power), 
+                       p2 = as.numeric(input$p2_equi_cat_power), 
+                       d = as.numeric(input$d_equi_cat_power))
+  })
+  output$power_equi_cat <- renderText({
+    power_equi_cat()
+  })
+  
+  
 })
 
