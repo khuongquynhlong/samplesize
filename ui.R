@@ -36,7 +36,8 @@ sidebar <- dashboardSidebar(
             menuSubItem("Nghiên cứu thuần tập, kiểm định RR", tabName = "cohort_rr"),
             menuSubItem("Nghiên cứu sống còn", tabName = "survive"),
             menuSubItem("Nghiên cứu nghiệm pháp chẩn đoán", tabName = "diag_test"),
-            menuSubItem("Nghiên cứu tương đương", tabName = "equi_trial"),
+            menuSubItem("Nghiên cứu tương đương với biến định lượng", tabName = "equi_cont"),
+            menuSubItem("Nghiên cứu tương đương với biến định tính", tabName = "equi_cat"),
             menuSubItem("Nghiên cứu không kém hơn", tabName = "noninfer_trial"),
             menuSubItem("Nghiên cứu thử nghiệm lâm sàng theo cụm", tabName = "cluster_randomize"),
             menuSubItem("Cỡ mẫu cho mô hình hồi quy", tabName = "regression")
@@ -1377,6 +1378,101 @@ body <- dashboardBody(
                 )
             )
         ),
+        
+        ##### NC tuong duong voi bien dinh luong #####
+        tabItem(
+            tabName = "equi_cont",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        tabBox(
+                            width = 6, side = "left",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "alpha_equi_cont",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "power_equi_cont",
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
+                                                  value = 0.8),
+                                        textInput(inputId = "m1_equi_cont", 
+                                                  label = HTML("Trung bình của nhóm can thiệp (&mu;<sub>1</sub>)"), 
+                                                  value = 7),
+                                        textInput(inputId = "m2_equi_cont", 
+                                                  label = HTML("Trung bình cúa nhóm đối chứng (&mu;<sub>2</sub>)"), 
+                                                  value = 4),
+                                        textInput(inputId = "d_equi_cont",
+                                                  label = HTML("Ngưỡng khác biệt (d)"),
+                                                  value = 2),
+                                        textInput(inputId = "sd_equi_cont",
+                                                  label = HTML("Độ lệch chuẩn (&sigma;)"),
+                                                  value = 10)
+                                    ),
+                                    box(
+                                        textInput(inputId = "nonrep_equi_cont",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_equi_cont",
+                                                     label = "Hệ số thiết kế",
+                                                     value = 1),
+                                        numericInput(inputId = "k_equi_cont",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu nhóm can thiệp</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_equi_cont"), "</b>")), align = "center")),
+                                        p(HTML("<center><b>Cỡ mẫu nhóm đối chứng</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_equi_cont"), "</b>")), align = "center"))
+                                    )
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính lực thống kê",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "m1_equi_cont_power", 
+                                                  label = HTML("Trung bình của nhóm can thiệp (&mu;<sub>1</sub>)"), 
+                                                  value = 7),
+                                        textInput(inputId = "m2_equi_cont_power", 
+                                                  label = HTML("Trung bình cúa nhóm đối chứng (&mu;<sub>2</sub>)"), 
+                                                  value = 4),
+                                        textInput(inputId = "d_equi_cont_power",
+                                                  label = HTML("Ngưỡng khác biệt (d)"),
+                                                  value = 2),
+                                        textInput(inputId = "sd_equi_cont_power",
+                                                  label = HTML("Độ lệch chuẩn (&sigma;)"),
+                                                  value = 10)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_equi_cont_power",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "n_equi_cont_power",
+                                                  label = "Cỡ mẫu mỗi nhóm (n)",
+                                                  value = 500)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_equi_cont"), "</b>")), align = "center"))
+                                    )
+                                )
+                            )
+                        ),
+                        box(title = "Công thức", width = 6,
+                            withMathJax(),
+                            p("$$n=\\frac{2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})}{H^2}$$"),
+                            p("$$H=\\frac{|\\mu_1-\\mu_2|-d}{\\sigma}$$")
+                        )
+                    )
+                )
+            )
+        ),
+        
         
         ##### Regression #####
         

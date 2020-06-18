@@ -858,5 +858,55 @@ shinyServer(function(input, output) {
     power_survive_power()
   })
   
+  ##### NC tuong duong voi bien dinh luong #####
+  n_equi_cont <- reactive({
+    req(as.numeric(input$m1_equi_cont)>=0&
+          as.numeric(input$m2_equi_cont)>=0&
+          as.numeric(input$sd_equi_cont)>0&
+          as.numeric(input$alpha_equi_cont)>0&
+          as.numeric(input$power_equi_cont)>0&
+          as.numeric(input$nonrep_equi_cont)>=0&
+          as.numeric(input$nonrep_equi_cont)<=1, 
+        cancelOutput = TRUE)
+    fun_equi_cont(alpha = as.numeric(input$alpha_equi_cont), 
+                  power = as.numeric(input$power_equi_cont), 
+                  m1 = as.numeric(input$m1_equi_cont), 
+                  m2 = as.numeric(input$m2_equi_cont), 
+                  d = as.numeric(input$d_equi_cont), 
+                  sd = as.numeric(input$sd_equi_cont), 
+                  nonrep = as.numeric(input$nonrep_equi_cont), 
+                  deseff = input$deseff_equi_cont)
+  })
+  n1_equi_cont <- reactive({
+    req(input$k_equi_cont>=1, cancelOutput = TRUE)
+    big_n <- 2*n_equi_cont()*(1+input$k_equi_cont)^2/(4*input$k_equi_cont)
+    big_n/(1+input$k_equi_cont)
+  })
+  output$n1_equi_cont <- renderText({
+    ceiling(n1_equi_cont())
+  })
+  output$n2_equi_cont <- renderText({
+    ceiling(input$k_equi_cont*n1_equi_cont())
+  })
+  
+  # Power
+  power_equi_cont <- reactive({
+    req(as.numeric(input$m1_equi_cont_power)>=0&
+          as.numeric(input$m2_equi_cont_power)>=0&
+          as.numeric(input$sd_equi_cont_power)>0&
+          as.numeric(input$alpha_equi_cont_power)>0&
+          as.numeric(input$n_equi_cont_power)>0,
+        cancelOutput = TRUE)
+    fun_equi_cont_power(alpha = as.numeric(input$alpha_equi_cont_power), 
+                        n = as.numeric(input$n_equi_cont_power), 
+                        m1 = as.numeric(input$m1_equi_cont_power), 
+                        m2 = as.numeric(input$m2_equi_cont_power), 
+                        d = as.numeric(input$d_equi_cont_power), 
+                        sd = as.numeric(input$sd_equi_cont_power))
+  })
+  output$power_equi_cont <- renderText({
+    power_equi_cont()
+  })
+  
 })
 
