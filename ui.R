@@ -1439,7 +1439,7 @@ body <- dashboardBody(
                                                   label = HTML("Trung bình của nhóm can thiệp (&mu;<sub>1</sub>)"), 
                                                   value = 7),
                                         textInput(inputId = "m2_equi_cont_power", 
-                                                  label = HTML("Trung bình cúa nhóm đối chứng (&mu;<sub>2</sub>)"), 
+                                                  label = HTML("Trung bình của nhóm đối chứng (&mu;<sub>2</sub>)"), 
                                                   value = 4),
                                         textInput(inputId = "d_equi_cont_power",
                                                   label = HTML("Ngưỡng khác biệt (d)"),
@@ -1473,6 +1473,93 @@ body <- dashboardBody(
             )
         ),
         
+        ##### NC tuong duong voi bien dinh tinh #####
+        tabItem(
+            tabName = "equi_cat",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        tabBox(
+                            width = 6, side = "left",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "alpha_equi_cat",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "power_equi_cat",
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
+                                                  value = 0.8),
+                                        textInput(inputId = "p1_equi_cat", 
+                                                  label = HTML("Tỷ lệ của nhóm can thiệp (p<sub>1</sub>)"), 
+                                                  value = 0.4),
+                                        textInput(inputId = "p2_equi_cat", 
+                                                  label = HTML("Tỷ lệ của nhóm đối chứng (p<sub>2</sub>)"), 
+                                                  value = 0.3),
+                                        textInput(inputId = "d_equi_cat",
+                                                  label = HTML("Ngưỡng khác biệt (d)"),
+                                                  value = 0.05)
+                                    ),
+                                    box(
+                                        textInput(inputId = "nonrep_equi_cat",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_equi_cat",
+                                                     label = "Hệ số thiết kế",
+                                                     value = 1),
+                                        numericInput(inputId = "k_equi_cat",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu nhóm can thiệp</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_equi_cat"), "</b>")), align = "center")),
+                                        p(HTML("<center><b>Cỡ mẫu nhóm đối chứng</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_equi_cat"), "</b>")), align = "center"))
+                                    )
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính lực thống kê",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "p1_equi_cat_power", 
+                                                  label = HTML("Tỷ lệ của nhóm can thiệp (p<sub>1</sub>)"), 
+                                                  value = 0.4),
+                                        textInput(inputId = "p2_equi_cat_power", 
+                                                  label = HTML("Tỷ lệ của nhóm đối chứng (p<sub>2</sub>)"), 
+                                                  value = 0.3),
+                                        textInput(inputId = "d_equi_cat_power",
+                                                  label = HTML("Ngưỡng khác biệt (d)"),
+                                                  value = 0.05)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_equi_cat_power",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "n_equi_cat_power",
+                                                  label = "Cỡ mẫu mỗi nhóm (n)",
+                                                  value = 500)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_equi_cat"), "</b>")), align = "center"))
+                                    )
+                                )
+                            )
+                        ),
+                        box(title = "Công thức", width = 6,
+                            withMathJax(),
+                            p("$$n=\\frac{2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})}{H^2}$$"),
+                            p("$$H=\\frac{|p_1-p_2|-d}{\\sqrt{p_1(1-p_1)+p_2(1-p_2)}}$$")
+                        )
+                    )
+                )
+            )
+        ),
         
         ##### Regression #####
         
