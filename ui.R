@@ -1332,10 +1332,24 @@ body <- dashboardBody(
                                     box(
                                         textInput(inputId = "p1_survive_power", 
                                                   label = HTML("Tỷ lệ ở nhóm can thiệp (p<sub>1</sub>)"), 
-                                                  value = 0.001),
-                                        textInput(inputId = "p2_survive_power",
-                                                  label = HTML("Tỷ lệ ở nhóm chứng (p<sub>2</sub>)"),
-                                                  value = 0.015)
+                                                  value = 0.25),
+                                        radioButtons(inputId = "select_survive_power", 
+                                                     label = "Chọn loại tham số", 
+                                                     choices = c("Tỷ số nguy hại" = 1,
+                                                                 "Tỷ lệ ở nhóm chứng" = 2)),
+                                        conditionalPanel(
+                                            condition = "input.select_survive_power == 1",
+                                            textInput(inputId = "hr_survive_power",
+                                                      label = HTML("Tỷ số nguy hại (HR)"),
+                                                      value = 1.5),
+                                        ),
+                                        conditionalPanel(
+                                            condition = "input.select_survive_power == 2",
+                                            textInput(inputId = "p2_survive_power",
+                                                      label = HTML("Tỷ lệ ở nhóm chứng (p<sub>2</sub>)"),
+                                                      value = 0.15),
+                                        ),
+                                        uiOutput(outputId = "select_survive_power"),
                                     ),
                                     box(
                                         textInput(inputId = "alpha_survive_power",
@@ -1343,11 +1357,11 @@ body <- dashboardBody(
                                                   value = 0.05),
                                         textInput(inputId = "n_survive_power",
                                                   label = "Cỡ mẫu mỗi nhóm (n)",
-                                                  value = 550)
+                                                  value = 50)
                                     ),
                                     box(
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
-                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_survive"), "</b>")), align = "center"))
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_survive_power"), "</b>")), align = "center"))
                                     )
                                 )
                             )

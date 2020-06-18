@@ -26,3 +26,10 @@ fun_survive <- function(hr, alpha, power, p1, p2, nonrep, deseff) {
   n <- n*deseff/(1-nonrep)
   return(ceiling(n))
 }
+
+fun_survive_power <- function(hr, alpha, n, p1, p2) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- n*(hr-1)^2*(2-p1-p2)/(hr+1)^2-z_a
+  power <- pnorm(z_b)
+  return(round(power, 2))
+}

@@ -816,5 +816,47 @@ shinyServer(function(input, output) {
     ceiling(input$k_survive*n1_survive())
   })
   
+  # Power
+  value_survive_power <- reactive({
+    if (input$select_survive_power == 1) {
+      exp((log(as.numeric(input$p1_survive_power))/as.numeric(input$hr_survive_power)))
+    } else if (input$select_survive_power == 2) {
+      log(as.numeric(input$p1_survive_power))/log(as.numeric(input$p2_survive_power))
+    }
+  })
+  
+  output$select_survive_power <- renderText({
+    if (input$select_survive_power == 1) {
+      paste0(HTML("<b>Tỷ lệ ở nhóm chứng (p<sub>2</sub>) = </b>"), round(value_survive_power(), 3))
+    } else if (input$select_survive_power == 2) {
+      paste0(HTML("<b>Tỷ số nguy hại (HR) = </b>"), round(value_survive_power(), 2))
+    }
+  })
+  
+  power_survive_power <- reactive({
+    req(as.numeric(input$p1_survive_power)>0&
+          as.numeric(input$alpha_survive_power)>0&
+          as.numeric(input$n_survive_power)>0,
+        cancelOutput = TRUE)
+    if (input$select_survive_power == 1) {
+      p2_value_power <- value_survive_power()
+      fun_survive_power(hr = as.numeric(input$hr_survive_power), 
+                        alpha = as.numeric(input$alpha_survive_power), 
+                        n = as.numeric(input$n_survive_power), 
+                        p1 = as.numeric(input$p1_survive_power), 
+                        p2 = p2_value_power)
+    } else if (input$select_survive_power == 2) {
+      hr_value_power <- value_survive_power()
+      fun_survive_power(hr = hr_value_power, 
+                        alpha = as.numeric(input$alpha_survive_power), 
+                        n = as.numeric(input$n_survive_power), 
+                        p1 = as.numeric(input$p1_survive_power), 
+                        p2 = as.numeric(input$p2_survive_power))
+    }
+  })
+  output$power_survive_power <- renderText({
+    power_survive_power()
+  })
+  
 })
 
