@@ -955,6 +955,57 @@ shinyServer(function(input, output) {
     power_equi_cat()
   })
   
+  ##### NC tuong duong voi bien dinh luong #####
+  n_noninfer_cont <- reactive({
+    req(as.numeric(input$m1_noninfer_cont)>=0&
+          as.numeric(input$m2_noninfer_cont)>=0&
+          as.numeric(input$sd_noninfer_cont)>0&
+          as.numeric(input$alpha_noninfer_cont)>0&
+          as.numeric(input$power_noninfer_cont)>0&
+          as.numeric(input$nonrep_noninfer_cont)>=0&
+          as.numeric(input$nonrep_noninfer_cont)<=1, 
+        cancelOutput = TRUE)
+    fun_noninfer_cont(alpha = as.numeric(input$alpha_noninfer_cont), 
+                  power = as.numeric(input$power_noninfer_cont), 
+                  m1 = as.numeric(input$m1_noninfer_cont), 
+                  m2 = as.numeric(input$m2_noninfer_cont), 
+                  d = as.numeric(input$d_noninfer_cont), 
+                  sd = as.numeric(input$sd_noninfer_cont), 
+                  nonrep = as.numeric(input$nonrep_noninfer_cont), 
+                  deseff = input$deseff_noninfer_cont)
+  })
+  n1_noninfer_cont <- reactive({
+    req(input$k_noninfer_cont>=1, cancelOutput = TRUE)
+    big_n <- 2*n_noninfer_cont()*(1+input$k_noninfer_cont)^2/(4*input$k_noninfer_cont)
+    big_n/(1+input$k_noninfer_cont)
+  })
+  output$n1_noninfer_cont <- renderText({
+    ceiling(n1_noninfer_cont())
+  })
+  output$n2_noninfer_cont <- renderText({
+    ceiling(input$k_noninfer_cont*n1_noninfer_cont())
+  })
+  
+  # Power
+  power_noninfer_cont <- reactive({
+    req(as.numeric(input$m1_noninfer_cont_power)>=0&
+          as.numeric(input$m2_noninfer_cont_power)>=0&
+          as.numeric(input$sd_noninfer_cont_power)>0&
+          as.numeric(input$alpha_noninfer_cont_power)>0&
+          as.numeric(input$n_noninfer_cont_power)>0,
+        cancelOutput = TRUE)
+    fun_noninfer_cont_power(alpha = as.numeric(input$alpha_noninfer_cont_power), 
+                        n = as.numeric(input$n_noninfer_cont_power), 
+                        m1 = as.numeric(input$m1_noninfer_cont_power), 
+                        m2 = as.numeric(input$m2_noninfer_cont_power), 
+                        d = as.numeric(input$d_noninfer_cont_power), 
+                        sd = as.numeric(input$sd_noninfer_cont_power))
+  })
+  output$power_noninfer_cont <- renderText({
+    power_noninfer_cont()
+  })
+  
+  
   ##### NC thu nghiem lam sang theo cum #####
   vif_value <- reactive({
     if (input$select_icc_cluster_randomize == 1) {
