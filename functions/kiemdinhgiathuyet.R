@@ -70,6 +70,43 @@ fun_equi_cat_power <- function(alpha, n, p1, p2, d) {
   return(round(power, 2))
 }
 
+##### NC khong kem hon voi bien dinh luong #####
+fun_noninfer_cont <- function(alpha, power, m1, m2, d, sd, nonrep, deseff) {
+  z_a <- qnorm(1-alpha)
+  z_b <- qnorm(power)
+  h <- (abs(m1-m2)-d)/sd
+  n <- 2*(z_a+z_b)/h^2
+  n <- n*deseff/(1-nonrep)
+  return(ceiling(n))
+}
+
+fun_noninfer_cont_power <- function(alpha, n, m1, m2, d, sd) {
+  z_a <- qnorm(1-alpha)
+  h <- (abs(m1-m2)-d)/sd
+  z_b <- (n*h^2)/2-z_a
+  power <- pnorm(z_b)
+  return(round(power, 2))
+}
+
+##### NC khong kem hon voi bien dinh tinh #####
+fun_noninfer_cat <- function(alpha, power, p1, p2, d, nonrep, deseff) {
+  z_a <- qnorm(1-alpha)
+  z_b <- qnorm(power)
+  h <- (abs(p1-p2)-d)/sqrt(p1*(1-p1)+p2*(1-p2))
+  n <- 2*(z_a+z_b)/h^2
+  n <- n*deseff/(1-nonrep)
+  return(ceiling(n))
+}
+
+fun_noninfer_cat_power <- function(alpha, n, p1, p2, d) {
+  z_a <- qnorm(1-alpha)
+  h <- (abs(p1-p2)-d)/sqrt(p1*(1-p1)+p2*(1-p2))
+  z_b <- (n*h^2)/2-z_a
+  power <- pnorm(z_b)
+  return(round(power, 2))
+}
+
+
 ##### NC thu nghiem lam sang theo cum #####
 fun_cluster_randomize <- function(sd, alpha, power, vif, gamma, delta) {
   z_a <- qnorm(1-alpha/2)
