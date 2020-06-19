@@ -35,13 +35,27 @@ sidebar <- dashboardSidebar(
             menuSubItem("Nghiên cứu bệnh chứng, kiểm định OR", tabName = "case_hypo"),
             menuSubItem("Nghiên cứu thuần tập, kiểm định RR", tabName = "cohort_hypo"),
             menuSubItem("Nghiên cứu sống còn", tabName = "survive"),
-            menuSubItem("Nghiên cứu nghiệm pháp chẩn đoán", tabName = "diag_test"),
+            menuSubItem("Nghiên cứu nghiệm pháp chẩn đoán", tabName = "diag_test")
+        ),
+        menuItem(
+            "Nghiên cứu tương đương",
+            icon = icon("percentage"), startExpanded = FALSE,
             menuSubItem("Nghiên cứu tương đương với biến định lượng", tabName = "equi_cont"),
-            menuSubItem("Nghiên cứu tương đương với biến định tính", tabName = "equi_cat"),
+            menuSubItem("Nghiên cứu tương đương với biến định tính", tabName = "equi_cat")
+        ),
+        menuItem(
+            "Nghiên cứu không kém hơn",
+            icon = icon("percentage"), startExpanded = FALSE,
             menuSubItem("Nghiên cứu không kém hơn với biến định lượng", tabName = "noninfer_cont"),
-            menuSubItem("Nghiên cứu không kém hơn với biến định tính", tabName = "noninfer_cat"),
-            menuSubItem("Nghiên cứu thử nghiệm lâm sàng theo cụm", tabName = "cluster_randomize"),
-            menuSubItem("Cỡ mẫu cho mô hình hồi quy", tabName = "regression")
+            menuSubItem("Nghiên cứu không kém hơn với biến định tính", tabName = "noninfer_cat")
+        ),
+        menuItem(
+            "Nghiên cứu thử nghiệm lâm sàng theo cụm", startExpanded = FALSE,
+            tabName = "cluster_randomize"
+        ),
+        menuItem(
+            "Cỡ mẫu cho mô hình hồi quy", startExpanded = FALSE,
+            tabName = "samregress"
         )
     )
 )
@@ -1661,6 +1675,98 @@ body <- dashboardBody(
             )
         ),
         
+        ##### NC khong kem hon voi bien dinh tinh #####
+        tabItem(
+            tabName = "noninfer_cat",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        tabBox(
+                            width = 6, side = "left",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "alpha_noninfer_cat",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "power_noninfer_cat",
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
+                                                  value = 0.8),
+                                        textInput(inputId = "p1_noninfer_cat", 
+                                                  label = HTML("Tỷ lệ của nhóm can thiệp (p<sub>1</sub>)"), 
+                                                  value = 0.4),
+                                        textInput(inputId = "p2_noninfer_cat", 
+                                                  label = HTML("Tỷ lệ của nhóm đối chứng (p<sub>2</sub>)"), 
+                                                  value = 0.3),
+                                        textInput(inputId = "d_noninfer_cat",
+                                                  label = HTML("Ngưỡng khác biệt (d)"),
+                                                  value = 0.05)
+                                    ),
+                                    box(
+                                        textInput(inputId = "nonrep_noninfer_cat",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_noninfer_cat",
+                                                     label = "Hệ số thiết kế",
+                                                     value = 1),
+                                        numericInput(inputId = "k_noninfer_cat",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu nhóm can thiệp</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_noninfer_cat"), "</b>")), align = "center")),
+                                        p(HTML("<center><b>Cỡ mẫu nhóm đối chứng</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_noninfer_cat"), "</b>")), align = "center"))
+                                    )
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính lực thống kê",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "p1_noninfer_cat_power", 
+                                                  label = HTML("Tỷ lệ của nhóm can thiệp (p<sub>1</sub>)"), 
+                                                  value = 0.4),
+                                        textInput(inputId = "p2_noninfer_cat_power", 
+                                                  label = HTML("Tỷ lệ của nhóm đối chứng (p<sub>2</sub>)"), 
+                                                  value = 0.3),
+                                        textInput(inputId = "d_noninfer_cat_power",
+                                                  label = HTML("Ngưỡng khác biệt (d)"),
+                                                  value = 0.05)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_noninfer_cat_power",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "n_noninfer_cat_power",
+                                                  label = "Cỡ mẫu mỗi nhóm (n)",
+                                                  value = 500)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_noninfer_cat"), "</b>")), align = "center"))
+                                    )
+                                )
+                            )
+                        ),
+                        box(title = "Công thức", width = 6,
+                            withMathJax(),
+                            p("$$n=\\frac{2(Z_{1-\\alpha}+Z_{1-\\beta})}{H^2}$$"),
+                            p("$$H=\\frac{|p_1-p_2|-d}{\\sqrt{p_1(1-p_1)+p_2(1-p_2)}}$$"),
+                            p(HTML("Công thức giống với công thức tính cỡ mẫu của 
+                                   nghiên cứu tương đương, ngoại trừ việc dùng
+                                   Z<sub>1-&alpha;</sub>=1.645 (kiểm định một phía)
+                                   thay cho dùng Z<sub>1-&alpha;/2</sub> = 1.96
+                                   trong nghiên cứu tương đương"))
+                        )
+                    )
+                )
+            )
+        ),
         
         ##### NC thu nghiem lam sang theo cum #####
         tabItem(
