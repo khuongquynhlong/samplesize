@@ -955,7 +955,7 @@ shinyServer(function(input, output) {
     power_equi_cat()
   })
   
-  ##### NC tuong duong voi bien dinh luong #####
+  ##### NC khong kem hon voi bien dinh luong #####
   n_noninfer_cont <- reactive({
     req(as.numeric(input$m1_noninfer_cont)>=0&
           as.numeric(input$m2_noninfer_cont)>=0&
@@ -1005,6 +1005,52 @@ shinyServer(function(input, output) {
     power_noninfer_cont()
   })
   
+  ##### NC khong kem hon voi bien dinh tinh #####
+  n_noninfer_cat <- reactive({
+    req(as.numeric(input$p1_noninfer_cat)>=0&
+          as.numeric(input$p2_noninfer_cat)>=0&
+          as.numeric(input$alpha_noninfer_cat)>0&
+          as.numeric(input$power_noninfer_cat)>0&
+          as.numeric(input$nonrep_noninfer_cat)>=0&
+          as.numeric(input$nonrep_noninfer_cat)<=1, 
+        cancelOutput = TRUE)
+    fun_noninfer_cat(alpha = as.numeric(input$alpha_noninfer_cat), 
+                 power = as.numeric(input$power_noninfer_cat), 
+                 p1 = as.numeric(input$p1_noninfer_cat), 
+                 p2 = as.numeric(input$p2_noninfer_cat), 
+                 d = as.numeric(input$d_noninfer_cat), 
+                 nonrep = as.numeric(input$nonrep_noninfer_cat), 
+                 deseff = input$deseff_noninfer_cat)
+  })
+  n1_noninfer_cat <- reactive({
+    req(input$k_noninfer_cat>=1, cancelOutput = TRUE)
+    big_n <- 2*n_noninfer_cat()*(1+input$k_noninfer_cat)^2/(4*input$k_noninfer_cat)
+    big_n/(1+input$k_noninfer_cat)
+  })
+  output$n1_noninfer_cat <- renderText({
+    ceiling(n1_noninfer_cat())
+  })
+  output$n2_noninfer_cat <- renderText({
+    ceiling(input$k_noninfer_cat*n1_noninfer_cat())
+  })
+  
+  # Power
+  power_noninfer_cat <- reactive({
+    req(as.numeric(input$p1_noninfer_cat_power)>=0&
+          as.numeric(input$p2_noninfer_cat_power)>=0&
+          as.numeric(input$d_noninfer_cat_power)>0&
+          as.numeric(input$alpha_noninfer_cat_power)>0&
+          as.numeric(input$n_noninfer_cat_power)>0,
+        cancelOutput = TRUE)
+    fun_noninfer_cat_power(alpha = as.numeric(input$alpha_noninfer_cat_power), 
+                       n = as.numeric(input$n_noninfer_cat_power), 
+                       p1 = as.numeric(input$p1_noninfer_cat_power), 
+                       p2 = as.numeric(input$p2_noninfer_cat_power), 
+                       d = as.numeric(input$d_noninfer_cat_power))
+  })
+  output$power_noninfer_cat <- renderText({
+    power_noninfer_cat()
+  })
   
   ##### NC thu nghiem lam sang theo cum #####
   vif_value <- reactive({
