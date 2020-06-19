@@ -69,3 +69,11 @@ fun_equi_cat_power <- function(alpha, n, p1, p2, d) {
   power <- pnorm(z_b)
   return(round(power, 2))
 }
+
+##### NC thu nghiem lam sang theo cum #####
+fun_cluster_randomize <- function(sd, alpha, power, vif, gamma, delta) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- qnorm(power)
+  n <- 2*sd^2*(z_a+z_b)^2*vif/(gamma*delta^2)
+  return(ceiling(n))
+}
