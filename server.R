@@ -955,6 +955,39 @@ shinyServer(function(input, output) {
     power_equi_cat()
   })
   
+  ##### NC thu nghiem lam sang theo cum #####
+  vif_value <- reactive({
+    if (input$select_icc_cluster_randomize == 1) {
+      1+(as.numeric(input$gamma_cluster_randomize)-1)*as.numeric(input$icc_cluster_randomize)
+    } else if (input$select_icc_cluster_randomize == 2) {
+      icc <- as.numeric(input$var_inter_cluster_randomize)^2/(as.numeric(input$var_inter_cluster_randomize)+as.numeric(input$var_intra_cluster_randomize))
+      1+(as.numeric(input$gamma_cluster_randomize)-1)*icc
+    }
+  })
+  icc_value <- reactive({
+    if (input$select_icc_cluster_randomize == 2) {
+      as.numeric(input$var_inter_cluster_randomize)^2/(as.numeric(input$var_inter_cluster_randomize)+as.numeric(input$var_intra_cluster_randomize))
+    }
+  })
+  output$vif_cluster_randomize <- renderText({
+    if (input$select_icc_cluster_randomize == 1) {
+      paste0(HTML("<b>Kết quả hệ số phóng đại phương sai (VIF) = </b>"), round(vif_value(), 2))
+    } else if (input$select_icc_cluster_randomize == 2) {
+      paste0(HTML("<b>Kết quả hệ số tương quan nội cụm (ICC) = </b>"), round(icc_value(), 2), "<br>", 
+             HTML("<b>Kết quả hệ số phóng đại phương sai (VIF) = </b>"), round(vif_value(), 2))
+    }
+  })
+  n_cluster_randomize <- reactive({
+    fun_cluster_randomize(sd = as.numeric(input$sd_cluster_randomize), 
+                          alpha = as.numeric(input$alpha_cluster_randomize), 
+                          power = as.numeric(input$power_cluster_randomize), 
+                          vif = vif_value(), 
+                          gamma = as.numeric(input$gamma_cluster_randomize), 
+                          delta = as.numeric(input$delta_cluster_randomize))
+  })
+  output$n_cluster_randomize <- renderText({
+    n_cluster_randomize()
+  })
   
 })
 

@@ -32,8 +32,8 @@ sidebar <- dashboardSidebar(
             menuSubItem("Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 trung bình", tabName = "2means_pair_hypo"),
             menuSubItem("Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 tỷ lệ", tabName = "2props_ind_hypo"),
             menuSubItem("Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 tỷ lệ", tabName = "2props_pair_hypo"),
-            menuSubItem("Nghiên cứu bệnh chứng, kiểm định OR", tabName = "case_or"),
-            menuSubItem("Nghiên cứu thuần tập, kiểm định RR", tabName = "cohort_rr"),
+            menuSubItem("Nghiên cứu bệnh chứng, kiểm định OR", tabName = "case_hypo"),
+            menuSubItem("Nghiên cứu thuần tập, kiểm định RR", tabName = "cohort_hypo"),
             menuSubItem("Nghiên cứu sống còn", tabName = "survive"),
             menuSubItem("Nghiên cứu nghiệm pháp chẩn đoán", tabName = "diag_test"),
             menuSubItem("Nghiên cứu tương đương với biến định lượng", tabName = "equi_cont"),
@@ -901,7 +901,7 @@ body <- dashboardBody(
             )
         ),
         
-        ##### Hypothesis test for a RR #####
+        ##### Nghien cuu thuan tap, kiem dinh RR #####
         tabItem(
             tabName = "cohort_hypo",
             tabsetPanel(
@@ -1022,7 +1022,7 @@ body <- dashboardBody(
             )
         ),
         
-        ##### Hypothesis test for a OR #####
+        ##### NC benh chung, kiem dinh OR #####
         tabItem(
             tabName = "case_hypo",
             tabsetPanel(
@@ -1560,6 +1560,105 @@ body <- dashboardBody(
                 )
             )
         ),
+        
+        ##### NC thu nghiem lam sang theo cum #####
+        tabItem(
+            tabName = "cluster_randomize",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        tabBox(
+                            width = 6, side = "left",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "sd_cluster_randomize",
+                                                  label = HTML("Độ lệch chuẩn (&sigma;)"),
+                                                  value = 3),
+                                        textInput(inputId = "alpha_cluster_randomize",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "power_cluster_randomize",
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
+                                                  value = 0.8),
+                                        textInput(inputId = "gamma_cluster_randomize", 
+                                                  label = HTML("Số lượng cá thể trong từng cụm (&gamma;)"), 
+                                                  value = 100),
+                                        textInput(inputId = "delta_cluster_randomize", 
+                                                  label = HTML("Mức khác biệt về hiệu quả điều trị giữa nhóm bệnh và nhóm chứng (&delta;)"), 
+                                                  value = 4)
+                                    ),
+                                    box(
+                                        radioButtons(inputId = "select_icc_cluster_randomize",
+                                                     label = "Lựa chọn",
+                                                     choices = c("Nhập ICC" = 1,
+                                                                 "Tính ICC" = 2)),
+                                        conditionalPanel(
+                                            condition = "input.select_icc_cluster_randomize == 1",
+                                            textInput(inputId = "icc_cluster_randomize", 
+                                                      label = HTML("Hệ số tương quan nội cụm (ICC)"), 
+                                                      value = 2)
+                                        ),
+                                        conditionalPanel(
+                                            condition = "input.select_icc_cluster_randomize == 2",
+                                            textInput(inputId = "var_inter_cluster_randomize", 
+                                                      label = HTML("Phương sai sự khác biệt giữa các cụm (&sigma;<sub>u</sub>)"), 
+                                                      value = 9),
+                                            textInput(inputId = "var_intra_cluster_randomize", 
+                                                      label = HTML("Phương sai sự khác biệt giữa các cá thể trong từng cụm (&sigma;<sub>e</sub>)"), 
+                                                      value = 5)
+                                        ),
+                                        uiOutput(outputId = "vif_cluster_randomize")
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Số cụm</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n_cluster_randomize"), "</b>")), align = "center"))
+                                    )
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính lực thống kê",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "p1_cluster_randomize_power", 
+                                                  label = HTML("Tỷ lệ của nhóm can thiệp (p<sub>1</sub>)"), 
+                                                  value = 0.4),
+                                        textInput(inputId = "p2_cluster_randomize_power", 
+                                                  label = HTML("Tỷ lệ của nhóm đối chứng (p<sub>2</sub>)"), 
+                                                  value = 0.3),
+                                        textInput(inputId = "d_cluster_randomize_power",
+                                                  label = HTML("Ngưỡng khác biệt (d)"),
+                                                  value = 0.05)
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_cluster_randomize_power",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "n_cluster_randomize_power",
+                                                  label = "Cỡ mẫu mỗi nhóm (n)",
+                                                  value = 500)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_cluster_randomize"), "</b>")), align = "center"))
+                                    )
+                                )
+                            )
+                        ),
+                        box(title = "Công thức", width = 6,
+                            withMathJax(),
+                            p("$$n=\\frac{2\\sigma^2[Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}]^2VIF}{\\gamma\\delta^2}$$"),
+                            p("$$VIF=1+(\\gamma-1)ICC$$"),
+                            p("$$ICC=\\frac{\\sigma^2_u}{\\sigma^2_u+\\sigma^2_e}$$")
+                        )
+                    )
+                )
+            )
+        ),
+        
         
         ##### Regression #####
         
