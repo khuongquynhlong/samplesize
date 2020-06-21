@@ -449,6 +449,98 @@ shinyServer(function(input, output) {
     power_1mean_hypo()
   })
   
+  ##### NC 2 mau doc lap, kiem dinh 2 trung binh #####
+  # Sample size
+  n_2means_ind_hypo <- reactive({
+    req(as.numeric(input$m1_2means_ind_hypo)>=0&
+          as.numeric(input$m2_2means_ind_hypo)>=0&
+          as.numeric(input$sd_2means_ind_hypo)>=0&
+          as.numeric(input$alpha_2means_ind_hypo)>0&
+          as.numeric(input$power_2means_ind_hypo)>0&
+          as.numeric(input$nonrep_2means_ind_hypo)>=0&
+          as.numeric(input$nonrep_2means_ind_hypo)<=1,
+        cancelOutput = TRUE)
+    fun_2means_ind_hypo(alpha = as.numeric(input$alpha_2means_ind_hypo), 
+                        power = as.numeric(input$power_2means_ind_hypo), 
+                        m1 = as.numeric(input$m1_2means_ind_hypo), 
+                        m2 = as.numeric(input$m2_2means_ind_hypo), 
+                        sd = as.numeric(input$sd_2means_ind_hypo), 
+                        nonrep = as.numeric(input$nonrep_2means_ind_hypo), 
+                        deseff = input$deseff_2means_ind_hypo)
+  })
+  n1_2means_ind_hypo <- reactive({
+    req(input$k_2means_ind_hypo>=1, cancelOutput = TRUE)
+    big_n <- 2*n_2means_ind_hypo()*(1+input$k_2means_ind_hypo)^2/(4*input$k_2means_ind_hypo)
+    big_n/(1+input$k_2means_ind_hypo)
+  })
+  output$n1_2means_ind_hypo <- renderText({
+    ceiling(n1_2means_ind_hypo())
+  })
+  output$n2_2means_ind_hypo <- renderText({
+    ceiling(input$k_2means_ind_hypo*n1_2means_ind_hypo())
+  })
+  # Power
+  power_2means_ind_hypo <- reactive({
+    req(as.numeric(input$m1_2means_ind_hypo_power)>=0&
+          as.numeric(input$m2_2means_ind_hypo_power)>=0&
+          as.numeric(input$sd_2means_ind_hypo_power)>0&
+          as.numeric(input$alpha_2means_ind_hypo_power)>0&
+          as.numeric(input$n_2means_ind_hypo_power)>0,
+        cancelOutput = TRUE)
+    fun_2means_ind_hypo_power(alpha = as.numeric(input$alpha_2means_ind_hypo_power), 
+                              n = as.numeric(input$n_2means_ind_hypo_power), 
+                              m1 = as.numeric(input$m1_2means_ind_hypo_power), 
+                              m2 = as.numeric(input$m2_2means_ind_hypo_power), 
+                              sd = as.numeric(input$sd_2means_ind_hypo_power))
+  })
+  output$power_2means_ind_hypo <- renderText({
+    power_2means_ind_hypo()
+  })
+  
+  ##### NC 2 mau ghep cap, kiem dinh 2 trung binh #####
+  # Sample size
+  n_2means_pair_hypo <- reactive({
+    req(as.numeric(input$m_2means_pair_hypo)>=0&
+          as.numeric(input$sd_2means_pair_hypo)>=0&
+          as.numeric(input$alpha_2means_pair_hypo)>0&
+          as.numeric(input$power_2means_pair_hypo)>0&
+          as.numeric(input$nonrep_2means_pair_hypo)>=0&
+          as.numeric(input$nonrep_2means_pair_hypo)<=1,
+        cancelOutput = TRUE)
+    fun_2means_pair_hypo(alpha = as.numeric(input$alpha_2means_pair_hypo), 
+                        power = as.numeric(input$power_2means_pair_hypo), 
+                        m = as.numeric(input$m_2means_pair_hypo), 
+                        sd = as.numeric(input$sd_2means_pair_hypo), 
+                        nonrep = as.numeric(input$nonrep_2means_pair_hypo), 
+                        deseff = input$deseff_2means_pair_hypo)
+  })
+  n1_2means_pair_hypo <- reactive({
+    req(input$k_2means_pair_hypo>=1, cancelOutput = TRUE)
+    big_n <- 2*n_2means_pair_hypo()*(1+input$k_2means_pair_hypo)^2/(4*input$k_2means_pair_hypo)
+    big_n/(1+input$k_2means_pair_hypo)
+  })
+  output$n1_2means_pair_hypo <- renderText({
+    ceiling(n1_2means_pair_hypo())
+  })
+  output$n2_2means_pair_hypo <- renderText({
+    ceiling(input$k_2means_pair_hypo*n1_2means_pair_hypo())
+  })
+  # Power
+  power_2means_pair_hypo <- reactive({
+    req(as.numeric(input$m_2means_pair_hypo_power)>=0&
+          as.numeric(input$sd_2means_pair_hypo_power)>=0&
+          as.numeric(input$alpha_2means_pair_hypo_power)>0&
+          as.numeric(input$n_2means_pair_hypo_power)>0,
+        cancelOutput = TRUE)
+    fun_2means_pair_hypo_power(alpha = as.numeric(input$alpha_2means_pair_hypo_power), 
+                              n = as.numeric(input$n_2means_pair_hypo_power), 
+                              m = as.numeric(input$m_2means_pair_hypo_power), 
+                              sd = as.numeric(input$sd_2means_pair_hypo_power))
+  })
+  output$power_2means_pair_hypo <- renderText({
+    power_2means_pair_hypo()
+  })
+  
   ##### NC 2 mau doc lap, kiem dinh 2 ty le #####
   # Sample size
   n_2props_ind_hypo <- reactive({

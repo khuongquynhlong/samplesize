@@ -643,6 +643,181 @@ body <- dashboardBody(
             )
         ),
         
+        ##### NC 2 mau doc lap, kiem dinh 2 trung binh #####
+        tabItem(
+            tabName = "2means_ind_hypo",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        tabBox(
+                            width = 6, side = "left",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "alpha_2means_ind_hypo",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "power_2means_ind_hypo",
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
+                                                  value = 0.8),
+                                        textInput(inputId = "m1_2means_ind_hypo", 
+                                                  label = HTML("Trung bình nhóm 1 (&mu;<sub>1</sub>)"), 
+                                                  value = 10),
+                                        textInput(inputId = "m2_2means_ind_hypo", 
+                                                  label = HTML("Trung bình nhóm 2 (&mu;<sub>2</sub>)"), 
+                                                  value = 5),
+                                        textInput(inputId = "sd_2means_ind_hypo",
+                                                  label = HTML("Độ lệch chuẩn (&sigma;)"),
+                                                  value = 19),
+                                        numericInput(inputId = "k_2means_ind_hypo",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1)
+                                    ),
+                                    box(
+                                        textInput(inputId = "nonrep_2means_ind_hypo",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_2means_ind_hypo",
+                                                     label = "Hệ số thiết kế",
+                                                     value = 1)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_2means_ind_hypo"), "</b>")), align = "center"))
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu nhóm 2</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_2means_ind_hypo"), "</b>")), align = "center"))
+                                    )
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính lực thống kê",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "m1_2means_ind_hypo_power", 
+                                                  label = HTML("Trung bình nhóm 1 (&mu;<sub>1</sub>)"), 
+                                                  value = 10),
+                                        textInput(inputId = "m2_2means_ind_hypo_power", 
+                                                  label = HTML("Trung bình nhóm 2 (&mu;<sub>2</sub>)"), 
+                                                  value = 5),
+                                        textInput(inputId = "sd_2means_ind_hypo_power",
+                                                  label = HTML("Độ lệch chuẩn (&sigma;)"),
+                                                  value = 19)
+                                    ),
+                                    box(
+                                        textInput(inputId = "n_2means_ind_hypo_power",
+                                                  label = "Cỡ mẫu (n)",
+                                                  value = 250),
+                                        textInput(inputId = "alpha_2means_ind_hypo_power",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_2means_ind_hypo"), "</b>")), align = "center"))
+                                    )
+                                )
+                            )
+                        ),
+                        box(title = "Công thức", width = 6,
+                            withMathJax(),
+                            p("$$n=2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}}{ES}\\right)^2$$"),
+                            p("$$ES=\\frac{\\mu_1-\\mu_2}{\\sigma}$$"),
+                            p("$$\\sigma=\\sqrt{\\frac{(n_1-1)s^2_1+(n_2-1)s^2_2}{n_1+n_2-2}}$$")
+                        )
+                    )
+                )
+            )
+        ),
+        
+        ##### NC 2 mau ghep cap, kiem dinh 2 trung binh #####
+        tabItem(
+            tabName = "2means_pair_hypo",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        tabBox(
+                            width = 6, side = "left",
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "alpha_2means_pair_hypo",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        textInput(inputId = "power_2means_pair_hypo",
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
+                                                  value = 0.8),
+                                        textInput(inputId = "m_2means_pair_hypo", 
+                                                  label = HTML("Sự khác biệt giữa 2 lần đo (&mu;<sub>d</sub>)"), 
+                                                  value = 3),
+                                        textInput(inputId = "sd_2means_pair_hypo",
+                                                  label = HTML("Độ lệch chuẩn (&sigma;<sub>d</sub>)"),
+                                                  value = 9.1),
+                                        numericInput(inputId = "k_2means_pair_hypo",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1)
+                                    ),
+                                    box(
+                                        textInput(inputId = "nonrep_2means_pair_hypo",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_2means_pair_hypo",
+                                                     label = "Hệ số thiết kế",
+                                                     value = 1)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_2means_pair_hypo"), "</b>")), align = "center"))
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Cỡ mẫu nhóm 2</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_2means_pair_hypo"), "</b>")), align = "center"))
+                                    )
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính lực thống kê",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "m_2means_pair_hypo_power", 
+                                                  label = HTML("Sự khác biệt giữa 2 lần đo (&mu;<sub>d</sub>)"), 
+                                                  value = 3),
+                                        textInput(inputId = "sd_2means_pair_hypo_power",
+                                                  label = HTML("Độ lệch chuẩn (&sigma;<sub>d</sub>)"),
+                                                  value = 9.1)
+                                    ),
+                                    box(
+                                        textInput(inputId = "n_2means_pair_hypo_power",
+                                                  label = "Cỡ mẫu (n)",
+                                                  value = 73),
+                                        textInput(inputId = "alpha_2means_pair_hypo_power",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05)
+                                    ),
+                                    box(
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
+                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "power_2means_pair_hypo"), "</b>")), align = "center"))
+                                    )
+                                )
+                            )
+                        ),
+                        box(title = "Công thức", width = 6,
+                            withMathJax(),
+                            p("$$n=\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}}{ES}\\right)^2$$"),
+                            p("$$ES=\\frac{\\mu_d}{\\sigma_d}$$"),
+                            p("$$\\sigma=\\sqrt{\\frac{(n_1-1)s^2_1+(n_2-1)s^2_2}{n_1+n_2-2}}$$")
+                        )
+                    )
+                )
+            )
+        ),
         
         ##### NC 2 mau doc lap, kiem dinh 2 ty le #####
         tabItem(

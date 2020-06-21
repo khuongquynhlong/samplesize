@@ -1,5 +1,41 @@
+##### NC 2 mau doc lap, kiem dinh 2 trung binh #####
+fun_2means_ind_hypo <- function(alpha, power, m1, m2, sd, nonrep = 0, deseff = 1) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- qnorm(power)
+  es <- (m1-m2)/sd
+  n <- 2*((z_a+z_b)/es)^2
+  n <- n*deseff/(1-nonrep)
+  return(ceiling(n))
+}
+
+fun_2means_ind_hypo_power <- function(alpha, n, m1, m2, sd) {
+  z_a <- qnorm(1-alpha/2)
+  es <- (m1-m2)/sd
+  z_b <- es*sqrt(n/2)-z_a
+  power <- pnorm(z_b)
+  return(round(power, 2))
+}
+
+##### NC 2 mau ghep cap, kiem dinh 2 trung binh #####
+fun_2means_pair_hypo <- function(alpha, power, m, sd, nonrep = 0, deseff = 1) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- qnorm(power)
+  es <- m/sd
+  n <- ((z_a+z_b)/es)^2
+  n <- n*deseff/(1-nonrep)
+  return(ceiling(n))
+}
+
+fun_2means_pair_hypo_power <- function(alpha, n, m, sd) {
+  z_a <- qnorm(1-alpha/2)
+  es <- m/sd
+  z_b <- es*sqrt(n)-z_a
+  power <- pnorm(z_b)
+  return(round(power, 2))
+}
+
 ##### NC 2 mau doc lap, kiem dinh 2 ty le #####
-fun_2props_ind_hypo <- function(alpha, power, p1, p2, nonrep, deseff) {
+fun_2props_ind_hypo <- function(alpha, power, p1, p2, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   p <- (p1+p2)/2
@@ -19,7 +55,7 @@ fun_2props_ind_hypo_power <- function(alpha, n, p1, p2) {
 }
 
 ##### NC song con #####
-fun_survive <- function(hr, alpha, power, p1, p2, nonrep, deseff) {
+fun_survive <- function(hr, alpha, power, p1, p2, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   n <- (hr+1)^2*(z_a+z_b)/((hr-1)^2*(2-p1-p2))
@@ -35,7 +71,7 @@ fun_survive_power <- function(hr, alpha, n, p1, p2) {
 }
 
 ##### NC tuong duong voi bien dinh luong #####
-fun_equi_cont <- function(alpha, power, m1, m2, d, sd, nonrep, deseff) {
+fun_equi_cont <- function(alpha, power, m1, m2, d, sd, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   h <- (abs(m1-m2)-d)/sd
@@ -53,7 +89,7 @@ fun_equi_cont_power <- function(alpha, n, m1, m2, d, sd) {
 }
 
 ##### NC tuong duong voi bien dinh tinh #####
-fun_equi_cat <- function(alpha, power, p1, p2, d, nonrep, deseff) {
+fun_equi_cat <- function(alpha, power, p1, p2, d, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   h <- (abs(p1-p2)-d)/sqrt(p1*(1-p1)+p2*(1-p2))
@@ -71,7 +107,7 @@ fun_equi_cat_power <- function(alpha, n, p1, p2, d) {
 }
 
 ##### NC khong kem hon voi bien dinh luong #####
-fun_noninfer_cont <- function(alpha, power, m1, m2, d, sd, nonrep, deseff) {
+fun_noninfer_cont <- function(alpha, power, m1, m2, d, sd, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha)
   z_b <- qnorm(power)
   h <- (abs(m1-m2)-d)/sd
@@ -89,7 +125,7 @@ fun_noninfer_cont_power <- function(alpha, n, m1, m2, d, sd) {
 }
 
 ##### NC khong kem hon voi bien dinh tinh #####
-fun_noninfer_cat <- function(alpha, power, p1, p2, d, nonrep, deseff) {
+fun_noninfer_cat <- function(alpha, power, p1, p2, d, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha)
   z_b <- qnorm(power)
   h <- (abs(p1-p2)-d)/sqrt(p1*(1-p1)+p2*(1-p2))
