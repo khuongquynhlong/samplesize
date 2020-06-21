@@ -31,11 +31,16 @@ sidebar <- dashboardSidebar(
             menuSubItem("Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 trung bình", tabName = "2means_ind_hypo"),
             menuSubItem("Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 trung bình", tabName = "2means_pair_hypo"),
             menuSubItem("Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 tỷ lệ", tabName = "2props_ind_hypo"),
-            menuSubItem("Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 tỷ lệ", tabName = "2props_pair_hypo"),
+            menuSubItem("Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 tỷ lệ (McNemar)", tabName = "2props_pair_hypo"),
             menuSubItem("Nghiên cứu bệnh chứng, kiểm định OR", tabName = "case_hypo"),
             menuSubItem("Nghiên cứu thuần tập, kiểm định RR", tabName = "cohort_hypo"),
-            menuSubItem("Nghiên cứu sống còn", tabName = "survive"),
-            menuSubItem("Nghiên cứu nghiệm pháp chẩn đoán", tabName = "diag_test")
+            menuSubItem("Nghiên cứu sống còn", tabName = "survive")
+        ),
+        menuItem(
+            "Nghiên cứu nghiệm pháp chẩn đoán",
+            icon = icon("chart-line"), startExpanded = FALSE,
+            menuSubItem("Độ nhạy", tabName = "sens"),
+            menuSubItem("Độ đặc hiệu", tabName = "spec")
         ),
         menuItem(
             "Nghiên cứu tương đương",
@@ -1560,9 +1565,8 @@ body <- dashboardBody(
                         
                         box(title = "Công thức", width = 6,
                             withMathJax(),
-                            p("$$n=2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}}{ES}\\right)^2$$"),
-                            p("$$ES=\\frac{p_1-p_2}{\\sqrt{p(1-p)}}$$"),
-                            p("$$p=\\frac{p_1+p_2}{2}$$")
+                            p("$$n=\\frac{(HR+1)^2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})}{(HR-1)^2(2-p_1-p_2)}$$"),
+                            p("$$HR=\\frac{ln(p_1)}{ln(p_2)}$$")
                         )
                     )
                 )
