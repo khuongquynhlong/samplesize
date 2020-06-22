@@ -13,6 +13,7 @@ fun2_1prop_est <- function(p, eps, alpha, nonrep = 0, deseff = 1) {
   return(ceiling(n))
 }
 
+
 ##### So sanh voi ty le quan the #####
 fun_1prop_hypo <- function(p1, p0, alpha, power, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha/2)
