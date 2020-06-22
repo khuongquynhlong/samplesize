@@ -29,6 +29,11 @@ fun2_2means_ind_est <- function(n1, sd1, n2, sd2, d, alpha, nonrep = 0, deseff =
   return(ceiling(n))
 }
 
+fun2_2means_ind_est_sd <- function(n1, sd1, n2, sd2) {
+  sd <- sqrt(((n1-1)*sd1^2 + (n2-1)*sd2^2)/(n1+n2-2))
+  return(sd)
+}
+
 ##### Kiem dinh gia thuyet cho 1 trung binh #####
 fun_1mean_hypo <- function(m1, m0, sd, alpha, power, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha/2)

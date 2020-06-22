@@ -451,6 +451,7 @@ shinyServer(function(input, output) {
   })
   
   ##### Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 trung bình #####
+  
   output$input_2means_ind_est <- renderUI({
     if (input$input_type_2means_ind_est == 1) {
       textInput(inputId = "sigma_2means_ind_est",
@@ -473,6 +474,9 @@ shinyServer(function(input, output) {
       )
     }
   })
+  
+  
+
   n_2means_ind_est <- reactive({
     req(as.numeric(input$alpha_2means_ind_est)>0&
           as.numeric(input$d_2means_ind_est)>0 ||
@@ -500,6 +504,29 @@ shinyServer(function(input, output) {
                           deseff = input$deseff_1mean_est)
     }
   })
+
+   value_sd <- reactive({
+     req(as.numeric(input$n1_2means_ind_est)>0||
+              as.numeric(input$sd1_2means_ind_est)>0||
+              as.numeric(input$n2_2means_ind_est)>0||
+              as.numeric(input$sd2_2means_ind_est)>0,
+         cancelOutput = TRUE)
+     if (input$input_type_2means_ind_est == 2) {
+       fun2_2means_ind_est_sd(
+         n1 = as.numeric(input$n1_2means_ind_est),
+         sd1 = as.numeric(input$sd1_2means_ind_est),
+         n2 = as.numeric(input$n2_2means_ind_est),
+         sd2 = as.numeric(input$sd2_2means_ind_est)
+       )
+     }
+   })
+  
+   output$sdpool_2means_ind_est <- renderText({
+     if (input$input_type_2means_ind_est == 2) {
+       paste0(HTML("Độ lệch chuẩn gộp (&sigma;) tính được là: "), round(value_sd(), 2))
+     }
+   })
+  
   output$n_2means_ind_est <- renderText({
     n_2means_ind_est()
   })
