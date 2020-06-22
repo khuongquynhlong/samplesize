@@ -193,6 +193,7 @@ shinyServer(function(input, output) {
     n_2props_est()
   })
   
+  
   ##### Hypothesis test for 2 proportions #####
   n_2props_hypo <- reactive({
     req(as.numeric(input$p1_2props_hypo)>0&
@@ -448,6 +449,80 @@ shinyServer(function(input, output) {
   output$power_1mean_hypo <- renderText({
     power_1mean_hypo()
   })
+  
+  ##### Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 trung bình #####
+  output$input_2means_ind_est <- renderUI({
+    if (input$input_type_2means_ind_est == 1) {
+      textInput(inputId = "sigma_2means_ind_est",
+                label = HTML("Độ lệch chuẩn gộp (&sigma;)"),
+                value = 8.1)
+    } else if (input$input_type_2means_ind_est == 2) {
+      list(
+        textInput(inputId = "n1_2means_ind_est",
+                  label = HTML("Cỡ mẫu nhóm 1 (n<sub>1</sub>)"),
+                  value = 100),
+        textInput(inputId = "sd1_2means_ind_est", 
+                  label = HTML("Độ lệch chuẩn nhóm 1 (s<sub>1</sub>)"), 
+                  value = 8.4),
+        textInput(inputId = "n2_2means_ind_est",
+                  label = HTML("Cỡ mẫu nhóm 2 (n<sub>2</sub>)"),
+                  value = 100),
+        textInput(inputId = "sd2_2means_ind_est", 
+                  label = HTML("Độ lệch chuẩn nhóm 2 (s<sub>2</sub>)"), 
+                  value = 7.7)
+      )
+    }
+  })
+  n_2means_ind_est <- reactive({
+    req(as.numeric(input$alpha_2means_ind_est)>0&
+          as.numeric(input$d_2means_ind_est)>0 ||
+          (as.numeric(input$n1_2means_ind_est)>0||
+             as.numeric(input$sd1_2means_ind_est)>0||
+             as.numeric(input$n2_2means_ind_est)>0||
+             as.numeric(input$sd2_2means_ind_est)>0)&
+          as.numeric(input$nonrep_1mean_est)>=0&
+          as.numeric(input$nonrep_1mean_est)<=1,
+        cancelOutput = TRUE)
+    if (input$input_type_2means_ind_est == 1) {
+      fun1_2means_ind_est(sd = as.numeric(input$sigma_2means_ind_est), 
+                          d = as.numeric(input$d_2means_ind_est), 
+                          alpha = as.numeric(input$alpha_2means_ind_est),
+                          nonrep = as.numeric(input$nonrep_2means_ind_est), 
+                          deseff = input$deseff_2means_ind_est)
+    } else if (input$input_type_2means_ind_est == 2) {
+      fun2_2means_ind_est(n1 = as.numeric(input$n1_2means_ind_est),
+                          sd1 = as.numeric(input$sd1_2means_ind_est),
+                          n2 = as.numeric(input$n2_2means_ind_est),
+                          sd2 = as.numeric(input$sd2_2means_ind_est),
+                          d = as.numeric(input$d_2means_ind_est), 
+                          alpha = as.numeric(input$alpha_1mean_est),
+                          nonrep = as.numeric(input$nonrep_1mean_est), 
+                          deseff = input$deseff_1mean_est)
+    }
+  })
+  output$n_2means_ind_est <- renderText({
+    n_2means_ind_est()
+  })
+  
+  ##### Nghiên cứu 2 mẫu ghép cặp, xác định sự khác biệt 2 trung bình
+  
+  n_2props_pair_est <- reactive({
+    req(as.numeric(input$alpha_2props_pair_est)>0&
+          as.numeric(input$sd_2props_pair_est)>0&
+          as.numeric(input$d_2props_pair_est)>0&
+          as.numeric(input$nonrep_1mean_hypo)>=0&
+          as.numeric(input$nonrep_1mean_hypo)<=1,
+        cancelOutput = TRUE)
+    fun1_1mean_est(d = as.numeric(input$d_2props_pair_est),
+                   sd = as.numeric(input$sd_2props_pair_est), 
+                   alpha = as.numeric(input$alpha_2props_pair_est),
+                   nonrep = 0, 
+                   deseff = 1)
+  })
+  output$n_2props_pair_est <- renderText({
+    n_2props_pair_est()
+  })
+  
   
   ##### NC 2 mau doc lap, kiem dinh 2 trung binh #####
   # Sample size

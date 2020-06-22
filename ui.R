@@ -161,8 +161,157 @@ body <- dashboardBody(
             )
         ),
         
+        ##### Estimating the population mean #####
+        tabItem(
+            tabName = "1mean_est",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Tính cỡ mẫu", width = 6,
+                            box(
+                                textInput(inputId = "alpha_1mean_est",
+                                          label = HTML("Alpha (&alpha;)"),
+                                          value = 0.05),
+                                textInput(inputId = "sd_1mean_est", 
+                                          label = HTML("Độ lệch chuẩn (&sigma;)"), 
+                                          value = 2),
+                                radioButtons(inputId = "precision_type_1mean_est", 
+                                             label = "Chọn loại sai số", 
+                                             choices = c("Sai số tuyệt đối" = 1,
+                                                         "Sai số tương đối" = 2)),
+                                uiOutput(outputId = "precision_1mean_est")
+                            ),
+                            box(
+                                textInput(inputId = "nonrep_1mean_est",
+                                          label = "Tỷ lệ không trả lời",
+                                          value = 0),
+                                numericInput(inputId = "deseff_1mean_est",
+                                             label = "Hệ số thiết kế",
+                                             value = 1)
+                            ),
+                            box(
+                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1mean_est"), "</b>")), align = "center"))
+                            )
+                        ),
+                        box(title = "Công thức", width = 6,
+                            conditionalPanel(
+                                condition = "input.precision_type_1mean_est == 1",
+                                withMathJax(),
+                                p("Công thức 1: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}$$")
+                            ),
+                            conditionalPanel(
+                                condition = "input.precision_type_1mean_est == 2",
+                                withMathJax(),
+                                p("Công thức 2: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{\\varepsilon^2\\mu^2}$$")
+                            )
+                        )
+                    )
+                )
+            )
+        ),
         
-        ##### Estimate difference between 2 proportions #####
+        ## Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 trung bình"
+        
+        tabItem(
+            tabName = "2means_ind_est",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Tính cỡ mẫu", width = 6,
+                            box(
+                                textInput(inputId = "alpha_2means_ind_est",
+                                          label = HTML("Alpha (&alpha;)"),
+                                          value = 0.05),
+                                textInput(inputId = "d_2means_ind_est", 
+                                          label = HTML("Sai số (d)"), 
+                                          value = 3),
+                                radioButtons(inputId = "input_type_2means_ind_est", 
+                                             label = "Chọn cách nhập", 
+                                             choices = c("Độ lệch chuẩn gộp" = 1,
+                                                         "Độ lệch cuẩn của 2 nhóm" = 2)),
+                                uiOutput(outputId = "input_2means_ind_est")
+                            ),
+                            box(
+                                textInput(inputId = "nonrep_2means_ind_est",
+                                          label = "Tỷ lệ không trả lời",
+                                          value = 0),
+                                numericInput(inputId = "deseff_2means_ind_est",
+                                             label = "Hệ số thiết kế",
+                                             value = 1)
+                            ),
+                            box(
+                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_2means_ind_est"), "</b>")), align = "center"))
+                            )
+                        ),
+                        box(title = "Công thức", width = 6,
+                            conditionalPanel(
+                                condition = "input.input_type_2means_ind_est == 1",
+                                withMathJax(),
+                                p("Công thức 1: $$n= 2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}\\right)$$")
+                            ),
+                            conditionalPanel(
+                                condition = "input.input_type_2means_ind_est == 2",
+                                withMathJax(),
+                                p("Công thức 2: $$n= 2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}\\right)$$"),
+                                p("Trong đó:"),
+                                p("$$\\sigma=\\sqrt{\\frac{(n_1-1)s^2_1+(n_2-1)s^2_2}{n_1+n_2-2}}$$")
+                            )
+                        )
+                    )
+                )
+            )
+        ),
+        
+        ##### Nghiên cứu 2 mẫu ghép cặp, xác định sự khác biệt 2 trung bình
+        tabItem(
+            tabName = "2props_pair_est",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nhập số",
+                    fluidRow(
+                        box(title = "Tính cỡ mẫu", width = 6,
+                            box(
+                                textInput(inputId = "alpha_2props_pair_est",
+                                          label = HTML("Alpha (&alpha;)"),
+                                          value = 0.05),
+                                textInput(inputId = "sd_2props_pair_est", 
+                                          label = HTML("Độ lệch chuẩn của sự khác biệt trước-sau (&sigma;<sub>d</sub>)"), 
+                                          value = 9.1),
+                                textInput(inputId = "d_2props_pair_est", 
+                                          label = HTML("Sai số (d)"), 
+                                          value = 3)
+                            ),
+                            box(
+                                textInput(inputId = "nonrep_2props_pair_est",
+                                          label = "Tỷ lệ không trả lời",
+                                          value = 0),
+                                numericInput(inputId = "deseff_2props_pair_est",
+                                             label = "Hệ số thiết kế",
+                                             value = 1)
+                            ),
+                            box(
+                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_2props_pair_est"), "</b>")), align = "center"))
+                            )
+                        ),
+                        box(title = "Công thức", width = 6,
+                            withMathJax(),
+                            p("Công thức 1: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma_d^2}{d^2}$$")
+                        )
+                    )
+                )
+            )
+        ),
+        
+        ##### Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 tỷ lệ
+
         tabItem(
             tabName = "2props_est",
             tabsetPanel(
@@ -177,12 +326,12 @@ body <- dashboardBody(
                                           value = 0.05),
                                 textInput(inputId = "p1_2props_est", 
                                           label = HTML("Tỷ lệ nhóm 1 (P<sub>1</sub>)"), 
-                                          value = 0.2),
+                                          value = 0.34),
                                 textInput(inputId = "p2_2props_est", 
                                           label = HTML("Tỷ lệ nhóm 2 (P<sub>2</sub>)"), 
-                                          value = 0.5),
+                                          value = 0.17),
                                 textInput(inputId = "d_2props_est",
-                                          label = "Sai số tuyệt đối (d)",
+                                          label = "Sai số (d)",
                                           value = 0.05)
                             ),
                             box(
@@ -435,58 +584,7 @@ body <- dashboardBody(
         ),        
         
         ##### Continuous variables #####
-        ##### Estimating the population mean #####
-        tabItem(
-            tabName = "1mean_est",
-            tabsetPanel(
-                type = "tabs",
-                tabPanel(
-                    title = "Nhập số",
-                    fluidRow(
-                        box(title = "Tính cỡ mẫu", width = 6,
-                            box(
-                                textInput(inputId = "alpha_1mean_est",
-                                          label = HTML("Alpha (&alpha;)"),
-                                          value = 0.05),
-                                textInput(inputId = "sd_1mean_est", 
-                                          label = HTML("Độ lệch chuẩn (&sigma;)"), 
-                                          value = 2),
-                                radioButtons(inputId = "precision_type_1mean_est", 
-                                             label = "Chọn loại sai số", 
-                                             choices = c("Sai số tuyệt đối" = 1,
-                                                         "Sai số tương đối" = 2)),
-                                uiOutput(outputId = "precision_1mean_est")
-                            ),
-                            box(
-                                textInput(inputId = "nonrep_1mean_est",
-                                          label = "Tỷ lệ không trả lời",
-                                          value = 0),
-                                numericInput(inputId = "deseff_1mean_est",
-                                             label = "Hệ số thiết kế",
-                                             value = 1)
-                            ),
-                            box(
-                                p(HTML("<center><b>Cỡ mẫu</b></center>")),
-                                p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1mean_est"), "</b>")), align = "center"))
-                            )
-                        ),
-                        box(title = "Công thức", width = 6,
-                            conditionalPanel(
-                                condition = "input.precision_type_1mean_est == 1",
-                                withMathJax(),
-                                p("Công thức 1: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}$$")
-                            ),
-                            conditionalPanel(
-                                condition = "input.precision_type_1mean_est == 2",
-                                withMathJax(),
-                                p("Công thức 2: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{\\varepsilon^2\\mu^2}$$")
-                            )
-                        )
-                    )
-                )
-            )
-        ),
-        
+       
         ##### NC 1 mau, kiem dinh 1 trung binh #####
         tabItem(
             tabName = "1mean_hypo",
@@ -2073,7 +2171,7 @@ body <- dashboardBody(
                     p(HTML("<left> <b> <p style='font-size:35px;color:white;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU LTM 1.0 </sup> </p> </b> </left>")),
                     p(HTML("<left> <b> <p style='font-size:28px;color:white;'> Dành cho các nghiên cứu khoa học sức khỏe </p> </b> </left>")),
                     # p(HTML("<left> <i> <p style='font-size:15px;color:darkblue;'>  (Phiên bản v1.0-2020) </p> </i> </left>")),
-                    p(HTML("<left> <b> <p style='font-size:15px;color:white;'> </b> <i>  Tác giả: Khương Quỳnh Long, Ong Phúc Thịnh, Hoàng Văn Minh </i> </p>  </left>")),
+                    p(HTML("<left> <b> <p style='font-size:15px;color:white;'> </b> <i>  Tác giả: Hoàng Văn Minh, Khương Quỳnh Long, Ong Phúc Thịnh </i> </p>  </left>")),
                     tags$br(),
                     p(HTML('<left><img src="Sampling2.gif" style="width: 30w; min-width: 1000x;"></left>')),
                     # p(HTML('<left><img src="Sample1.jpg" style="width: 30vw; min-width: 250x;"></left>')),
