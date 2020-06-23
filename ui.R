@@ -57,10 +57,6 @@ sidebar <- dashboardSidebar(
         menuItem(
             "Nghiên cứu thử nghiệm lâm sàng theo cụm", startExpanded = FALSE,
             tabName = "cluster_randomize"
-        ),
-        menuItem(
-            "Cỡ mẫu cho mô hình hồi quy", startExpanded = FALSE,
-            tabName = "samregress"
         )
     )
 )
@@ -773,14 +769,17 @@ body <- dashboardBody(
                                         textInput(inputId = "m2_2means_ind_hypo", 
                                                   label = HTML("Trung bình nhóm 2 (&mu;<sub>2</sub>)"), 
                                                   value = 5),
-                                        textInput(inputId = "sd_2means_ind_hypo",
-                                                  label = HTML("Độ lệch chuẩn (&sigma;)"),
-                                                  value = 19),
-                                        numericInput(inputId = "k_2means_ind_hypo",
-                                                     label = "Tỷ số 2 nhóm",
-                                                     value = 1)
+                                        radioButtons(inputId = "input_type_2means_ind_hypo", 
+                                                     label = "Chọn cách nhập", 
+                                                     choices = c("Độ lệch chuẩn gộp" = 1,
+                                                                 "Độ lệch chuẩn của 2 nhóm" = 2)),
+                                        uiOutput(outputId = "input_2means_ind_hypo"),
+                                        uiOutput(outputId = "sdpool_2means_ind_hypo")
                                     ),
                                     box(
+                                        numericInput(inputId = "k_2means_ind_hypo",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1),
                                         textInput(inputId = "nonrep_2means_ind_hypo",
                                                   label = "Tỷ lệ không trả lời",
                                                   value = 0),
@@ -861,14 +860,17 @@ body <- dashboardBody(
                                         textInput(inputId = "m_2means_pair_hypo", 
                                                   label = HTML("Sự khác biệt giữa 2 lần đo (&mu;<sub>d</sub>)"), 
                                                   value = 3),
-                                        textInput(inputId = "sd_2means_pair_hypo",
-                                                  label = HTML("Độ lệch chuẩn (&sigma;<sub>d</sub>)"),
-                                                  value = 9.1),
-                                        numericInput(inputId = "k_2means_pair_hypo",
-                                                     label = "Tỷ số 2 nhóm",
-                                                     value = 1)
+                                        radioButtons(inputId = "input_type_2means_pair_hypo", 
+                                                     label = "Chọn cách nhập", 
+                                                     choices = c("Độ lệch chuẩn gộp" = 1,
+                                                                 "Độ lệch chuẩn của 2 nhóm" = 2)),
+                                        uiOutput(outputId = "input_2means_pair_hypo"),
+                                        uiOutput(outputId = "sdpool_2means_pair_hypo")
                                     ),
                                     box(
+                                        numericInput(inputId = "k_2means_pair_hypo",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1),
                                         textInput(inputId = "nonrep_2means_pair_hypo",
                                                   label = "Tỷ lệ không trả lời",
                                                   value = 0),
