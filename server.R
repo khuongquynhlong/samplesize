@@ -474,8 +474,27 @@ shinyServer(function(input, output) {
       )
     }
   })
+  value_sd_ind_est <- reactive({
+    req(as.numeric(input$n1_2means_ind_est)>0||
+          as.numeric(input$sd1_2means_ind_est)>0||
+          as.numeric(input$n2_2means_ind_est)>0||
+          as.numeric(input$sd2_2means_ind_est)>0,
+        cancelOutput = TRUE)
+    if (input$input_type_2means_ind_est == 2) {
+      fun2_2means_ind_est_sd(
+        n1 = as.numeric(input$n1_2means_ind_est),
+        sd1 = as.numeric(input$sd1_2means_ind_est),
+        n2 = as.numeric(input$n2_2means_ind_est),
+        sd2 = as.numeric(input$sd2_2means_ind_est)
+      )
+    }
+  })
   
-  
+  output$sdpool_2means_ind_est <- renderText({
+    if (input$input_type_2means_ind_est == 2) {
+      paste0(HTML("<b>Độ lệch chuẩn gộp (&sigma;) tính được là: </b>"), round(value_sd_ind_est(), 2))
+    }
+  })
 
   n_2means_ind_est <- reactive({
     req(as.numeric(input$alpha_2means_ind_est)>0&
@@ -505,27 +524,6 @@ shinyServer(function(input, output) {
     }
   })
 
-   value_sd <- reactive({
-     req(as.numeric(input$n1_2means_ind_est)>0||
-              as.numeric(input$sd1_2means_ind_est)>0||
-              as.numeric(input$n2_2means_ind_est)>0||
-              as.numeric(input$sd2_2means_ind_est)>0,
-         cancelOutput = TRUE)
-     if (input$input_type_2means_ind_est == 2) {
-       fun2_2means_ind_est_sd(
-         n1 = as.numeric(input$n1_2means_ind_est),
-         sd1 = as.numeric(input$sd1_2means_ind_est),
-         n2 = as.numeric(input$n2_2means_ind_est),
-         sd2 = as.numeric(input$sd2_2means_ind_est)
-       )
-     }
-   })
-  
-   output$sdpool_2means_ind_est <- renderText({
-     if (input$input_type_2means_ind_est == 2) {
-       paste0(HTML("Độ lệch chuẩn gộp (&sigma;) tính được là: "), round(value_sd(), 2))
-     }
-   })
   
   output$n_2means_ind_est <- renderText({
     n_2means_ind_est()
@@ -575,7 +573,7 @@ shinyServer(function(input, output) {
       )
     }
   })
-  value_sd <- reactive({
+  value_sd_ind_hypo <- reactive({
     req(as.numeric(input$n1_2means_ind_hypo)>0||
           as.numeric(input$sd1_2means_ind_hypo)>0||
           as.numeric(input$n2_2means_ind_hypo)>0||
@@ -593,14 +591,14 @@ shinyServer(function(input, output) {
   
   output$sdpool_2means_ind_hypo <- renderText({
     if (input$input_type_2means_ind_hypo == 2) {
-      paste0(HTML("<b>Độ lệch chuẩn gộp (&sigma;) tính được là: </b>"), round(value_sd(), 2))
+      paste0(HTML("<b>Độ lệch chuẩn gộp (&sigma;) tính được là: </b>"), round(value_sd_ind_hypo(), 2))
     }
   })
   
   n_2means_ind_hypo <- reactive({
     req(as.numeric(input$m1_2means_ind_hypo)>=0&
           as.numeric(input$m2_2means_ind_hypo)>=0&
-          (as.numeric(input$sd_2means_ind_hypo)>=0||!is.null(value_sd()))&
+          (as.numeric(input$sd_2means_ind_hypo)>=0||!is.null(value_sd_ind_hypo()))&
           as.numeric(input$alpha_2means_ind_hypo)>0&
           as.numeric(input$power_2means_ind_hypo)>0&
           as.numeric(input$nonrep_2means_ind_hypo)>=0&
@@ -619,7 +617,7 @@ shinyServer(function(input, output) {
                           power = as.numeric(input$power_2means_ind_hypo), 
                           m1 = as.numeric(input$m1_2means_ind_hypo), 
                           m2 = as.numeric(input$m2_2means_ind_hypo), 
-                          sd = value_sd(), 
+                          sd = value_sd_ind_hypo(), 
                           nonrep = as.numeric(input$nonrep_2means_ind_hypo), 
                           deseff = input$deseff_2means_ind_hypo)
     }
@@ -678,7 +676,7 @@ shinyServer(function(input, output) {
       )
     }
   })
-  value_sd <- reactive({
+  value_sd_pair_hypo <- reactive({
     req(as.numeric(input$n1_2means_pair_hypo)>0||
           as.numeric(input$sd1_2means_pair_hypo)>0||
           as.numeric(input$n2_2means_pair_hypo)>0||
@@ -696,13 +694,13 @@ shinyServer(function(input, output) {
   
   output$sdpool_2means_pair_hypo <- renderText({
     if (input$input_type_2means_pair_hypo == 2) {
-      paste0(HTML("<b>Độ lệch chuẩn gộp (&sigma;) tính được là: </b>"), round(value_sd(), 2))
+      paste0(HTML("<b>Độ lệch chuẩn gộp (&sigma;) tính được là: </b>"), round(value_sd_pair_hypo(), 2))
     }
   })
   
   n_2means_pair_hypo <- reactive({
     req(as.numeric(input$m_2means_pair_hypo)>=0&
-          as.numeric(input$sd_2means_pair_hypo)>=0&
+          (as.numeric(input$sd_2means_pair_hypo)>=0||!is.null(value_sd_pair_hypo()))&
           as.numeric(input$alpha_2means_pair_hypo)>0&
           as.numeric(input$power_2means_pair_hypo)>0&
           as.numeric(input$nonrep_2means_pair_hypo)>=0&
@@ -719,7 +717,7 @@ shinyServer(function(input, output) {
       fun_2means_pair_hypo(alpha = as.numeric(input$alpha_2means_pair_hypo), 
                            power = as.numeric(input$power_2means_pair_hypo), 
                            m = as.numeric(input$m_2means_pair_hypo), 
-                           sd = value_sd(), 
+                           sd = value_sd_pair_hypo(), 
                            nonrep = as.numeric(input$nonrep_2means_pair_hypo), 
                            deseff = input$deseff_2means_pair_hypo)
     }

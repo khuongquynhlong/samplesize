@@ -231,7 +231,7 @@ body <- dashboardBody(
                                              choices = c("Độ lệch chuẩn gộp" = 1,
                                                          "Độ lệch chuẩn của 2 nhóm" = 2)),
                                 uiOutput(outputId = "input_2means_ind_est"),
-                                textOutput(outputId = "sdpool_2means_ind_est")
+                                uiOutput(outputId = "sdpool_2means_ind_est")
                             ),
                             box(
                                 textInput(inputId = "nonrep_2means_ind_est",
