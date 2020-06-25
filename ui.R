@@ -74,7 +74,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu gồm 1 mẫu, xác định 1 tỷ lệ",
                     fluidRow(
                         box(title = "Tính cỡ mẫu", width = 6,
                             box(
@@ -107,53 +107,53 @@ body <- dashboardBody(
                             conditionalPanel(
                                 condition = "input.precision_type_1prop_est == 1",
                                 withMathJax(),
-                                p("Công thức 1: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2P(1-P)}{d^2}$$")
+                                p("Công thức: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2P(1-P)}{d^2}$$")
                             ),
                             conditionalPanel(
                                 condition = "input.precision_type_1prop_est == 2",
                                 withMathJax(),
-                                p("Công thức 2: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2(1-P)}{\\varepsilon^2P}$$")
-                            )
-                        )
-                    )
-                ),
-                tabPanel(
-                    title = "Biểu đồ",
-                    fluidRow(
-                        box(width = 4,
-                            radioButtons(inputId = "precision_type_1prop_est_plot", 
-                                         label = "Chọn loại sai số", 
-                                         choices = c("Sai số tuyệt đối" = 1,
-                                                     "Sai số tương đối" = 2)),
-                            textInput(inputId = "alpha_1prop_est_plot",
-                                      label = HTML("Alpha (&alpha;)"),
-                                      value = 0.05),
-                            sliderInput(inputId = "p_range_1prop_est_plot",
-                                        label = "Chọn khoảng tỷ lệ muốn vẽ",
-                                        min = 0, max = 1, value = c(0.1, 0.99)),
-                            textInput(inputId = "p_by_1prop_est_plot",
-                                      label = "Khoảng cách tỷ lệ",
-                                      value = 0.01),
-                            uiOutput(outputId = "precision_1prop_est_plot"),
-                            helpText("Có thể nhập nhiều sai số, cách nhau bằng dấu khoảng trắng (space)")
-                        ),
-                        tabBox(
-                            width = 8, side = "left",
-                            tabPanel(
-                                title = "Biểu đồ",
-                                fluidPage(
-                                    plotlyOutput(outputId = "plot_1prop_est")
-                                )
-                            ),
-                            tabPanel(
-                                title = "Bảng",
-                                fluidPage(
-                                    dataTableOutput(outputId = "table_1prop_est")
-                                )
+                                p("Công thức: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2(1-P)}{\\varepsilon^2P}$$")
                             )
                         )
                     )
                 )
+                # tabPanel(
+                #     title = "Biểu đồ",
+                #     fluidRow(
+                #         box(width = 4,
+                #             radioButtons(inputId = "precision_type_1prop_est_plot", 
+                #                          label = "Chọn loại sai số", 
+                #                          choices = c("Sai số tuyệt đối" = 1,
+                #                                      "Sai số tương đối" = 2)),
+                #             textInput(inputId = "alpha_1prop_est_plot",
+                #                       label = HTML("Alpha (&alpha;)"),
+                #                       value = 0.05),
+                #             sliderInput(inputId = "p_range_1prop_est_plot",
+                #                         label = "Chọn khoảng tỷ lệ muốn vẽ",
+                #                         min = 0, max = 1, value = c(0.1, 0.99)),
+                #             textInput(inputId = "p_by_1prop_est_plot",
+                #                       label = "Khoảng cách tỷ lệ",
+                #                       value = 0.01),
+                #             uiOutput(outputId = "precision_1prop_est_plot"),
+                #             helpText("Có thể nhập nhiều sai số, cách nhau bằng dấu khoảng trắng (space)")
+                #         ),
+                #         tabBox(
+                #             width = 8, side = "left",
+                #             tabPanel(
+                #                 title = "Biểu đồ",
+                #                 fluidPage(
+                #                     plotlyOutput(outputId = "plot_1prop_est")
+                #                 )
+                #             ),
+                #             tabPanel(
+                #                 title = "Bảng",
+                #                 fluidPage(
+                #                     dataTableOutput(outputId = "table_1prop_est")
+                #                 )
+                #             )
+                #         )
+                #     )
+                # )
             )
         ),
         
@@ -163,7 +163,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu gồm 1 mẫu, xác định 1 trung bình",
                     fluidRow(
                         box(title = "Tính cỡ mẫu", width = 6,
                             box(
@@ -196,12 +196,12 @@ body <- dashboardBody(
                             conditionalPanel(
                                 condition = "input.precision_type_1mean_est == 1",
                                 withMathJax(),
-                                p("Công thức 1: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}$$")
+                                p("Công thức: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}$$")
                             ),
                             conditionalPanel(
                                 condition = "input.precision_type_1mean_est == 2",
                                 withMathJax(),
-                                p("Công thức 2: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{\\varepsilon^2\\mu^2}$$")
+                                p("Công thức: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{\\varepsilon^2\\mu^2}$$")
                             )
                         )
                     )
@@ -216,7 +216,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 trung bình",
                     fluidRow(
                         box(title = "Tính cỡ mẫu", width = 6,
                             box(
@@ -250,12 +250,12 @@ body <- dashboardBody(
                             conditionalPanel(
                                 condition = "input.input_type_2means_ind_est == 1",
                                 withMathJax(),
-                                p("Công thức 1: $$n= 2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}\\right)$$")
+                                p("Công thức: $$n= 2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}\\right)$$")
                             ),
                             conditionalPanel(
                                 condition = "input.input_type_2means_ind_est == 2",
                                 withMathJax(),
-                                p("Công thức 2: $$n= 2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}\\right)$$"),
+                                p("Công thức: $$n= 2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}\\right)$$"),
                                 p("Trong đó:"),
                                 p("$$\\sigma=\\sqrt{\\frac{(n_1-1)s^2_1+(n_2-1)s^2_2}{n_1+n_2-2}}$$")
                             )
@@ -271,7 +271,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu 2 mẫu ghép cặp, xác định sự khác biệt 2 trung bình",
                     fluidRow(
                         box(title = "Tính cỡ mẫu", width = 6,
                             box(
@@ -300,7 +300,7 @@ body <- dashboardBody(
                         ),
                         box(title = "Công thức", width = 6,
                             withMathJax(),
-                            p("Công thức 1: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma_d^2}{d^2}$$")
+                            p("Công thức: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma_d^2}{d^2}$$")
                         )
                     )
                 )
@@ -314,7 +314,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 tỷ lệ",
                     fluidRow(
                         box(title = "Tính cỡ mẫu", width = 6,
                             box(
@@ -588,7 +588,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu gồm 1 mẫu, kiểm định 1 trung bình",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left",
@@ -671,7 +671,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu gồm 1 mẫu, kiểm định 1 tỷ lệ",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left", 
@@ -749,7 +749,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 trung bình",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left",
@@ -843,7 +843,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 trung bình",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left",
@@ -931,7 +931,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 tỷ lệ",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left", 
@@ -1203,7 +1203,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu thuần tập, kiểm định RR",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left",
@@ -1324,7 +1324,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu bệnh chứng, kiểm định OR",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left",
@@ -1379,7 +1379,7 @@ body <- dashboardBody(
                                                   value = 100)
                                     ),
                                     box(
-                                        p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                        p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_case_hypo"), "</b>")), align = "center"))
                                     )
                                 )
@@ -1478,7 +1478,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu tính toán độ nhạy",
                     fluidRow(
                         box(title = "Tính cỡ mẫu", width = 6,
                             box(
@@ -1516,7 +1516,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu tính toán độ đặc hiệu",
                     fluidRow(
                         box(title = "Tính cỡ mẫu", width = 6,
                             box(
@@ -1569,7 +1569,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu sống còn",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left", 
@@ -1680,7 +1680,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu tương đương với biến định lượng",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left",
@@ -1774,7 +1774,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu tương đương với biến định tính",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left",
@@ -1862,7 +1862,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu không kém hơn với biến định lượng",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left",
@@ -1961,7 +1961,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu không kém hơn với biến định tính",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left",
@@ -2054,7 +2054,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nhập số",
+                    title = "Nghiên cứu thử nghiệm lâm sàng theo cụm",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left",
@@ -2168,20 +2168,20 @@ body <- dashboardBody(
         tabItem(
             tabName = "landing_page",
             fluidRow(
-                myBox(width = 10, background = "#222d32",color = "white",
+                myBox(width = 12, background = "#222d32",color = "white",
                     #p(HTML('<left><img src="Logo1.png" style="width: 10vw; min-width: 250x;"></left>')),
                     #tags$br(),
-                    p(HTML("<left> <b> <p style='font-size:35px;color:white;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU LTM 1.0 </sup> </p> </b> </left>")),
-                    p(HTML("<left> <b> <p style='font-size:28px;color:white;'> Dành cho các nghiên cứu khoa học sức khỏe </p> </b> </left>")),
+                    p(HTML("<center> <b> <p style='font-size:35px;color:white;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU </sup> </p> </b> </center>")),
+                    p(HTML("<center> <b> <p style='font-size:28px;color:white;'> DÀNH CHO CÁC NGHIÊN CỨU KHOA HỌC SỨC KHỎE </p> </b> </center>")),
                     # p(HTML("<left> <i> <p style='font-size:15px;color:darkblue;'>  (Phiên bản v1.0-2020) </p> </i> </left>")),
-                    p(HTML("<left> <b> <p style='font-size:15px;color:white;'> </b> <i>  Tác giả: Hoàng Văn Minh, Khương Quỳnh Long, Ong Phúc Thịnh </i> </p>  </left>")),
+                    p(HTML("<center> <b> <p style='font-size:15px;color:white;'> </b> <i>  Tác giả: Hoàng Văn Minh, Khương Quỳnh Long, Ong Phúc Thịnh </i> </p>  </center>")),
                     tags$br(),
-                    p(HTML('<left><img src="Sampling2.gif" style="width: 30w; min-width: 1000x;"></left>')),
+                    p(HTML('<center><img src="Sampling2.gif" style="width: 30w; min-width: 1000x;"></center>')),
                     # p(HTML('<left><img src="Sample1.jpg" style="width: 30vw; min-width: 250x;"></left>')),
+                    #tags$br(),
+                    #tags$br(),
                     tags$br(),
-                    tags$br(),
-                    tags$br(),
-                    p(HTML("<i> <p style='font-size:12px;color:white;text-align:left'> (Phần mềm đang trong quá trình xây dựng và thử nghiệm, mọi góp ý xin vui lòng liên hệ nhóm tác giả; <u> Email: kql@huph.edu.vn</u>) </p> </i>")),
+                    p(HTML("<i> <p style='font-size:10px;color:white;text-align:left'> (Phần mềm đang trong quá trình xây dựng và thử nghiệm, mọi góp ý xin vui lòng liên hệ; <u> Email: kql@huph.edu.vn</u>) </p> </i>")),
                     # p(HTML("<i> <p style='font-size:10px;color:darkblue;text-align:right'> @Phần mềm được viết bằng ngôn ngữ R với ứng dụng Shiny    </p> </i>"))
                     )
                 )
@@ -2189,9 +2189,9 @@ body <- dashboardBody(
         )
     )
 
-dashboardPage(title = "Phần mềm tính toán cỡ mẫu LTM 1.0",
+dashboardPage(title = "Phần mềm tính toán cỡ mẫu",
     dashboardHeader(
-        title = span(icon("dna"), HTML("Cỡ mẫu LTM 1.0")),
+        title = span(icon("dna"), HTML("Tính toán cỡ mẫu")),
         tags$li(
             a(icon("question-circle"),
               strong("Help"),
