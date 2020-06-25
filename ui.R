@@ -98,7 +98,7 @@ body <- dashboardBody(
                                              label = "Hệ số thiết kế", 
                                              value = 1)
                             ),
-                            box(
+                            myBox(background = "#d9d9d9",color = "black",
                                 p(HTML("<center><b>Cỡ mẫu</b></center>")),
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1prop_est"), "</b>")), align = "center"))
                             )
@@ -187,7 +187,7 @@ body <- dashboardBody(
                                              label = "Hệ số thiết kế",
                                              value = 1)
                             ),
-                            box(
+                            myBox(background = "#d9d9d9",color = "black",
                                 p(HTML("<center><b>Cỡ mẫu</b></center>")),
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1mean_est"), "</b>")), align = "center"))
                             )
@@ -196,12 +196,12 @@ body <- dashboardBody(
                             conditionalPanel(
                                 condition = "input.precision_type_1mean_est == 1",
                                 withMathJax(),
-                                p("Công thức: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}$$")
+                                p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}$$")
                             ),
                             conditionalPanel(
                                 condition = "input.precision_type_1mean_est == 2",
                                 withMathJax(),
-                                p("Công thức: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{\\varepsilon^2\\mu^2}$$")
+                                p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{\\varepsilon^2\\mu^2}$$")
                             )
                         )
                     )
@@ -241,7 +241,7 @@ body <- dashboardBody(
                                              label = "Hệ số thiết kế",
                                              value = 1)
                             ),
-                            box(
+                            myBox(background = "#d9d9d9",color = "black",
                                 p(HTML("<center><b>Cỡ mẫu</b></center>")),
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_2means_ind_est"), "</b>")), align = "center"))
                             )
@@ -250,12 +250,12 @@ body <- dashboardBody(
                             conditionalPanel(
                                 condition = "input.input_type_2means_ind_est == 1",
                                 withMathJax(),
-                                p("Công thức: $$n= 2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}\\right)$$")
+                                p("$$n= 2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}\\right)$$")
                             ),
                             conditionalPanel(
                                 condition = "input.input_type_2means_ind_est == 2",
                                 withMathJax(),
-                                p("Công thức: $$n= 2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}\\right)$$"),
+                                p("$$n= 2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma^2}{d^2}\\right)$$"),
                                 p("Trong đó:"),
                                 p("$$\\sigma=\\sqrt{\\frac{(n_1-1)s^2_1+(n_2-1)s^2_2}{n_1+n_2-2}}$$")
                             )
@@ -293,14 +293,14 @@ body <- dashboardBody(
                                              label = "Hệ số thiết kế",
                                              value = 1)
                             ),
-                            box(
+                            myBox(background = "#d9d9d9",color = "black",
                                 p(HTML("<center><b>Cỡ mẫu</b></center>")),
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_2props_pair_est"), "</b>")), align = "center"))
                             )
                         ),
                         box(title = "Công thức", width = 6,
                             withMathJax(),
-                            p("Công thức: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma_d^2}{d^2}$$")
+                            p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2\\sigma_d^2}{d^2}$$")
                         )
                     )
                 )
@@ -339,7 +339,7 @@ body <- dashboardBody(
                                              label = "Hệ số thiết kế",
                                              value = 1)
                             ),
-                            box(
+                            myBox(background = "#d9d9d9",color = "black",
                                 p(HTML("<center><b>Cỡ mẫu</b></center>")),
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_2props_est"), "</b>")), align = "center"))
                             )
@@ -391,11 +391,11 @@ body <- dashboardBody(
                                                      label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_2props_hypo"), "</b>")), align = "center"))
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm 2</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_2props_hypo"), "</b>")), align = "center"))
                                     )
@@ -422,7 +422,7 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu (n)",
                                                   value = 500)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_2props_hypo"), "</b>")), align = "center"))
                                     )
@@ -620,7 +620,7 @@ body <- dashboardBody(
                                                      label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1mean_hypo"), "</b>")), align = "center"))
                                     )
@@ -648,7 +648,7 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu (n)",
                                                   value = 31)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_1mean_hypo"), "</b>")), align = "center"))
                                     )
@@ -700,7 +700,7 @@ body <- dashboardBody(
                                                      label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n_1prop_hypo"), "</b>")), align = "center"))
                                     )
@@ -725,7 +725,7 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu (n)",
                                                   value = 100)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_1prop_hypo"), "</b>")), align = "center"))
                                     )
@@ -787,11 +787,11 @@ body <- dashboardBody(
                                                      label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_2means_ind_hypo"), "</b>")), align = "center"))
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm 2</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_2means_ind_hypo"), "</b>")), align = "center"))
                                     )
@@ -819,7 +819,7 @@ body <- dashboardBody(
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_2means_ind_hypo"), "</b>")), align = "center"))
                                     )
@@ -878,11 +878,11 @@ body <- dashboardBody(
                                                      label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_2means_pair_hypo"), "</b>")), align = "center"))
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm 2</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_2means_pair_hypo"), "</b>")), align = "center"))
                                     )
@@ -907,7 +907,7 @@ body <- dashboardBody(
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_2means_pair_hypo"), "</b>")), align = "center"))
                                     )
@@ -963,7 +963,7 @@ body <- dashboardBody(
                                                      label = "Tỷ số 2 nhóm",
                                                      value = 1),
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_2props_ind_hypo"), "</b>")), align = "center")),
                                         p(HTML("<center><b>Cỡ mẫu nhóm 2</b></center>")),
@@ -990,7 +990,7 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu mỗi nhóm (n)",
                                                   value = 550)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_2props_ind_hypo"), "</b>")), align = "center"))
                                     )
@@ -1232,7 +1232,7 @@ body <- dashboardBody(
                                                      label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n_cohort_hypo"), "</b>")), align = "center"))
                                     )
@@ -1257,7 +1257,7 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu (n)",
                                                   value = 100)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_cohort_hypo"), "</b>")), align = "center"))
                                     )
@@ -1353,7 +1353,7 @@ body <- dashboardBody(
                                                      label = "Hệ số thiết kế",
                                                      value = 1)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n_case_hypo"), "</b>")), align = "center"))
                                     )
@@ -1378,7 +1378,7 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu (n)",
                                                   value = 100)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_case_hypo"), "</b>")), align = "center"))
                                     )
@@ -1495,7 +1495,7 @@ body <- dashboardBody(
                                           label = HTML("Tỷ lệ bệnh hiện hành (P)"),
                                           value = 0.2)
                             ),
-                            box(
+                            myBox(background = "#d9d9d9",color = "black",
                                 p(HTML("<center><b>Cỡ mẫu</b></center>")),
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_sen"), "</b>")), align = "center"))
                             )
@@ -1533,7 +1533,7 @@ body <- dashboardBody(
                                           label = HTML("Tỷ lệ bệnh hiện hành (P)"),
                                           value = 0.2)
                             ),
-                            box(
+                            myBox(background = "#d9d9d9",color = "black",
                                 p(HTML("<center><b>Cỡ mẫu</b></center>")),
                                 p(h1(HTML(paste0("<b>", textOutput(outputId = "n_spec"), "</b>")), align = "center"))
                             )
@@ -1615,7 +1615,7 @@ body <- dashboardBody(
                                                      label = "Tỷ số 2 nhóm",
                                                      value = 1),
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_survive"), "</b>")), align = "center")),
                                         p(HTML("<center><b>Cỡ mẫu nhóm 2</b></center>")),
@@ -1656,7 +1656,7 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu mỗi nhóm (n)",
                                                   value = 50)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_survive_power"), "</b>")), align = "center"))
                                     )
@@ -1718,7 +1718,7 @@ body <- dashboardBody(
                                                      label = "Tỷ số 2 nhóm",
                                                      value = 1)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm can thiệp</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_equi_cont"), "</b>")), align = "center")),
                                         p(HTML("<center><b>Cỡ mẫu nhóm đối chứng</b></center>")),
@@ -1751,7 +1751,7 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu mỗi nhóm (n)",
                                                   value = 500)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_equi_cont"), "</b>")), align = "center"))
                                     )
@@ -1809,7 +1809,7 @@ body <- dashboardBody(
                                                      label = "Tỷ số 2 nhóm",
                                                      value = 1)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm can thiệp</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_equi_cat"), "</b>")), align = "center")),
                                         p(HTML("<center><b>Cỡ mẫu nhóm đối chứng</b></center>")),
@@ -1839,7 +1839,7 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu mỗi nhóm (n)",
                                                   value = 500)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_equi_cat"), "</b>")), align = "center"))
                                     )
@@ -1900,7 +1900,7 @@ body <- dashboardBody(
                                                      label = "Tỷ số 2 nhóm",
                                                      value = 1)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm can thiệp</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_noninfer_cont"), "</b>")), align = "center")),
                                         p(HTML("<center><b>Cỡ mẫu nhóm đối chứng</b></center>")),
@@ -1933,7 +1933,7 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu mỗi nhóm (n)",
                                                   value = 500)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_noninfer_cont"), "</b>")), align = "center"))
                                     )
@@ -1996,7 +1996,7 @@ body <- dashboardBody(
                                                      label = "Tỷ số 2 nhóm",
                                                      value = 1)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm can thiệp</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_noninfer_cat"), "</b>")), align = "center")),
                                         p(HTML("<center><b>Cỡ mẫu nhóm đối chứng</b></center>")),
@@ -2026,7 +2026,7 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu mỗi nhóm (n)",
                                                   value = 500)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_noninfer_cat"), "</b>")), align = "center"))
                                     )
@@ -2100,7 +2100,7 @@ body <- dashboardBody(
                                         ),
                                         uiOutput(outputId = "vif_cluster_randomize")
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Số cụm</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "n_cluster_randomize"), "</b>")), align = "center"))
                                     )
@@ -2128,7 +2128,7 @@ body <- dashboardBody(
                                                   label = "Cỡ mẫu mỗi nhóm (n)",
                                                   value = 500)
                                     ),
-                                    box(
+                                    myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
                                         p(h1(HTML(paste0("<b>", textOutput(outputId = "power_cluster_randomize"), "</b>")), align = "center"))
                                     )
