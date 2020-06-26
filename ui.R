@@ -15,47 +15,48 @@ sidebar <- dashboardSidebar(
             tabName = "landing_page"
         ),
         menuItem(
-            "Nghiên cứu dựa trên ước lượng khoảng", 
+            "1. Nghiên cứu dựa trên ước lượng khoảng", 
             icon = icon("percentage"), startExpanded = FALSE,
-            menuSubItem("Nghiên cứu gồm 1 mẫu, xác định 1 trung bình", tabName = "1mean_est"),
-            menuSubItem("Nghiên cứu gồm 1 mẫu, xác định 1 tỷ lệ", tabName = "1prop_est"),
-            menuSubItem("Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 trung bình", tabName = "2means_ind_est"),
-            menuSubItem("Nghiên cứu 2 mẫu ghép cặp, xác định sự khác biệt 2 trung bình", tabName = "2props_pair_est"),
-            menuSubItem("Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 tỷ lệ", tabName = "2props_est")
+            menuSubItem("1.1 Nghiên cứu gồm 1 mẫu, xác định 1 trung bình", tabName = "1mean_est"),
+            menuSubItem("1.2 Nghiên cứu gồm 1 mẫu, xác định 1 tỷ lệ", tabName = "1prop_est"),
+            menuSubItem("1.3 Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 trung bình", tabName = "2means_ind_est"),
+            menuSubItem("1.4 Nghiên cứu 2 mẫu ghép cặp, xác định sự khác biệt 2 trung bình", tabName = "2props_pair_est"),
+            menuSubItem("1.5 Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 tỷ lệ", tabName = "2props_est")
             ),
         menuItem(
-            "Nghiên cứu dựa trên kiểm định giả thuyết", 
+            "2. Nghiên cứu dựa trên kiểm định giả thuyết", 
             icon = icon("chart-line"), startExpanded = FALSE,
-            menuSubItem("Nghiên cứu gồm 1 mẫu, kiểm định 1 trung bình", tabName = "1mean_hypo"),
-            menuSubItem("Nghiên cứu gồm 1 mẫu, kiểm định 1 tỷ lệ", tabName = "1prop_hypo"),
-            menuSubItem("Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 trung bình", tabName = "2means_ind_hypo"),
-            menuSubItem("Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 trung bình", tabName = "2means_pair_hypo"),
-            menuSubItem("Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 tỷ lệ", tabName = "2props_ind_hypo"),
-            menuSubItem("Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 tỷ lệ (McNemar)", tabName = "2props_pair_hypo"),
-            menuSubItem("Nghiên cứu bệnh chứng, kiểm định OR", tabName = "case_hypo"),
-            menuSubItem("Nghiên cứu thuần tập, kiểm định RR", tabName = "cohort_hypo"),
-            menuSubItem("Nghiên cứu sống còn", tabName = "survive")
+            menuSubItem("2.1 Nghiên cứu gồm 1 mẫu, kiểm định 1 trung bình", tabName = "1mean_hypo"),
+            menuSubItem("2.2 Nghiên cứu gồm 1 mẫu, kiểm định 1 tỷ lệ", tabName = "1prop_hypo"),
+            menuSubItem("2.3 Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 trung bình", tabName = "2means_ind_hypo"),
+            menuSubItem("2.4 Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 trung bình", tabName = "2means_pair_hypo"),
+            menuSubItem("2.5 Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 tỷ lệ", tabName = "2props_ind_hypo"),
+            menuSubItem("2.6 Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 tỷ lệ (McNemar)", tabName = "2props_pair_hypo"),
+            menuSubItem("2.7 Nghiên cứu bệnh chứng, kiểm định OR", tabName = "case_hypo"),
+            menuSubItem("2.8 Nghiên cứu thuần tập, kiểm định RR", tabName = "cohort_hypo"),
+            menuSubItem("2.9 Nghiên cứu sống còn", tabName = "survive")
         ),
         menuItem(
-            "Nghiên cứu nghiệm pháp chẩn đoán",
-            icon = icon("chart-line"), startExpanded = FALSE,
+            "3. Nghiên cứu nghiệm pháp chẩn đoán",
+            icon = icon("vial"), startExpanded = FALSE,
             menuSubItem("Độ nhạy", tabName = "sens"),
             menuSubItem("Độ đặc hiệu", tabName = "spec")
         ),
         menuItem(
-            "Nghiên cứu tương đương",
-            icon = icon("percentage"), startExpanded = FALSE,
+            "4. Nghiên cứu tương đương",
+            icon = icon("capsules"), startExpanded = FALSE,
             menuSubItem("Nghiên cứu tương đương với biến định lượng", tabName = "equi_cont"),
             menuSubItem("Nghiên cứu tương đương với biến định tính", tabName = "equi_cat")
         ),
         menuItem(
-            "Nghiên cứu không kém hơn",
-            icon = icon("percentage"), startExpanded = FALSE,
+            "5. Nghiên cứu không kém hơn",
+            icon = icon("pills"), startExpanded = FALSE,
             menuSubItem("Nghiên cứu không kém hơn với biến định lượng", tabName = "noninfer_cont"),
             menuSubItem("Nghiên cứu không kém hơn với biến định tính", tabName = "noninfer_cat")
         ),
         menuItem(
-            "Nghiên cứu thử nghiệm lâm sàng theo cụm", startExpanded = FALSE,
+            "6. Nghiên cứu thử nghiệm lâm sàng theo cụm",
+            icon = icon("tablets"), startExpanded = FALSE,
             tabName = "cluster_randomize"
         )
     )
