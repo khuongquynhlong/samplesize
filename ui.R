@@ -108,12 +108,12 @@ body <- dashboardBody(
                             conditionalPanel(
                                 condition = "input.precision_type_1prop_est == 1",
                                 withMathJax(),
-                                p("Công thức: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2P(1-P)}{d^2}$$")
+                                p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2P(1-P)}{d^2}$$")
                             ),
                             conditionalPanel(
                                 condition = "input.precision_type_1prop_est == 2",
                                 withMathJax(),
-                                p("Công thức: $$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2(1-P)}{\\varepsilon^2P}$$")
+                                p("$$n=\\frac{Z_{1-\\frac{\\alpha}{2}}^2(1-P)}{\\varepsilon^2P}$$")
                             )
                         )
                     )
@@ -2220,10 +2220,9 @@ body <- dashboardBody(
                     p(HTML("<center> <b> <p style='font-size:35px;color:white;'> PHẦN MỀM TÍNH TOÁN CỠ MẪU </sup> </p> </b> </center>")),
                     p(HTML("<center> <b> <p style='font-size:28px;color:white;'> DÀNH CHO CÁC NGHIÊN CỨU KHOA HỌC SỨC KHỎE </p> </b> </center>")),
                     # p(HTML("<left> <i> <p style='font-size:15px;color:darkblue;'>  (Phiên bản v1.0-2020) </p> </i> </left>")),
-                    p(HTML("<center> <b> <p style='font-size:15px;color:white;'> </b> <i>  Tác giả: Hoàng Văn Minh, Khương Quỳnh Long, Ong Phúc Thịnh </i> </p>  </center>")),
+                    p(HTML("<center> <b> <p style='font-size:15px;color:white;'> </b> <i>  Tác giả: Khương Quỳnh Long, Ong Phúc Thịnh, Hoàng Văn Minh </i> </p>  </center>")),
                     tags$br(),
-                    p(HTML('<center><img src="Sampling2.gif" style="width: 30w; min-width: 1000x;"></center>')),
-                    # p(HTML('<left><img src="Sample1.jpg" style="width: 30vw; min-width: 250x;"></left>')),
+                    p(HTML('<center><img src="Sampling2.gif" style="width:400px;"></center>')),
                     #tags$br(),
                     #tags$br(),
                     tags$br(),
