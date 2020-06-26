@@ -17,6 +17,10 @@ shinyServer(function(input, output) {
   
   ##### Categorical variables #####
   ##### Estimate 1 prop #####
+  output$za_1prop_est <- renderText({
+    req(as.numeric(input$alpha_1prop_est)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_1prop_est)/2), 2))
+  })
   output$precision_1prop_est <- renderUI({
     if (input$precision_type_1prop_est == 1) {
       textInput(inputId = "d_1prop_est",
@@ -137,6 +141,14 @@ shinyServer(function(input, output) {
   })
   
   ##### NC 1 mau, kiem dinh 1 ty le #####
+  output$za_1prop_hypo <- renderText({
+    req(as.numeric(input$alpha_1prop_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_1prop_hypo)/2), 2))
+  })
+  output$zb_1prop_hypo <- renderText({
+    req(as.numeric(input$power_1prop_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_1prop_hypo)), 2))
+  })
   # Sample size
   n_1prop_hypo <- reactive({
     req(as.numeric(input$p0_1prop_hypo)>0&
@@ -158,6 +170,10 @@ shinyServer(function(input, output) {
   })
   
   # Power
+  output$za_1prop_hypo_power <- renderText({
+    req(as.numeric(input$alpha_1prop_hypo_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_1prop_hypo_power)/2), 2))
+  })
   power_1prop_hypo <- reactive({
     req(as.numeric(input$p0_1prop_hypo_power)>0&
           as.numeric(input$pa_1prop_hypo_power)>0&
@@ -173,7 +189,11 @@ shinyServer(function(input, output) {
     power_1prop_hypo()
   })
   
-  ##### Estimate 2 proportions difference #####
+  ##### NC 2 mau doc lap, su khac biet 2 ty le #####
+  output$za_2props_est <- renderText({
+    req(as.numeric(input$alpha_2props_est)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_2props_est)/2), 2))
+  })
   n_2props_est <- reactive({
     req(as.numeric(input$p1_2props_est)>0&
           as.numeric(input$p2_2props_est)>0&
@@ -365,6 +385,10 @@ shinyServer(function(input, output) {
 
   ##### Continuous variables #####
   ##### Estimating the population mean #####
+  output$za_1mean_est <- renderText({
+    req(as.numeric(input$alpha_1mean_est)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_1mean_est)/2), 2))
+  })
   output$precision_1mean_est <- renderUI({
     if (input$precision_type_1mean_est == 1) {
       textInput(inputId = "d_1mean_est",
@@ -411,6 +435,14 @@ shinyServer(function(input, output) {
   
   ##### NC 1 mau, kiem dinh 1 trung binh #####
   # Sample size
+  output$za_1mean_hypo <- renderText({
+    req(as.numeric(input$alpha_1mean_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_1mean_hypo)/2), 2))
+  })
+  output$zb_1mean_hypo <- renderText({
+    req(as.numeric(input$power_1mean_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_1mean_hypo)), 2))
+  })
   n_1mean_hypo <- reactive({
     req(as.numeric(input$m1_1mean_hypo)>0&
           as.numeric(input$m0_1mean_hypo)>0&
@@ -433,6 +465,10 @@ shinyServer(function(input, output) {
   })
   
   # Power
+  output$za_1mean_hypo_power <- renderText({
+    req(as.numeric(input$alpha_1mean_hypo_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_1mean_hypo_power)/2), 2))
+  })
   power_1mean_hypo <- reactive({
     req(as.numeric(input$m0_1mean_hypo_power)>=0&
           as.numeric(input$m1_1mean_hypo_power)>=0&
@@ -451,7 +487,10 @@ shinyServer(function(input, output) {
   })
   
   ##### Nghiên cứu 2 mẫu độc lập, xác định sự khác biệt 2 trung bình #####
-  
+  output$za_2means_ind_est <- renderText({
+    req(as.numeric(input$alpha_2means_ind_est)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_2means_ind_est)/2), 2))
+  })
   output$input_2means_ind_est <- renderUI({
     if (input$input_type_2means_ind_est == 1) {
       textInput(inputId = "sigma_2means_ind_est",
@@ -529,8 +568,11 @@ shinyServer(function(input, output) {
     n_2means_ind_est()
   })
   
-  ##### Nghiên cứu 2 mẫu ghép cặp, xác định sự khác biệt 2 trung bình
-  
+  ##### Nghiên cứu 2 mẫu ghép cặp, xác định sự khác biệt 2 trung bình #####
+  output$za_2props_pair_est <- renderText({
+    req(as.numeric(input$alpha_2props_pair_est)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_2props_pair_est)/2), 2))
+  })
   n_2props_pair_est <- reactive({
     req(as.numeric(input$alpha_2props_pair_est)>0&
           as.numeric(input$sd_2props_pair_est)>0&
@@ -551,6 +593,14 @@ shinyServer(function(input, output) {
   
   ##### NC 2 mau doc lap, kiem dinh 2 trung binh #####
   # Sample size
+  output$za_2means_ind_hypo <- renderText({
+    req(as.numeric(input$alpha_2means_ind_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_2means_ind_hypo)/2), 2))
+  })
+  output$zb_2means_ind_hypo <- renderText({
+    req(as.numeric(input$power_2means_ind_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_2means_ind_hypo)), 2))
+  })
   output$input_2means_ind_hypo <- renderUI({
     if (input$input_type_2means_ind_hypo == 1) {
       textInput(inputId = "sd_2means_ind_hypo",
@@ -635,6 +685,10 @@ shinyServer(function(input, output) {
     ceiling(input$k_2means_ind_hypo*n1_2means_ind_hypo())
   })
   # Power
+  output$za_2means_ind_hypo_power <- renderText({
+    req(as.numeric(input$alpha_2means_ind_hypo_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_2means_ind_hypo_power)/2), 2))
+  })
   power_2means_ind_hypo <- reactive({
     req(as.numeric(input$m1_2means_ind_hypo_power)>=0&
           as.numeric(input$m2_2means_ind_hypo_power)>=0&
@@ -654,6 +708,14 @@ shinyServer(function(input, output) {
   
   ##### NC 2 mau ghep cap, kiem dinh 2 trung binh #####
   # Sample size
+  output$za_2means_pair_hypo <- renderText({
+    req(as.numeric(input$alpha_2means_pair_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_2means_pair_hypo)/2), 2))
+  })
+  output$zb_2means_pair_hypo <- renderText({
+    req(as.numeric(input$power_2means_pair_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_2means_pair_hypo)), 2))
+  })
   output$input_2means_pair_hypo <- renderUI({
     if (input$input_type_2means_pair_hypo == 1) {
       textInput(inputId = "sd_2means_pair_hypo",
@@ -735,6 +797,10 @@ shinyServer(function(input, output) {
     ceiling(input$k_2means_pair_hypo*n1_2means_pair_hypo())
   })
   # Power
+  output$za_2means_pair_hypo_power <- renderText({
+    req(as.numeric(input$alpha_2means_pair_hypo_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_2means_pair_hypo_power)/2), 2))
+  })
   power_2means_pair_hypo <- reactive({
     req(as.numeric(input$m_2means_pair_hypo_power)>=0&
           as.numeric(input$sd_2means_pair_hypo_power)>=0&
@@ -752,6 +818,14 @@ shinyServer(function(input, output) {
   
   ##### NC 2 mau doc lap, kiem dinh 2 ty le #####
   # Sample size
+  output$za_2props_ind_hypo <- renderText({
+    req(as.numeric(input$alpha_2props_ind_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_2props_ind_hypo)/2), 2))
+  })
+  output$zb_2props_ind_hypo <- renderText({
+    req(as.numeric(input$power_2props_ind_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_2props_ind_hypo)), 2))
+  })
   n_2props_ind_hypo <- reactive({
     req(as.numeric(input$p1_2props_ind_hypo)>0&
           as.numeric(input$p2_2props_ind_hypo)>0&
@@ -780,6 +854,10 @@ shinyServer(function(input, output) {
   })
   
   # Power
+  output$za_2props_ind_hypo_power <- renderText({
+    req(as.numeric(input$alpha_2props_ind_hypo_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_2props_ind_hypo_power)/2), 2))
+  })
   power_2props_ind_hypo <- reactive({
     req(as.numeric(input$p1_2props_ind_hypo_power)>0&
           as.numeric(input$p2_2props_ind_hypo_power)>0&
@@ -887,8 +965,16 @@ shinyServer(function(input, output) {
     n_cohort_est()
   })
   
-  ##### Hypothesis test for a RR #####
+  ##### NC thuan tap kiem dinh RR #####
   # Sample size
+  output$za_cohort_hypo <- renderText({
+    req(as.numeric(input$alpha_cohort_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_cohort_hypo)/2), 2))
+  })
+  output$zb_cohort_hypo <- renderText({
+    req(as.numeric(input$power_cohort_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_cohort_hypo)), 2))
+  })
   n_cohort_hypo <- reactive({
     req(as.numeric(input$p1_cohort_hypo)>0&
           as.numeric(input$p2_cohort_hypo)>0&
@@ -909,6 +995,10 @@ shinyServer(function(input, output) {
   })
   
   # Power
+  output$za_cohort_hypo_power <- renderText({
+    req(as.numeric(input$alpha_cohort_hypo_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_cohort_hypo_power)/2), 2))
+  })
   power_cohort_hypo <- reactive({
     req(as.numeric(input$p1_cohort_hypo_power)>0&
           as.numeric(input$p2_cohort_hypo_power)>0&
@@ -946,7 +1036,15 @@ shinyServer(function(input, output) {
     n_case_est()
   })
   
-  # Hypothesis test for a OR
+  ##### NC benh chung kiem dinh OR #####
+  output$za_case_hypo <- renderText({
+    req(as.numeric(input$alpha_case_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_case_hypo)/2), 2))
+  })
+  output$zb_case_hypo <- renderText({
+    req(as.numeric(input$power_case_hypo)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_case_hypo)), 2))
+  })
   n_case_hypo <- reactive({
     req(as.numeric(input$p1_case_hypo)>0&
           as.numeric(input$p2_case_hypo)>0&
@@ -967,6 +1065,10 @@ shinyServer(function(input, output) {
   })
   
   # Power
+  output$za_case_hypo_power <- renderText({
+    req(as.numeric(input$alpha_case_hypo_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_case_hypo_power)/2), 2))
+  })
   power_case_hypo <- reactive({
     req(as.numeric(input$p1_case_hypo_power)>0 &
           as.numeric(input$p2_case_hypo_power)>0 &
@@ -1027,6 +1129,10 @@ shinyServer(function(input, output) {
   
   ##### Sensitivity #####
   # Sample size
+  output$za_sens <- renderText({
+    req(as.numeric(input$alphasens)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alphasens)/2), 2))
+  })
   n_sen <- reactive({
     req(as.numeric(input$alphasens)>0&
           as.numeric(input$sen_sens)>0&
@@ -1045,6 +1151,10 @@ shinyServer(function(input, output) {
   
   ##### Specificity #####
   # Sample size
+  output$za_spec <- renderText({
+    req(as.numeric(input$alphaspec)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alphaspec)/2), 2))
+  })
   n_spec <- reactive({
     req(as.numeric(input$alphaspec)>0&
           as.numeric(input$spec_spec)>0&
@@ -1062,6 +1172,15 @@ shinyServer(function(input, output) {
   })
   
   ##### NC song con #####
+  # Sample size
+  output$za_survive <- renderText({
+    req(as.numeric(input$alpha_survive)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_survive)/2), 2))
+  })
+  output$zb_survive <- renderText({
+    req(as.numeric(input$power_survive)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_survive)), 2))
+  })
   value_survive <- reactive({
     if (input$select_survive == 1) {
       exp((log(as.numeric(input$p1_survive))/as.numeric(input$hr_survive)))
@@ -1118,6 +1237,10 @@ shinyServer(function(input, output) {
   })
   
   # Power
+  output$za_survive_power <- renderText({
+    req(as.numeric(input$alpha_survive_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_survive_power)/2), 2))
+  })
   value_survive_power <- reactive({
     if (input$select_survive_power == 1) {
       exp((log(as.numeric(input$p1_survive_power))/as.numeric(input$hr_survive_power)))
@@ -1160,6 +1283,15 @@ shinyServer(function(input, output) {
   })
   
   ##### NC tuong duong voi bien dinh luong #####
+  # Sample size
+  output$za_equi_cont <- renderText({
+    req(as.numeric(input$alpha_equi_cont)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_equi_cont)/2), 2))
+  })
+  output$zb_equi_cont <- renderText({
+    req(as.numeric(input$power_equi_cont)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_equi_cont)), 2))
+  })
   n_equi_cont <- reactive({
     req(as.numeric(input$m1_equi_cont)>=0&
           as.numeric(input$m2_equi_cont)>=0&
@@ -1191,6 +1323,10 @@ shinyServer(function(input, output) {
   })
   
   # Power
+  output$za_equi_cont_power <- renderText({
+    req(as.numeric(input$alpha_equi_cont_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_equi_cont_power)/2), 2))
+  })
   power_equi_cont <- reactive({
     req(as.numeric(input$m1_equi_cont_power)>=0&
           as.numeric(input$m2_equi_cont_power)>=0&
@@ -1210,6 +1346,15 @@ shinyServer(function(input, output) {
   })
   
   ##### NC tuong duong voi bien dinh tinh #####
+  # Sample size
+  output$za_equi_cat <- renderText({
+    req(as.numeric(input$alpha_equi_cat)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_equi_cat)/2), 2))
+  })
+  output$zb_equi_cat <- renderText({
+    req(as.numeric(input$power_equi_cat)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_equi_cat)), 2))
+  })
   n_equi_cat <- reactive({
     req(as.numeric(input$p1_equi_cat)>=0&
           as.numeric(input$p2_equi_cat)>=0&
@@ -1239,6 +1384,10 @@ shinyServer(function(input, output) {
   })
   
   # Power
+  output$za_equi_cat_power <- renderText({
+    req(as.numeric(input$alpha_equi_cat_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_equi_cat_power)/2), 2))
+  })
   power_equi_cat <- reactive({
     req(as.numeric(input$p1_equi_cat_power)>=0&
           as.numeric(input$p2_equi_cat_power)>=0&
@@ -1257,6 +1406,15 @@ shinyServer(function(input, output) {
   })
   
   ##### NC khong kem hon voi bien dinh luong #####
+  # Sample size
+  output$za_noninfer_cont <- renderText({
+    req(as.numeric(input$alpha_noninfer_cont)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_noninfer_cont)/2), 2))
+  })
+  output$zb_noninfer_cont <- renderText({
+    req(as.numeric(input$power_noninfer_cont)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_noninfer_cont)), 2))
+  })
   n_noninfer_cont <- reactive({
     req(as.numeric(input$m1_noninfer_cont)>=0&
           as.numeric(input$m2_noninfer_cont)>=0&
@@ -1288,6 +1446,10 @@ shinyServer(function(input, output) {
   })
   
   # Power
+  output$za_noninfer_cont_power <- renderText({
+    req(as.numeric(input$alpha_noninfer_cont_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_noninfer_cont_power)/2), 2))
+  })
   power_noninfer_cont <- reactive({
     req(as.numeric(input$m1_noninfer_cont_power)>=0&
           as.numeric(input$m2_noninfer_cont_power)>=0&
@@ -1307,6 +1469,15 @@ shinyServer(function(input, output) {
   })
   
   ##### NC khong kem hon voi bien dinh tinh #####
+  # Sample size
+  output$za_noninfer_cat <- renderText({
+    req(as.numeric(input$alpha_noninfer_cat)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_noninfer_cat)/2), 2))
+  })
+  output$zb_noninfer_cat <- renderText({
+    req(as.numeric(input$power_noninfer_cat)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_noninfer_cat)), 2))
+  })
   n_noninfer_cat <- reactive({
     req(as.numeric(input$p1_noninfer_cat)>=0&
           as.numeric(input$p2_noninfer_cat)>=0&
@@ -1336,6 +1507,10 @@ shinyServer(function(input, output) {
   })
   
   # Power
+  output$za_noninfer_cat_power <- renderText({
+    req(as.numeric(input$alpha_noninfer_cat_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_noninfer_cat_power)/2), 2))
+  })
   power_noninfer_cat <- reactive({
     req(as.numeric(input$p1_noninfer_cat_power)>=0&
           as.numeric(input$p2_noninfer_cat_power)>=0&
@@ -1354,6 +1529,15 @@ shinyServer(function(input, output) {
   })
   
   ##### NC thu nghiem lam sang theo cum #####
+  # Sample size
+  output$za_cluster_randomize <- renderText({
+    req(as.numeric(input$alpha_cluster_randomize)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_cluster_randomize)/2), 2))
+  })
+  output$zb_cluster_randomize <- renderText({
+    req(as.numeric(input$power_cluster_randomize)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_cluster_randomize)), 2))
+  })
   vif_value <- reactive({
     if (input$select_icc_cluster_randomize == 1) {
       1+(as.numeric(input$gamma_cluster_randomize)-1)*as.numeric(input$icc_cluster_randomize)
