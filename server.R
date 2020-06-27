@@ -1570,6 +1570,43 @@ shinyServer(function(input, output) {
   output$n_cluster_randomize <- renderText({
     n_cluster_randomize()
   })
+  # Power
+  output$za_cluster_randomize_power <- renderText({
+    req(as.numeric(input$alpha_cluster_randomize_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_cluster_randomize_power)/2), 2))
+  })
+  vif_value_power <- reactive({
+    if (input$select_icc_cluster_randomize_power == 1) {
+      1+(as.numeric(input$gamma_cluster_randomize_power)-1)*as.numeric(input$icc_cluster_randomize_power)
+    } else if (input$select_icc_cluster_randomize_power == 2) {
+      icc <- as.numeric(input$var_inter_cluster_randomize_power)^2/(as.numeric(input$var_inter_cluster_randomize_power)+as.numeric(input$var_intra_cluster_randomize_power))
+      1+(as.numeric(input$gamma_cluster_randomize_power)-1)*icc
+    }
+  })
+  icc_value_power <- reactive({
+    if (input$select_icc_cluster_randomize_power == 2) {
+      as.numeric(input$var_inter_cluster_randomize_power)^2/(as.numeric(input$var_inter_cluster_randomize_power)+as.numeric(input$var_intra_cluster_randomize_power))
+    }
+  })
+  output$vif_cluster_randomize_power <- renderText({
+    if (input$select_icc_cluster_randomize_power == 1) {
+      paste0(HTML("<b>Kết quả hệ số phóng đại phương sai (VIF) = </b>"), round(vif_value_power(), 2))
+    } else if (input$select_icc_cluster_randomize_power == 2) {
+      paste0(HTML("<b>Kết quả hệ số tương quan nội cụm (ICC) = </b>"), round(icc_value_power(), 2), "<br>", 
+             HTML("<b>Kết quả hệ số phóng đại phương sai (VIF) = </b>"), round(vif_value_power(), 2))
+    }
+  })
+  power_cluster_randomize <- reactive({
+    fun_cluster_randomize_power(sd = as.numeric(input$sd_cluster_randomize_power), 
+                                alpha = as.numeric(input$alpha_cluster_randomize_power), 
+                                n = as.numeric(input$n_cluster_randomize_power), 
+                                vif = vif_value_power(), 
+                                gamma = as.numeric(input$gamma_cluster_randomize_power), 
+                                delta = as.numeric(input$delta_cluster_randomize_power))
+  })
+  output$power_cluster_randomize <- renderText({
+    power_cluster_randomize()
+  })
   
 })
 

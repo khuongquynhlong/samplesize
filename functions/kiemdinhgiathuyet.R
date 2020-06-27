@@ -150,3 +150,10 @@ fun_cluster_randomize <- function(sd, alpha, power, vif, gamma, delta) {
   n <- 2*sd^2*(z_a+z_b)^2*vif/(gamma*delta^2)
   return(ceiling(n))
 }
+
+fun_cluster_randomize_power <- function(sd, alpha, n, vif, gamma, delta) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- sqrt(n*gamma*delta^2/(2*sd^2*vif))-z_a
+  power <- pnorm(z_b)
+  return(round(power, 2))
+}

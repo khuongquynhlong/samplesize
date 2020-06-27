@@ -2156,24 +2156,44 @@ body <- dashboardBody(
                                 title = "Tính lực thống kê",
                                 fluidRow(
                                     box(
-                                        textInput(inputId = "p1_cluster_randomize_power", 
-                                                  label = HTML("Tỷ lệ của nhóm can thiệp (p<sub>1</sub>)"), 
-                                                  value = 0.4),
-                                        textInput(inputId = "p2_cluster_randomize_power", 
-                                                  label = HTML("Tỷ lệ của nhóm đối chứng (p<sub>2</sub>)"), 
-                                                  value = 0.3),
-                                        textInput(inputId = "d_cluster_randomize_power",
-                                                  label = HTML("Ngưỡng khác biệt (d)"),
-                                                  value = 0.05)
-                                    ),
-                                    box(
+                                        textInput(inputId = "sd_cluster_randomize_power",
+                                                  label = HTML("Độ lệch chuẩn (&sigma;)"),
+                                                  value = 3),
                                         textInput(inputId = "alpha_cluster_randomize_power",
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
                                         p(uiOutput(outputId = "za_cluster_randomize_power")),
                                         textInput(inputId = "n_cluster_randomize_power",
-                                                  label = "Cỡ mẫu mỗi nhóm (n)",
-                                                  value = 500)
+                                                  label = HTML("Số cụm (n)"),
+                                                  value = 18),
+                                        textInput(inputId = "gamma_cluster_randomize_power", 
+                                                  label = HTML("Số lượng cá thể trong từng cụm (&gamma;)"), 
+                                                  value = 100),
+                                        textInput(inputId = "delta_cluster_randomize_power", 
+                                                  label = HTML("Mức khác biệt về hiệu quả điều trị giữa nhóm bệnh và nhóm chứng (&delta;)"), 
+                                                  value = 4)
+                                    ),
+                                    box(
+                                        radioButtons(inputId = "select_icc_cluster_randomize_power",
+                                                     label = "Lựa chọn",
+                                                     choices = c("Nhập ICC" = 1,
+                                                                 "Tính ICC" = 2)),
+                                        conditionalPanel(
+                                            condition = "input.select_icc_cluster_randomize_power == 1",
+                                            textInput(inputId = "icc_cluster_randomize_power", 
+                                                      label = HTML("Hệ số tương quan nội cụm (ICC)"), 
+                                                      value = 2)
+                                        ),
+                                        conditionalPanel(
+                                            condition = "input.select_icc_cluster_randomize_power == 2",
+                                            textInput(inputId = "var_inter_cluster_randomize_power", 
+                                                      label = HTML("Phương sai sự khác biệt giữa các cụm (&sigma;<sub>u</sub>)"), 
+                                                      value = 9),
+                                            textInput(inputId = "var_intra_cluster_randomize_power", 
+                                                      label = HTML("Phương sai sự khác biệt giữa các cá thể trong từng cụm (&sigma;<sub>e</sub>)"), 
+                                                      value = 5)
+                                        ),
+                                        uiOutput(outputId = "vif_cluster_randomize_power")
                                     ),
                                     myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
