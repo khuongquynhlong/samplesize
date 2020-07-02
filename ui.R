@@ -696,11 +696,11 @@ body <- dashboardBody(
                                                   label = HTML("Lực thống kê (1-&beta;)"),
                                                   value = 0.8),
                                         p(uiOutput(outputId = "zb_1prop_hypo")),
-                                        textInput(inputId = "p1_1prop_hypo", 
-                                                  label = HTML("Kết quả theo giả thuyết H<sub>1</sub> (p<sub>1</sub>)"), 
+                                        textInput(inputId = "pa_1prop_hypo",
+                                                  label = HTML("Kết quả theo giả thuyết H<sub>1</sub> (P<sub>a</sub>)"),
                                                   value = 0.31),
                                         textInput(inputId = "p0_1prop_hypo",
-                                                  label = HTML("Kết quả theo giả thuyết H<sub>0</sub> (p<sub>0</sub>)"),
+                                                  label = HTML("Kết quả theo giả thuyết H<sub>0</sub> (P<sub>0</sub>)"),
                                                   value = 0.26)
                                     ),
                                     box(
@@ -722,10 +722,10 @@ body <- dashboardBody(
                                 fluidRow(
                                     box(
                                         textInput(inputId = "p0_1prop_hypo_power", 
-                                                  label = HTML("Kết quả theo giả thuyết H<sub>0</sub> (p<sub>0</sub>)"),
+                                                  label = HTML("Kết quả theo giả thuyết H<sub>0</sub> (P<sub>0</sub>)"),
                                                   value = 0.30),
                                         textInput(inputId = "pa_1prop_hypo_power",
-                                                  label = HTML("Kết quả theo giả thuyết H<sub>1</sub> (p<sub>1</sub>)"), 
+                                                  label = HTML("Kết quả theo giả thuyết H<sub>1</sub> (P<sub>a</sub>)"),
                                                   value = 0.20)
                                     ),
                                     box(
@@ -747,8 +747,7 @@ body <- dashboardBody(
                         
                         box(title = "Công thức", width = 6,
                             withMathJax(),
-                            p("$$n=\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}}{ES}\\right)^2$$"),
-                            p("$$ES=\\frac{p_1-p_0}{\\sqrt{p_0(1-p_0)}}$$")
+                            p("$$n=\\frac{\\left\\{Z_{1-\\frac{\\alpha}{2}}\\sqrt{P_0(1-P_0)} + Z_{1-\\beta}\\sqrt{P_a(1-P_a)}\\right\\}^2}{(P_a - P_0)^2}$$"),
                         )
                     )
                 )
