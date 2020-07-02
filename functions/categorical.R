@@ -15,11 +15,10 @@ fun2_1prop_est <- function(p, eps, alpha, nonrep = 0, deseff = 1) {
 
 
 ##### So sanh voi ty le quan the #####
-fun_1prop_hypo <- function(p1, p0, alpha, power, nonrep = 0, deseff = 1) {
+fun_1prop_hypo <- function(p_0, p_a, alpha, power, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
-  es <- (p1-p0)/sqrt(p0*(1-p0))
-  n <- ((z_a+z_b)/es)^2
+  n <- (z_a*sqrt(p_0*(1-p_0))+z_b*sqrt(p_a*(1-p_a)))^2/(p_a-p_0)^2
   n <- n*deseff/(1-nonrep)
   return(ceiling(n))
 }
