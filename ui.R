@@ -1043,6 +1043,12 @@ body <- dashboardBody(
                                 title = "Tính cỡ mẫu",
                                 fluidRow(
                                     box(
+                                        textInput(inputId = "p10_mcnemar", 
+                                                  label = HTML("P10"), 
+                                                  value = 0.32),
+                                        textInput(inputId = "p01_mcnemar",
+                                                  label = HTML("P01"),
+                                                  value = 0.16),
                                         textInput(inputId = "alpha_mcnemar",
                                                   label = HTML("Alpha (&alpha;)"),
                                                   value = 0.05),
@@ -1051,12 +1057,6 @@ body <- dashboardBody(
                                                   label = HTML("Lực thống kê (1-&beta;)"),
                                                   value = 0.9),
                                         p(uiOutput(outputId = "zb_mcnemar")),
-                                        textInput(inputId = "p10_mcnemar", 
-                                                  label = HTML("P10"), 
-                                                  value = 0.32),
-                                        textInput(inputId = "p01_mcnemar",
-                                                  label = HTML("P01"),
-                                                  value = 0.16),
                                         p(uiOutput(outputId = "or_mcnemar")),
                                         p(uiOutput(outputId = "pd_mcnemar"))
                                     ),
@@ -1106,6 +1106,7 @@ body <- dashboardBody(
                         
                         box(title = "Công thức", width = 6,
                             withMathJax(),
+                            p(HTML('<center><img src="explain_mcnemar.PNG" style="width:300px;"></center>')),
                             p("$$n=\\frac{\\left\\{Z_{1-\\frac{\\alpha}{2}}(OR+1)+Z_{1-\\beta}\\sqrt{(OR+1)^2-(OR-1)^2PD}\\right\\}^2}{(OR-1)^2PD}$$"),
                             p("$$OR=\\frac{P10}{P01}$$"),
                             p("$$PD=P10+P01$$")
