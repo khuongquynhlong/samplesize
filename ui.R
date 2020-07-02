@@ -31,7 +31,7 @@ sidebar <- dashboardSidebar(
             menuSubItem("2.3 Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 trung bình", tabName = "2means_ind_hypo"),
             menuSubItem("2.4 Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 trung bình", tabName = "2means_pair_hypo"),
             menuSubItem("2.5 Nghiên cứu gồm 2 mẫu độc lập, kiểm định 2 tỷ lệ", tabName = "2props_ind_hypo"),
-            menuSubItem("2.6 Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 tỷ lệ (McNemar)", tabName = "2props_pair_hypo"),
+            menuSubItem("2.6 Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 tỷ lệ (McNemar)", tabName = "mcnemar"),
             menuSubItem("2.7 Nghiên cứu bệnh chứng, kiểm định OR", tabName = "case_hypo"),
             menuSubItem("2.8 Nghiên cứu thuần tập, kiểm định RR", tabName = "cohort_hypo"),
             menuSubItem("2.9 Nghiên cứu sống còn", tabName = "survive")
@@ -1028,6 +1028,93 @@ body <- dashboardBody(
                 )
             )
         ),
+        
+        ##### NC 2 mau ghep cap, kiem dinh 2 ty le (McNemar) #####
+        tabItem(
+            tabName = "mcnemar",
+            tabsetPanel(
+                type = "tabs",
+                tabPanel(
+                    title = "Nghiên cứu gồm 2 mẫu ghép cặp, kiểm định 2 tỷ lệ (McNemar)",
+                    fluidRow(
+                        tabBox(
+                            width = 6, side = "left", 
+                            tabPanel(
+                                title = "Tính cỡ mẫu",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "alpha_mcnemar",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        p(uiOutput(outputId = "za_mcnemar")),
+                                        textInput(inputId = "power_mcnemar",
+                                                  label = HTML("Lực thống kê (1-&beta;)"),
+                                                  value = 0.9),
+                                        p(uiOutput(outputId = "zb_mcnemar")),
+                                        textInput(inputId = "p10_mcnemar", 
+                                                  label = HTML("P10"), 
+                                                  value = 0.32),
+                                        textInput(inputId = "p01_mcnemar",
+                                                  label = HTML("P01"),
+                                                  value = 0.16),
+                                        p(uiOutput(outputId = "or_mcnemar")),
+                                        p(uiOutput(outputId = "pd_mcnemar"))
+                                    ),
+                                    box(
+                                        textInput(inputId = "nonrep_mcnemar",
+                                                  label = "Tỷ lệ không trả lời",
+                                                  value = 0),
+                                        numericInput(inputId = "deseff_mcnemar",
+                                                     label = "Hệ số thiết kế",
+                                                     value = 1)
+                                    ),
+                                    myBox(background = "#d9d9d9",color = "black",
+                                          p(HTML("<center><b>Cỡ mẫu</b></center>")),
+                                          p(h1(HTML(paste0("<b>", textOutput(outputId = "n_mcnemar"), "</b>")), align = "center")),
+                                    )
+                                )
+                            ),
+                            tabPanel(
+                                title = "Tính lực thống kê",
+                                fluidRow(
+                                    box(
+                                        textInput(inputId = "p10_mcnemar_power", 
+                                                  label = HTML("P10"), 
+                                                  value = 0.32),
+                                        textInput(inputId = "p01_mcnemar_power",
+                                                  label = HTML("P01"), 
+                                                  value = 0.16),
+                                        p(uiOutput(outputId = "or_mcnemar_power")),
+                                        p(uiOutput(outputId = "pd_mcnemar_power"))
+                                    ),
+                                    box(
+                                        textInput(inputId = "alpha_mcnemar_power",
+                                                  label = HTML("Alpha (&alpha;)"),
+                                                  value = 0.05),
+                                        p(uiOutput(outputId = "za_mcnemar_power")),
+                                        textInput(inputId = "n_mcnemar_power",
+                                                  label = "Cỡ mẫu (n)",
+                                                  value = 193)
+                                    ),
+                                    myBox(background = "#d9d9d9",color = "black",
+                                          p(HTML("<center><b>Lực thống kê</b></center>")),
+                                          p(h1(HTML(paste0("<b>", textOutput(outputId = "power_mcnemar"), "</b>")), align = "center"))
+                                    )
+                                )
+                            )
+                        ),
+                        
+                        box(title = "Công thức", width = 6,
+                            withMathJax(),
+                            p("$$n=\\frac{\\left\\{Z_{1-\\frac{\\alpha}{2}}(OR+1)+Z_{1-\\beta}\\sqrt{(OR+1)^2-(OR-1)^2PD}\\right\\}^2}{(OR-1)^2PD}$$"),
+                            p("$$OR=\\frac{P10}{P01}$$"),
+                            p("$$PD=P10+P01$$")
+                        )
+                    )
+                )
+            )
+        ),
+        
         
         ##### Estimating the difference between 2 population means #####
         tabItem(
