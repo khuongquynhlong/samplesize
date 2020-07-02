@@ -157,3 +157,21 @@ fun_cluster_randomize_power <- function(sd, alpha, n, vif, gamma, delta) {
   power <- pnorm(z_b)
   return(round(power, 2))
 }
+
+##### NC 2 mau ghep cap, kiem dinh 2 ty le (McNemar) #####
+fun_mcnemar <- function(alpha, power, p10, p01, nonrep = 0, deseff = 1) {
+  z_a <- qnorm(1-alpha/2)
+  z_b <- qnorm(power)
+  or <- p10/p01
+  pd <- p10+p01
+  n <- (z_a*(or+1)+z_b*sqrt((or+1)^2-(or-1)^2*pd))^2/((or-1)^2*pd)
+  return(ceiling(n))
+}
+fun_mcnemar_power <- function(alpha, n, p10, p01) {
+  z_a <- qnorm(1-alpha/2)
+  or <- p10/p01
+  pd <- p10+p01
+  z_b <- (sqrt(n*(or-1)^2*pd)-z_a*(or+1))/sqrt((or+1)^2-(or-1)^2*pd)
+  power <- pnorm(z_b)
+  return(round(power, 2))
+}

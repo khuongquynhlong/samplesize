@@ -873,6 +873,71 @@ shinyServer(function(input, output) {
     power_2props_ind_hypo()
   })
   
+  ##### NC 2 mau ghep cap, kiem dinh 2 ty le (McNemar) #####
+  # Sample size
+  output$za_mcnemar <- renderText({
+    req(as.numeric(input$alpha_mcnemar)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_mcnemar)/2), 2))
+  })
+  output$zb_mcnemar <- renderText({
+    req(as.numeric(input$power_mcnemar)>0)
+    paste0(HTML("<b>Z<sub>1-&beta;</sub> =</b> "), round(qnorm(as.numeric(input$power_mcnemar)), 2))
+  })
+  output$or_mcnemar <- renderText({
+    req(as.numeric(input$p10_mcnemar)>0&as.numeric(input$p01_mcnemar)>0)
+    paste0(HTML("<b>OR =</b> "), round(as.numeric(input$p10_mcnemar)/as.numeric(input$p01_mcnemar), 2))
+  })
+  output$pd_mcnemar <- renderText({
+    req(as.numeric(input$p10_mcnemar)>0&as.numeric(input$p01_mcnemar)>0)
+    paste0(HTML("<b>PD =</b> "), round(as.numeric(input$p10_mcnemar)+as.numeric(input$p01_mcnemar), 2))
+  })
+  n_mcnemar <- reactive({
+    req(as.numeric(input$p10_mcnemar)>0&
+          as.numeric(input$p01_mcnemar)>0&
+          as.numeric(input$alpha_mcnemar)>0&
+          as.numeric(input$power_mcnemar)>0&
+          as.numeric(input$nonrep_mcnemar)>=0&
+          as.numeric(input$nonrep_mcnemar)<=1,
+        cancelOutput = TRUE)
+    fun_mcnemar(alpha = as.numeric(input$alpha_mcnemar), 
+                power = as.numeric(input$power_mcnemar), 
+                p10 = as.numeric(input$p10_mcnemar), 
+                p01 = as.numeric(input$p01_mcnemar), 
+                nonrep = as.numeric(input$nonrep_mcnemar), 
+                deseff = input$deseff_mcnemar)
+  })
+  output$n_mcnemar <- renderText({
+    n_mcnemar()
+  })
+  
+  # Power
+  output$za_mcnemar_power <- renderText({
+    req(as.numeric(input$alpha_mcnemar_power)>0)
+    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_mcnemar_power)/2), 2))
+  })
+  output$or_mcnemar_power <- renderText({
+    req(as.numeric(input$p10_mcnemar_power)>0&as.numeric(input$p01_mcnemar_power)>0)
+    paste0(HTML("<b>OR =</b> "), round(as.numeric(input$p10_mcnemar_power)/as.numeric(input$p01_mcnemar_power), 2))
+  })
+  output$pd_mcnemar_power <- renderText({
+    req(as.numeric(input$p10_mcnemar_power)>0&as.numeric(input$p01_mcnemar_power)>0)
+    paste0(HTML("<b>PD =</b> "), round(as.numeric(input$p10_mcnemar_power)+as.numeric(input$p01_mcnemar_power), 2))
+  })
+  power_mcnemar <- reactive({
+    req(as.numeric(input$p10_mcnemar_power)>0&
+          as.numeric(input$p01_mcnemar_power)>0&
+          as.numeric(input$alpha_mcnemar_power)>0&
+          as.numeric(input$n_mcnemar_power)>0,
+        cancelOutput = TRUE)
+    fun_mcnemar_power(alpha = as.numeric(input$alpha_mcnemar_power), 
+                      n = as.numeric(input$n_mcnemar_power), 
+                      p10 = as.numeric(input$p10_mcnemar_power), 
+                      p01 = as.numeric(input$p01_mcnemar_power))
+  })
+  output$power_mcnemar <- renderText({
+    power_mcnemar()
+  })
+  
   ##### Estimating the difference between 2 population means #####
   n_2means_est <- reactive({
     req(as.numeric(input$sd_2means_est)>0&
