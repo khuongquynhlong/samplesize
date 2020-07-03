@@ -1340,11 +1340,16 @@ body <- dashboardBody(
                                                   value = 0),
                                         numericInput(inputId = "deseff_cohort_hypo",
                                                      label = "Hệ số thiết kế",
+                                                     value = 1),
+                                        numericInput(inputId = "k_cohort_hypo",
+                                                     label = "Tỷ số 2 nhóm",
                                                      value = 1)
                                     ),
                                     myBox(background = "#d9d9d9",color = "black",
-                                        p(HTML("<center><b>Cỡ mẫu</b></center>")),
-                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n_cohort_hypo"), "</b>")), align = "center"))
+                                          p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),
+                                          p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_cohort_hypo"), "</b>")), align = "center")),
+                                          p(HTML("<center><b>Cỡ mẫu nhóm 2</b></center>")),
+                                          p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_cohort_hypo"), "</b>")), align = "center"))
                                     )
                                 )
                             ),
@@ -1449,14 +1454,14 @@ body <- dashboardBody(
                                         p(uiOutput(outputId = "za_case_hypo")),
                                         textInput(inputId = "p2_case_hypo", 
                                                   label = HTML("Tỷ lệ phơi nhiễm trong nhóm chứng (P<sub>2</sub>)"), 
-                                                  value = 0.35),
+                                                  value = 0.175),
                                         textInput(inputId = "power_case_hypo",
                                                   label = HTML("Lực thống kê (1-&beta;)"),
                                                   value = 0.8),
                                         p(uiOutput(outputId = "zb_case_hypo")),
                                         textInput(inputId = "p1_case_hypo", 
                                                   label = HTML("Tỷ lệ phơi nhiễm trong nhóm bệnh (P<sub>1</sub>)"), 
-                                                  value = 0.175)
+                                                  value = 0.35)
                                     ),
                                     box(
                                         textInput(inputId = "nonrep_case_hypo",
@@ -1464,11 +1469,16 @@ body <- dashboardBody(
                                                   value = 0),
                                         numericInput(inputId = "deseff_case_hypo",
                                                      label = "Hệ số thiết kế",
-                                                     value = 1)
+                                                     value = 1),
+                                        numericInput(inputId = "k_case_hypo",
+                                                     label = "Tỷ số 2 nhóm",
+                                                     value = 1),
                                     ),
                                     myBox(background = "#d9d9d9",color = "black",
-                                        p(HTML("<center><b>Cỡ mẫu</b></center>")),
-                                        p(h1(HTML(paste0("<b>", textOutput(outputId = "n_case_hypo"), "</b>")), align = "center"))
+                                          p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),
+                                          p(h1(HTML(paste0("<b>", textOutput(outputId = "n1_case_hypo"), "</b>")), align = "center")),
+                                          p(HTML("<center><b>Cỡ mẫu nhóm 2</b></center>")),
+                                          p(h1(HTML(paste0("<b>", textOutput(outputId = "n2_case_hypo"), "</b>")), align = "center"))
                                     )
                                 )
                             ),
@@ -1731,7 +1741,7 @@ body <- dashboardBody(
                                                      value = 1),
                                         numericInput(inputId = "k_survive",
                                                      label = "Tỷ số 2 nhóm",
-                                                     value = 1),
+                                                     value = 1)
                                     ),
                                     myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Cỡ mẫu nhóm 1</b></center>")),

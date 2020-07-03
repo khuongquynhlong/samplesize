@@ -1055,8 +1055,16 @@ shinyServer(function(input, output) {
                     nonrep = as.numeric(input$nonrep_cohort_hypo), 
                     deseff = input$deseff_cohort_hypo)
   })
-  output$n_cohort_hypo <- renderText({
-    n_cohort_hypo()
+  n1_cohort_hypo <- reactive({
+    req(input$k_cohort_hypo>=1, cancelOutput = TRUE)
+    big_n <- 2*n_cohort_hypo()*(1+input$k_cohort_hypo)^2/(4*input$k_cohort_hypo)
+    big_n/(1+input$k_cohort_hypo)
+  })
+  output$n1_cohort_hypo <- renderText({
+    ceiling(n1_cohort_hypo())
+  })
+  output$n2_cohort_hypo <- renderText({
+    ceiling(input$k_cohort_hypo*n1_cohort_hypo())
   })
   
   # Power
@@ -1125,8 +1133,16 @@ shinyServer(function(input, output) {
                   nonrep = as.numeric(input$nonrep_case_hypo), 
                   deseff = input$deseff_case_hypo)
   })
-  output$n_case_hypo <- renderText({
-    n_case_hypo()
+  n1_case_hypo <- reactive({
+    req(input$k_case_hypo>=1, cancelOutput = TRUE)
+    big_n <- 2*n_case_hypo()*(1+input$k_case_hypo)^2/(4*input$k_case_hypo)
+    big_n/(1+input$k_case_hypo)
+  })
+  output$n1_case_hypo <- renderText({
+    ceiling(n1_case_hypo())
+  })
+  output$n2_case_hypo <- renderText({
+    ceiling(input$k_case_hypo*n1_case_hypo())
   })
   
   # Power
