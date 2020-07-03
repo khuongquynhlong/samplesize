@@ -2335,7 +2335,7 @@ body <- dashboardBody(
                 myBox(width = 12, background = "#222d32",color = "white",
                     #p(HTML('<left><img src="Logo1.png" style="width: 10vw; min-width: 250x;"></left>')),
                     #tags$br(),
-                    p(HTML("<center> <p class='small';style='font-size:14px;color:white;'> Trường Đại học Y tế công cộng (HUPH)</sup> <br> Mạng lưới Nghiên cứu Khoa học Sức khỏe Việt Nam (ADHERE) </p> </center>")),
+                    p(HTML("<center> <p style='font-size:14px;color:white;line-height:1.4'> Trường Đại học Y tế công cộng (HUPH) <br> Mạng lưới Nghiên cứu Khoa học Sức khỏe Việt Nam (ADHERE) </p> </center>")),
                     p(HTML("<center> <b> <p style='font-size:20px;color:white;'> TÍNH TOÁN CỠ MẪU TRONG CÁC NGHIÊN CỨU KHOA HỌC SỨC KHỎE </sup> </p> </b> </center>")),
                     p(HTML("<center> <b> <p style='font-size:20px;color:white;'> (HEALTH STUDY SIZE -  HSS 1.0) </p> </b> </center>")),
                     # p(HTML("<left> <i> <p style='font-size:15px;color:darkblue;'>  (Phiên bản v1.0-2020) </p> </i> </left>")),
