@@ -1474,7 +1474,7 @@ shinyServer(function(input, output) {
   # Sample size
   output$za_noninfer_cont <- renderText({
     req(as.numeric(input$alpha_noninfer_cont)>0)
-    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_noninfer_cont)/2), 2))
+    paste0(HTML("<b>Z<sub>1-&alpha;</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_noninfer_cont)), 2))
   })
   output$zb_noninfer_cont <- renderText({
     req(as.numeric(input$power_noninfer_cont)>0)
@@ -1537,7 +1537,7 @@ shinyServer(function(input, output) {
   # Sample size
   output$za_noninfer_cat <- renderText({
     req(as.numeric(input$alpha_noninfer_cat)>0)
-    paste0(HTML("<b>Z<sub>1-&alpha;/2</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_noninfer_cat)/2), 2))
+    paste0(HTML("<b>Z<sub>1-&alpha;</sub> =</b> "), round(qnorm(1-as.numeric(input$alpha_noninfer_cat)), 2))
   })
   output$zb_noninfer_cat <- renderText({
     req(as.numeric(input$power_noninfer_cat)>0)
