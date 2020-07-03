@@ -17,3 +17,7 @@
     border-radius: 4px 4px 0 0;
     font-size: 18px;
 }
+
+p.small {
+  line-height: 1.4;
+}
