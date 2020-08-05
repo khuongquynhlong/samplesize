@@ -667,7 +667,9 @@ body <- dashboardBody(
                         box(title = "Công thức", width = 6,
                             withMathJax(),
                             p("$$n=\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}}{ES}\\right)^2$$"),
-                            p("$$ES=\\frac{\\mu_1-\\mu_0}{\\sigma}$$")
+                            p("$$ES=\\frac{\\mu_1-\\mu_0}{\\sigma}$$"),
+                            p(),
+                            p("Ghi chú: ES là cỡ tác động (effect size)")
                         )
                     )
                 )
@@ -844,7 +846,9 @@ body <- dashboardBody(
                             withMathJax(),
                             p("$$n=2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}}{ES}\\right)^2$$"),
                             p("$$ES=\\frac{\\mu_1-\\mu_2}{\\sigma}$$"),
-                            p("$$\\sigma=\\sqrt{\\frac{(n_1-1)s^2_1+(n_2-1)s^2_2}{n_1+n_2-2}}$$")
+                            p("$$\\sigma=\\sqrt{\\frac{(n_1-1)s^2_1+(n_2-1)s^2_2}{n_1+n_2-2}}$$"),
+                            p(),
+                            p("Ghi chú: ES là cỡ tác động (effect size)")
                         )
                     )
                 )
@@ -935,7 +939,9 @@ body <- dashboardBody(
                             withMathJax(),
                             p("$$n=\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}}{ES}\\right)^2$$"),
                             p("$$ES=\\frac{\\mu_d}{\\sigma_d}$$"),
-                            p("$$\\sigma=\\sqrt{\\frac{(n_1-1)s^2_1+(n_2-1)s^2_2}{n_1+n_2-2}}$$")
+                            p("$$\\sigma=\\sqrt{\\frac{(n_1-1)s^2_1+(n_2-1)s^2_2}{n_1+n_2-2}}$$"),
+                            p(),
+                            p("Ghi chú: ES là cỡ tác động (effect size)")
                         )
                     )
                 )
@@ -1022,7 +1028,9 @@ body <- dashboardBody(
                             withMathJax(),
                             p("$$n=2\\left(\\frac{Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}}{ES}\\right)^2$$"),
                             p("$$ES=\\frac{p_1-p_2}{\\sqrt{p(1-p)}}$$"),
-                            p("$$p=\\frac{p_1+p_2}{2}$$")
+                            p("$$p=\\frac{p_1+p_2}{2}$$"),
+                            p(),
+                            p("Ghi chú: ES là cỡ tác động (effect size)")
                         )
                     )
                 )
@@ -1109,7 +1117,9 @@ body <- dashboardBody(
                             p(HTML('<center><img src="explain_mcnemar.PNG" style="width:300px;"></center>')),
                             p("$$n=\\frac{\\left\\{Z_{1-\\frac{\\alpha}{2}}(OR+1)+Z_{1-\\beta}\\sqrt{(OR+1)^2-(OR-1)^2PD}\\right\\}^2}{(OR-1)^2PD}$$"),
                             p("$$OR=\\frac{P10}{P01}$$"),
-                            p("$$PD=P10+P01$$")
+                            p("$$PD=P10+P01$$"),
+                            p(),
+                            p("Ghi chú: PD là tỉ lệ các cặp không đồng nhất (Proportion of discordant pairs)")
                         )
                     )
                 )
@@ -1796,7 +1806,9 @@ body <- dashboardBody(
                         box(title = "Công thức", width = 6,
                             withMathJax(),
                             p("$$n=\\frac{(HR+1)^2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})}{(HR-1)^2(2-p_1-p_2)}$$"),
-                            p("$$HR=\\frac{ln(p_1)}{ln(p_2)}$$")
+                            p("$$HR=\\frac{ln(p_1)}{ln(p_2)}$$"),
+                            p(),
+                            p("Ghi chú: HR là tỷ số nguy hại (Hazard Ratio)")
                         )
                     )
                 )
@@ -1893,7 +1905,9 @@ body <- dashboardBody(
                         box(title = "Công thức", width = 6,
                             withMathJax(),
                             p("$$n=\\frac{2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})}{H^2}$$"),
-                            p("$$H=\\frac{|\\mu_1-\\mu_2|-d}{\\sigma}$$")
+                            p("$$H=\\frac{|\\mu_1-\\mu_2|-d}{\\sigma}$$"),
+                            p(),
+                            p("Ghi chú: H là mức độ khác biệt")
                         )
                     )
                 )
@@ -1984,7 +1998,9 @@ body <- dashboardBody(
                         box(title = "Công thức", width = 6,
                             withMathJax(),
                             p("$$n=\\frac{2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})}{H^2}$$"),
-                            p("$$H=\\frac{|p_1-p_2|-d}{\\sqrt{p_1(1-p_1)+p_2(1-p_2)}}$$")
+                            p("$$H=\\frac{|p_1-p_2|-d}{\\sqrt{p_1(1-p_1)+p_2(1-p_2)}}$$"),
+                            p(),
+                            p("Ghi chú: H là mức độ khác biệt")
                         )
                     )
                 )
@@ -2082,6 +2098,9 @@ body <- dashboardBody(
                             withMathJax(),
                             p("$$n=\\frac{2(Z_{1-\\alpha}+Z_{1-\\beta})}{H^2}$$"),
                             p("$$H=\\frac{|\\mu_1-\\mu_2|-d}{\\sigma}$$"),
+                            p(),
+                            p("Ghi chú:"),
+                            p("H là mức độ khác biệt"),
                             p(HTML("Công thức giống với công thức tính cỡ mẫu của 
                                    nghiên cứu tương đương, ngoại trừ việc dùng
                                    Z<sub>1-&alpha;</sub>=1.645 (kiểm định một phía)
@@ -2178,6 +2197,9 @@ body <- dashboardBody(
                             withMathJax(),
                             p("$$n=\\frac{2(Z_{1-\\alpha}+Z_{1-\\beta})}{H^2}$$"),
                             p("$$H=\\frac{|p_1-p_2|-d}{\\sqrt{p_1(1-p_1)+p_2(1-p_2)}}$$"),
+                            p(),
+                            p("Ghi chú:"),
+                            p("H là mức độ khác biệt"),
                             p(HTML("Công thức giống với công thức tính cỡ mẫu của 
                                    nghiên cứu tương đương, ngoại trừ việc dùng
                                    Z<sub>1-&alpha;</sub>=1.645 (kiểm định một phía)
@@ -2303,7 +2325,12 @@ body <- dashboardBody(
                             withMathJax(),
                             p("$$n=\\frac{2\\sigma^2[Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta}]^2VIF}{\\gamma\\delta^2}$$"),
                             p("$$VIF=1+(\\gamma-1)ICC$$"),
-                            p("$$ICC=\\frac{\\sigma^2_u}{\\sigma^2_u+\\sigma^2_e}$$")
+                            p("$$ICC=\\frac{\\sigma^2_u}{\\sigma^2_u+\\sigma^2_e}$$"),
+                            p(),
+                            p("Ghi chú:"),
+                            p("ICC: Hệ số tương quan nội cụm (Intraclass correlation coefficient"),
+                            p(HTML("&gamma;: Số lượng cá thể trong từng cụm")),
+                            p("VIF: Hệ số phóng đại phương sai (Variation inflation factor)")
                         )
                     )
                 )
