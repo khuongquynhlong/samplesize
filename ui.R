@@ -2374,7 +2374,7 @@ body <- dashboardBody(
                     #tags$br(),
                     #tags$br(),
                     #tags$br(),
-                    p(HTML("<i> <p style='font-size:10px;color:white;text-align:left'> (Ghi chú: Phần mềm đang trong quá trình xây dựng và thử nghiệm; Mọi góp ý xin liên hệ nhóm tác giả qua email <u>kql@huph.edu.vn</u>) </p> </i>")),
+                    p(HTML("<i> <p style='font-size:10px;color:white;text-align:left'> (Ghi chú: Đây là phần mềm đi kèm tài liệu <a href='http://adhere.vn/uploads/plugin/file/157/1597042201-70211094-sampling-and-sample-size.pdf'>PHƯƠNG PHÁP CHỌN MẪU VÀ TÍNH TOÁN CỠ MẪU TRONG NGHIÊN CỨU KHOA HỌC SỨC KHỎE </a>. Mọi góp ý xin liên hệ nhóm tác giả qua email <u>kql@huph.edu.vn</u>) </p> </i>"))
                     # p(HTML("<i> <p style='font-size:10px;color:darkblue;text-align:right'> @Phần mềm được viết bằng ngôn ngữ R với ứng dụng Shiny    </p> </i>"))
                     )
                 )
