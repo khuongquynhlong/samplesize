@@ -75,7 +75,7 @@ fun_equi_cont <- function(alpha, power, m1, m2, d, sd, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   h <- (abs(m1-m2)-d)/sd
-  n <- 2*(z_a+z_b)/h^2
+  n <- 2*(z_a+z_b)^2/h^2
   n <- n*deseff/(1-nonrep)
   return(ceiling(n))
 }
@@ -83,7 +83,7 @@ fun_equi_cont <- function(alpha, power, m1, m2, d, sd, nonrep = 0, deseff = 1) {
 fun_equi_cont_power <- function(alpha, n, m1, m2, d, sd) {
   z_a <- qnorm(1-alpha/2)
   h <- (abs(m1-m2)-d)/sd
-  z_b <- (n*h^2)/2-z_a
+  z_b <- sqrt((n*h^2)/2)-z_a
   power <- pnorm(z_b)
   return(round(power, 2))
 }
@@ -93,7 +93,7 @@ fun_equi_cat <- function(alpha, power, p1, p2, d, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha/2)
   z_b <- qnorm(power)
   h <- (abs(p1-p2)-d)/sqrt(p1*(1-p1)+p2*(1-p2))
-  n <- 2*(z_a+z_b)/h^2
+  n <- 2*(z_a+z_b)^2/h^2
   n <- n*deseff/(1-nonrep)
   return(ceiling(n))
 }
@@ -101,7 +101,7 @@ fun_equi_cat <- function(alpha, power, p1, p2, d, nonrep = 0, deseff = 1) {
 fun_equi_cat_power <- function(alpha, n, p1, p2, d) {
   z_a <- qnorm(1-alpha/2)
   h <- (abs(p1-p2)-d)/sqrt(p1*(1-p1)+p2*(1-p2))
-  z_b <- (n*h^2)/2-z_a
+  z_b <- sqrt((n*h^2)/2)-z_a
   power <- pnorm(z_b)
   return(round(power, 2))
 }
@@ -111,7 +111,7 @@ fun_noninfer_cont <- function(alpha, power, m1, m2, d, sd, nonrep = 0, deseff = 
   z_a <- qnorm(1-alpha)
   z_b <- qnorm(power)
   h <- (abs(m1-m2)-d)/sd
-  n <- 2*(z_a+z_b)/h^2
+  n <- 2*(z_a+z_b)^2/h^2
   n <- n*deseff/(1-nonrep)
   return(ceiling(n))
 }
@@ -119,7 +119,7 @@ fun_noninfer_cont <- function(alpha, power, m1, m2, d, sd, nonrep = 0, deseff = 
 fun_noninfer_cont_power <- function(alpha, n, m1, m2, d, sd) {
   z_a <- qnorm(1-alpha)
   h <- (abs(m1-m2)-d)/sd
-  z_b <- (n*h^2)/2-z_a
+  z_b <- sqrt((n*h^2)/2)-z_a
   power <- pnorm(z_b)
   return(round(power, 2))
 }
@@ -129,7 +129,7 @@ fun_noninfer_cat <- function(alpha, power, p1, p2, d, nonrep = 0, deseff = 1) {
   z_a <- qnorm(1-alpha)
   z_b <- qnorm(power)
   h <- (abs(p1-p2)-d)/sqrt(p1*(1-p1)+p2*(1-p2))
-  n <- 2*(z_a+z_b)/h^2
+  n <- 2*(z_a+z_b)^2/h^2
   n <- n*deseff/(1-nonrep)
   return(ceiling(n))
 }
@@ -137,7 +137,7 @@ fun_noninfer_cat <- function(alpha, power, p1, p2, d, nonrep = 0, deseff = 1) {
 fun_noninfer_cat_power <- function(alpha, n, p1, p2, d) {
   z_a <- qnorm(1-alpha)
   h <- (abs(p1-p2)-d)/sqrt(p1*(1-p1)+p2*(1-p2))
-  z_b <- (n*h^2)/2-z_a
+  z_b <- sqrt((n*h^2)/2)-z_a
   power <- pnorm(z_b)
   return(round(power, 2))
 }

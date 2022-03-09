@@ -49,10 +49,10 @@ sidebar <- dashboardSidebar(
             menuSubItem("Nghiên cứu tương đương với biến định tính", tabName = "equi_cat")
         ),
         menuItem(
-            "5. Nghiên cứu không kém hơn",
+            "5. Nghiên cứu vượt trội/ không kém hơn",
             icon = icon("pills"), startExpanded = FALSE,
-            menuSubItem("Nghiên cứu không kém hơn với biến định lượng", tabName = "noninfer_cont"),
-            menuSubItem("Nghiên cứu không kém hơn với biến định tính", tabName = "noninfer_cat")
+            menuSubItem("Nghiên cứu vượt trội/ không kém hơn với biến định lượng", tabName = "noninfer_cont"),
+            menuSubItem("Nghiên cứu vượt trội/ không kém hơn với biến định tính", tabName = "noninfer_cat")
         ),
         menuItem(
             "6. Nghiên cứu thử nghiệm lâm sàng theo cụm",
@@ -1839,13 +1839,13 @@ body <- dashboardBody(
                                         p(uiOutput(outputId = "zb_equi_cont")),
                                         textInput(inputId = "m1_equi_cont", 
                                                   label = HTML("Trung bình của nhóm can thiệp (&mu;<sub>1</sub>)"), 
-                                                  value = 7),
+                                                  value = 30),
                                         textInput(inputId = "m2_equi_cont", 
                                                   label = HTML("Trung bình cúa nhóm đối chứng (&mu;<sub>2</sub>)"), 
-                                                  value = 4),
+                                                  value = 10),
                                         textInput(inputId = "d_equi_cont",
-                                                  label = HTML("Ngưỡng khác biệt (d)"),
-                                                  value = 2),
+                                                  label = HTML("Ngưỡng khác biệt có ý nghĩa trên lâm sàng (d)"),
+                                                  value = 10),
                                         textInput(inputId = "sd_equi_cont",
                                                   label = HTML("Độ lệch chuẩn (&sigma;)"),
                                                   value = 10)
@@ -1875,13 +1875,13 @@ body <- dashboardBody(
                                     box(
                                         textInput(inputId = "m1_equi_cont_power", 
                                                   label = HTML("Trung bình của nhóm can thiệp (&mu;<sub>1</sub>)"), 
-                                                  value = 7),
+                                                  value = 30),
                                         textInput(inputId = "m2_equi_cont_power", 
                                                   label = HTML("Trung bình của nhóm đối chứng (&mu;<sub>2</sub>)"), 
-                                                  value = 4),
+                                                  value = 10),
                                         textInput(inputId = "d_equi_cont_power",
-                                                  label = HTML("Ngưỡng khác biệt (d)"),
-                                                  value = 2),
+                                                  label = HTML("Ngưỡng khác biệt có ý nghĩa trên lâm sàng (d)"),
+                                                  value = 10),
                                         textInput(inputId = "sd_equi_cont_power",
                                                   label = HTML("Độ lệch chuẩn (&sigma;)"),
                                                   value = 10)
@@ -1893,7 +1893,7 @@ body <- dashboardBody(
                                         p(uiOutput(outputId = "za_equi_cont_power")),
                                         textInput(inputId = "n_equi_cont_power",
                                                   label = "Cỡ mẫu mỗi nhóm (n)",
-                                                  value = 500)
+                                                  value = 20)
                                     ),
                                     myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
@@ -1904,10 +1904,10 @@ body <- dashboardBody(
                         ),
                         box(title = "Công thức", width = 6,
                             withMathJax(),
-                            p("$$n=\\frac{2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})}{H^2}$$"),
+                            p("$$n=\\frac{2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{H^2}$$"),
                             p("$$H=\\frac{|\\mu_1-\\mu_2|-d}{\\sigma}$$"),
                             p(),
-                            p("Ghi chú: H là mức độ khác biệt")
+                            p("Ghi chú: H là mức độ khác biệt có ý nghĩa trên lâm sàng")
                         )
                     )
                 )
@@ -1941,9 +1941,9 @@ body <- dashboardBody(
                                                   value = 0.4),
                                         textInput(inputId = "p2_equi_cat", 
                                                   label = HTML("Tỷ lệ của nhóm đối chứng (p<sub>2</sub>)"), 
-                                                  value = 0.3),
+                                                  value = 0.2),
                                         textInput(inputId = "d_equi_cat",
-                                                  label = HTML("Ngưỡng khác biệt (d)"),
+                                                  label = HTML("Ngưỡng khác biệt có ý nghĩa trên lâm sàng (d)"),
                                                   value = 0.05)
                                     ),
                                     box(
@@ -1974,9 +1974,9 @@ body <- dashboardBody(
                                                   value = 0.4),
                                         textInput(inputId = "p2_equi_cat_power", 
                                                   label = HTML("Tỷ lệ của nhóm đối chứng (p<sub>2</sub>)"), 
-                                                  value = 0.3),
+                                                  value = 0.2),
                                         textInput(inputId = "d_equi_cat_power",
-                                                  label = HTML("Ngưỡng khác biệt (d)"),
+                                                  label = HTML("Ngưỡng khác biệt có ý nghĩa trên lâm sàng (d)"),
                                                   value = 0.05)
                                     ),
                                     box(
@@ -1997,10 +1997,10 @@ body <- dashboardBody(
                         ),
                         box(title = "Công thức", width = 6,
                             withMathJax(),
-                            p("$$n=\\frac{2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})}{H^2}$$"),
+                            p("$$n=\\frac{2(Z_{1-\\frac{\\alpha}{2}}+Z_{1-\\beta})^2}{H^2}$$"),
                             p("$$H=\\frac{|p_1-p_2|-d}{\\sqrt{p_1(1-p_1)+p_2(1-p_2)}}$$"),
                             p(),
-                            p("Ghi chú: H là mức độ khác biệt")
+                            p("Ghi chú: H là mức độ khác biệt có ý nghĩa trên lâm sàng")
                         )
                     )
                 )
@@ -2013,7 +2013,7 @@ body <- dashboardBody(
             tabsetPanel(
                 type = "tabs",
                 tabPanel(
-                    title = "Nghiên cứu không kém hơn với biến định lượng",
+                    title = "Nghiên cứu vượt trội/không kém hơn với biến định lượng",
                     fluidRow(
                         tabBox(
                             width = 6, side = "left",
@@ -2031,16 +2031,16 @@ body <- dashboardBody(
                                         p(uiOutput(outputId = "zb_noninfer_cont")),
                                         textInput(inputId = "m1_noninfer_cont", 
                                                   label = HTML("Trung bình của nhóm can thiệp (&mu;<sub>1</sub>)"), 
-                                                  value = 7),
+                                                  value = 30),
                                         textInput(inputId = "m2_noninfer_cont", 
                                                   label = HTML("Trung bình cúa nhóm đối chứng (&mu;<sub>2</sub>)"), 
-                                                  value = 4),
+                                                  value = 10),
                                         textInput(inputId = "d_noninfer_cont",
-                                                  label = HTML("Ngưỡng khác biệt (d)"),
-                                                  value = 2),
+                                                  label = HTML("Ngưỡng khác biệt có ý nghĩa trên lâm sàng (d)"),
+                                                  value = 10),
                                         textInput(inputId = "sd_noninfer_cont",
                                                   label = HTML("Độ lệch chuẩn (&sigma;)"),
-                                                  value = 10)
+                                                  value = 20)
                                     ),
                                     box(
                                         textInput(inputId = "nonrep_noninfer_cont",
@@ -2067,16 +2067,16 @@ body <- dashboardBody(
                                     box(
                                         textInput(inputId = "m1_noninfer_cont_power", 
                                                   label = HTML("Trung bình của nhóm can thiệp (&mu;<sub>1</sub>)"), 
-                                                  value = 7),
+                                                  value = 30),
                                         textInput(inputId = "m2_noninfer_cont_power", 
                                                   label = HTML("Trung bình của nhóm đối chứng (&mu;<sub>2</sub>)"), 
-                                                  value = 4),
+                                                  value = 10),
                                         textInput(inputId = "d_noninfer_cont_power",
-                                                  label = HTML("Ngưỡng khác biệt (d)"),
-                                                  value = 2),
+                                                  label = HTML("Ngưỡng khác biệt có ý nghĩa trên lâm sàng (d)"),
+                                                  value = 10),
                                         textInput(inputId = "sd_noninfer_cont_power",
                                                   label = HTML("Độ lệch chuẩn (&sigma;)"),
-                                                  value = 10)
+                                                  value = 20)
                                     ),
                                     box(
                                         textInput(inputId = "alpha_noninfer_cont_power",
@@ -2085,7 +2085,7 @@ body <- dashboardBody(
                                         p(uiOutput(outputId = "za_noninfer_cont_power")),
                                         textInput(inputId = "n_noninfer_cont_power",
                                                   label = "Cỡ mẫu mỗi nhóm (n)",
-                                                  value = 500)
+                                                  value = 50)
                                     ),
                                     myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
@@ -2096,15 +2096,15 @@ body <- dashboardBody(
                         ),
                         box(title = "Công thức", width = 6,
                             withMathJax(),
-                            p("$$n=\\frac{2(Z_{1-\\alpha}+Z_{1-\\beta})}{H^2}$$"),
+                            p("$$n=\\frac{2(Z_{1-\\alpha}+Z_{1-\\beta})^2}{H^2}$$"),
                             p("$$H=\\frac{|\\mu_1-\\mu_2|-d}{\\sigma}$$"),
                             p(),
                             p("Ghi chú:"),
-                            p("H là mức độ khác biệt"),
+                            p("H là mức độ khác biệt có ý nghĩa trên lâm sàng"),
                             p(HTML("Công thức giống với công thức tính cỡ mẫu của 
                                    nghiên cứu tương đương, ngoại trừ việc dùng
-                                   Z<sub>1-&alpha;</sub>=1.645 (kiểm định một phía)
-                                   thay cho dùng Z<sub>1-&alpha;/2</sub> = 1.96
+                                   Z<sub>1-&alpha;</sub>
+                                   thay cho dùng Z<sub>1-&alpha;/2</sub>
                                    trong nghiên cứu tương đương"))
                         )
                     )
@@ -2139,9 +2139,9 @@ body <- dashboardBody(
                                                   value = 0.4),
                                         textInput(inputId = "p2_noninfer_cat", 
                                                   label = HTML("Tỷ lệ của nhóm đối chứng (p<sub>2</sub>)"), 
-                                                  value = 0.3),
+                                                  value = 0.2),
                                         textInput(inputId = "d_noninfer_cat",
-                                                  label = HTML("Ngưỡng khác biệt (d)"),
+                                                  label = HTML("Ngưỡng khác biệt có ý nghĩa trên lâm sàng (d)"),
                                                   value = 0.05)
                                     ),
                                     box(
@@ -2172,9 +2172,9 @@ body <- dashboardBody(
                                                   value = 0.4),
                                         textInput(inputId = "p2_noninfer_cat_power", 
                                                   label = HTML("Tỷ lệ của nhóm đối chứng (p<sub>2</sub>)"), 
-                                                  value = 0.3),
+                                                  value = 0.2),
                                         textInput(inputId = "d_noninfer_cat_power",
-                                                  label = HTML("Ngưỡng khác biệt (d)"),
+                                                  label = HTML("Ngưỡng khác biệt có ý nghĩa trên lâm sàng (d)"),
                                                   value = 0.05)
                                     ),
                                     box(
@@ -2184,7 +2184,7 @@ body <- dashboardBody(
                                         p(uiOutput(outputId = "za_noninfer_cat_power")),
                                         textInput(inputId = "n_noninfer_cat_power",
                                                   label = "Cỡ mẫu mỗi nhóm (n)",
-                                                  value = 500)
+                                                  value = 300)
                                     ),
                                     myBox(background = "#d9d9d9",color = "black",
                                         p(HTML("<center><b>Lực thống kê</b></center>")),
@@ -2195,15 +2195,15 @@ body <- dashboardBody(
                         ),
                         box(title = "Công thức", width = 6,
                             withMathJax(),
-                            p("$$n=\\frac{2(Z_{1-\\alpha}+Z_{1-\\beta})}{H^2}$$"),
+                            p("$$n=\\frac{2(Z_{1-\\alpha}+Z_{1-\\beta})^2}{H^2}$$"),
                             p("$$H=\\frac{|p_1-p_2|-d}{\\sqrt{p_1(1-p_1)+p_2(1-p_2)}}$$"),
                             p(),
                             p("Ghi chú:"),
-                            p("H là mức độ khác biệt"),
+                            p("H là mức độ khác biệt có ý nghĩa trên lâm sàng"),
                             p(HTML("Công thức giống với công thức tính cỡ mẫu của 
                                    nghiên cứu tương đương, ngoại trừ việc dùng
-                                   Z<sub>1-&alpha;</sub>=1.645 (kiểm định một phía)
-                                   thay cho dùng Z<sub>1-&alpha;/2</sub> = 1.96
+                                   Z<sub>1-&alpha;</sub> 
+                                   thay cho dùng Z<sub>1-&alpha;/2</sub> 
                                    trong nghiên cứu tương đương"))
                         )
                     )
@@ -2374,7 +2374,8 @@ body <- dashboardBody(
                     #tags$br(),
                     #tags$br(),
                     #tags$br(),
-                    p(HTML("<i> <p style='font-size:10px;color:white;text-align:left'> (Ghi chú: Đây là phần mềm đi kèm tài liệu <a href='http://adhere.vn/uploads/plugin/file/157/1597042201-70211094-sampling-and-sample-size.pdf'>PHƯƠNG PHÁP CHỌN MẪU VÀ TÍNH TOÁN CỠ MẪU TRONG NGHIÊN CỨU KHOA HỌC SỨC KHỎE </a>. Mọi góp ý xin liên hệ nhóm tác giả qua email <u>kql@huph.edu.vn</u>) </p> </i>")),
+                    #p(HTML("<i> <p style='font-size:10px;color:white;text-align:left'> (Ghi chú: Đây là phần mềm đi kèm tài liệu <a href='http://adhere.vn/uploads/plugin/file/157/1597042201-70211094-sampling-and-sample-size.pdf'>PHƯƠNG PHÁP CHỌN MẪU VÀ TÍNH TOÁN CỠ MẪU TRONG NGHIÊN CỨU KHOA HỌC SỨC KHỎE </a>. Mọi góp ý xin liên hệ nhóm tác giả qua email <u>kql@huph.edu.vn</u>) </p> </i>")),
+                    p(HTML("<i> <p style='font-size:10px;color:white;text-align:left'> (Ghi chú: Đây là phần mềm đi kèm tài liệu PHƯƠNG PHÁP CHỌN MẪU VÀ TÍNH TOÁN CỠ MẪU TRONG NGHIÊN CỨU KHOA HỌC SỨC KHỎE. Mọi góp ý xin liên hệ email <u>kql@huph.edu.vn</u>) </p> </i>")),
                     # p(HTML("<i> <p style='font-size:10px;color:darkblue;text-align:right'> @Phần mềm được viết bằng ngôn ngữ R với ứng dụng Shiny    </p> </i>"))
                     p(HTML("<i> <p style='font-size:10px;color:white;text-align:left'> Trang web đã được chứng nhận quyền tác giả theo giấy chứng nhận số 1804/2021/QTG cấp bởi Cục Bản quyền Tác giả"))
                     
